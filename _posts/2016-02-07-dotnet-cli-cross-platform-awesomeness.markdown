@@ -33,7 +33,8 @@ The quickest way to get up and running with this stuff is to create a quick cons
 	* DotNet Run
 
 If all that went well you should see the output of our Console app. 
-![Animated Example](http://gavindraper.com/content/images/dotnet.gif "")
+
+![Animated Example]({{ site.url }}/content/images/dotnet.gif)
 
 Other Languages
 --
