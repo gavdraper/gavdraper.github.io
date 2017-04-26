@@ -1,0 +1,25 @@
+---
+layout: post
+title: It Works
+date: '2010-11-23 06:50:33'
+---
+
+Ok so I've been messing around with XNA for the last 3 evenings.
+
+I've begged, borrowed and even drawn sprites from anywhere I can find (They will all
+be replaced at some point)
+
+I've now got a working tile engine, an animated player and some game logic. So far
+the player can move around the world and is prevented from walking over any non passable
+tiles (like water). The player can select a tool from his/her inventory and use it
+in the world. So far there is a working Shovel, Water Can, Fishing Rod. The player
+can fish in the lakes and if a fish is caught they earn Exp towards their fishing
+skill. The higher the fishing level the bigger the fish you can catch and sell.
+
+See the video below for a quick clip of how it plays.
+
+<object width="640" height="385"><embed type="application/x-shockwave-flash" width="640" height="385" src="http://www.youtube.com/v/OF8WLlIf-Pk?fs=1&amp;hl=en_GB" allowfullscreen="true" allowscriptaccess="always"></embed></object>
+
+I'll try to put some code together for my next post to show you some of the game objects
+I've created. Like I said before its all very hacked and not very pretty at all but
+hey it kind of works!

@@ -1,0 +1,7 @@
+---
+layout: post
+title: SplashActive - My Latest Weekend Project
+date: '2011-07-24 06:50:48'
+---
+
+<p>I've just put a very early version of my latest weekend project online, its still at a buggy stage but works for the most part. You can find it at <a title="http://www.splashactive.co.uk" href="http://www.splashactive.co.uk" target="_blank" data-mce-href="http://www.splashactive.co.uk">http://www.splashactive.co.uk</a></p><p>In short SplashActive allows you to find activities to do in a given area, you can also add new activites to the system. It is perfect for planning a weekend away or finding things to do in your area, this works out great for stag/hen parties, finding things for your kids to do over the holidays or just finding something new to try. The activities are primarly aimed at getting you away from the TV and out of the house in to an active enviroment.</p><p>Its written in and using ASP.Net MVC 3, C#, LinqToEntities, SQL Server 2008, Javascript, Bing Maps SDK.</p><p>In comming weeks I plan to do some more detailed posts on how the Bing Maps SDK intergration went, Geolocation lookup based on IP address and some other interesting issues I ran in to.</p><p>I've put it online early to see what people think. Although it was written in a weekend there is a lot more I want to add to it before I really start pushing it and as they say 10% of the work will take 90% of the time so I see this project going on for many months if not more before I attempt a proper launch.</p>

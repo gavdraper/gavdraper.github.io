@@ -1,0 +1,7 @@
+---
+layout: post
+title: AppHarbor and Entity Framework 4 Code First
+date: '2012-01-08 17:50:34'
+---
+
+<p>I’ve been using <a href="http://www.appharbor.com">AppHarbor</a> for pretty much all my personal projects over the last 6 months and think its a great service, especially now it has <a href="http://www.github.com">GitHub</a> support.</p>  <p>I recently deployed Entity Framework Code First project and had a few problems. After a bit of debugging it turn out the problem was because EF Code First was trying to drop and recreate the database and AppHarbor doesn't give you create permissions. The solution was…</p>  <ol>   <li>Remove the SQL add-on from AppHarbor and re-add it again as EF had dropped the database. </li>    <li>Change the call to <strong>Database.SetInitializer</strong> in your context class to look like this       <br /><em><font size="2">&#160;&#160;&#160;&#160;&#160; Database.SetInitializer(new <strong>CreateDatabaseIfNotExists</strong>&lt;YourContextName&gt;());</font></em> </li>    <li>Script your EF database and run the script on the AppHarbor database to create your database objects. </li> </ol>  <p>Assuming the connection strings are all set up correctly you should be good to go.</p>
