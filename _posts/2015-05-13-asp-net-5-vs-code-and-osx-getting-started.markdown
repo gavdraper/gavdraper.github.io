@@ -8,7 +8,7 @@ tags:
 - aspnet-mvc
 ---
 
-This post is part of a series of posts on ASP.NET 5 the series index can be found here [ASP.NET 5 Up and Running](http://gavindraper.com/2015/05/20/asp-net-5-up-and-running-series/).
+This post is part of a series of posts on ASP.NET 5 the series index can be found here [ASP.NET 5 Up and Running](https://gavindraper.com/2015/05/20/asp-net-5-up-and-running-series/).
 
 Over the last year Microsoft have released a lot of tools/frameworks that have made ASPNET cross platform development almost seamless. It's been possible for a long time now to develop and deploy to *nix platofrms using Mono and tools like Xamarin Studio/Mono Develop, I've tried these tools numerous times but always ended up backing away as I've hit various problems. I gave this another go a few weeks back now that DNX and VSCode have been released and was amazed how far this has come.
 
@@ -58,7 +58,7 @@ DNVM upgrade
  
 At this point your machine is ready to run DNX based .Net projects. Head over to [VS Code](https://code.visualstudio.com/ "VS Code") and grad their installer. Once this is installed create a folder to work in, open VS Code,  Click "Open Folder" and choose the folder you just created to set your working directory.
 
-![](http://gavindraper.com/content/images/openFolder.png)
+![](https://gavindraper.com/content/images/openFolder.png)
 
 
 Create a new file and save it as project.json. 
@@ -207,4 +207,4 @@ Now on OSX you run the website with DNX Kestrel and on Windows you use DNX Web. 
 
 I'll try to cover a lot of the above in more detail in future posts but this should serve as a good overview for getting started.
 
-Next : [ASP.NET 5 On OS X Unit Testing With xUnit.net](http://gavindraper.com/2015/05/19/asp-net-5-on-os-x-unit-testing/) 
+Next : [ASP.NET 5 On OS X Unit Testing With xUnit.net](https://gavindraper.com/2015/05/19/asp-net-5-on-os-x-unit-testing/) 

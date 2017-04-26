@@ -8,9 +8,9 @@ tags:
 - xunit-net
 ---
 
-This post is part of a series on ASP.NET 5, the index for this can be found here [ASP.NET 5 Up and Running](http://gavindraper.com/2015/05/20/asp-net-5-up-and-running-series/). We're continuing from [ASP.NET 5 on OS X](http://gavindraper.com/2015/05/13/asp-net-5-vs-code-and-osx-getting-started/). As with the previous post everything here will also work on Windows with or without Visual Studio. I'm using OS X as my focus as for me one of the best new features of ASP.NET 5 is being able to develop/deploy cross platform without the need for Visual Studio, I like having the extra choice.
+This post is part of a series on ASP.NET 5, the index for this can be found here [ASP.NET 5 Up and Running](https://gavindraper.com/2015/05/20/asp-net-5-up-and-running-series/). We're continuing from [ASP.NET 5 on OS X](https://gavindraper.com/2015/05/13/asp-net-5-vs-code-and-osx-getting-started/). As with the previous post everything here will also work on Windows with or without Visual Studio. I'm using OS X as my focus as for me one of the best new features of ASP.NET 5 is being able to develop/deploy cross platform without the need for Visual Studio, I like having the extra choice.
 
-I'm continuing with the simple MVC project we built in my [previous blog post](http://gavindraper.com/2015/05/13/asp-net-5-vs-code-and-osx-getting-started/) and adding a unit test to it using xUnit.net. This is in no way a guide to unit testing in general or xUnit.net, it's more of a sample to get up and running with xUnit.net in the ASP.NET 5 project system.
+I'm continuing with the simple MVC project we built in my [previous blog post](https://gavindraper.com/2015/05/13/asp-net-5-vs-code-and-osx-getting-started/) and adding a unit test to it using xUnit.net. This is in no way a guide to unit testing in general or xUnit.net, it's more of a sample to get up and running with xUnit.net in the ASP.NET 5 project system.
 
 First up we need to add xUnit.net to our project dependencies, this should be pretty simple if you followed the previous post, we just need to add the following to our Project.json...
 
@@ -62,7 +62,7 @@ At this point you can run the unit tests by either...
 
 When you run the tests you should see an error saying no tests were found...
 
-![](http://gavindraper.com/content/images/ASPNETXunit/1.png)
+![](https://gavindraper.com/content/images/ASPNETXunit/1.png)
 
  I guess we better add one...
 
@@ -90,7 +90,7 @@ namespace MinimalMVC.Tests
 
 This is a simple test that just checks our HomeController index method sets the ViewBag.Hello dynamic property to "Hello". Save this class and run the test command again...
 
-![](http://gavindraper.com/content/images/ASPNETXunit/2.png)
+![](https://gavindraper.com/content/images/ASPNETXunit/2.png)
 
 Oops it failed, our Index controller action is setting Hello to "Goodbye" and not "Hello" as the test expects.
 
@@ -98,10 +98,10 @@ Oops it failed, our Index controller action is setting Hello to "Goodbye" and no
 
 Change the HomeController to set it Hello to "Hello" so our test will pass. Now run the tests again...
 
-![](http://gavindraper.com/content/images/ASPNETXunit/3.png)
+![](https://gavindraper.com/content/images/ASPNETXunit/3.png)
 
 You should now get a pass! 
 
 In my next post I'll go over multi project solutions so we can look at putting our tests in separate projects. 
 
-Next : [ASP.NET 5 Multiple Projects With Global.json](http://gavindraper.com/2015/05/20/asp-net-5-multiple-projects-and-global-json/)
+Next : [ASP.NET 5 Multiple Projects With Global.json](https://gavindraper.com/2015/05/20/asp-net-5-multiple-projects-and-global-json/)
