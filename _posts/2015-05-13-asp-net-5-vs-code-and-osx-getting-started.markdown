@@ -84,7 +84,7 @@ Hit Cmd+Shift+P to open the command window then search for and run the "DNU Rest
 
 We now have the most minimal project.json for running an MVC site on OSX. Next up We need to create a Startup.cs with the following code...
 
-```language-csharp
+{% highlight csharp %}
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 
@@ -100,7 +100,7 @@ namespace MinimalMVC
         }
     }
 }
-```
+{% endhighlight %}
 
 If you run "DNX Kestrel" from VS Code (Cmd+Shift+P) you should get a terminal window reading "Started", if you then navigate to http://localhost:5005 you should see our awesome new webpage "Woop Woop!". We've created a site that returns "Woop Woop!" no matter what URL you request inside it. We'll add in MVC in a minute but before we do I want to break down what we've done above....
 
@@ -118,7 +118,7 @@ As you've probably noticed we've specififed MVC as a dependency in our project.j
 
 Modify your Startup.cs to look like this...
 
-```language-csharp
+{% highlight csharp %}
 using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
 
@@ -144,13 +144,13 @@ namespace MinimalMVC
         }
     }
 }
-```
+{% endhighlight %}
 
 This will add MVC to our pipeline and setup a default route. Now much like in previous versions of ASP.Net we just need to add a controller and a view...
 
 Create a folder called Controllers then inside it create HomeController.cs with the following code...
 
-```language-csharp
+{% highlight csharp %}
 using Microsoft.AspNet.Mvc;
 
 namespace MinimalMVC.Controllers
@@ -164,18 +164,18 @@ namespace MinimalMVC.Controllers
         }
     }
 }
-```
+{% endhighlight %}
 
 Create Views\Home folders with a new file in Views\Home called index.cshtml containing the following code...
 
-```language-markup
+{% highlight html %}
  <html>
 	<body>
 		<h1>Hello</h1>
 		<h2>@ViewBag.hello</h2>
 	</body>
 </html>
-```
+{% endhighlight %}
 
 I wont go into detail on how the controller/view code works as in this case the code is identical to previous versions of MVC. You should now be able to run DNX Kestrel and navigate to http://localhost:5005 or http://localhost:5005/home/index to hit that view. Also notice that if you throw an error in your controller or hit a route that doesnt exist in your browser you get a blank screen rather than an error, by design in ASP.NET 5 you have to opt in to everything you want rather than being given everything and having to remove what you dont need. Want error pages? No problem just add a dependency in project.json to Microsoft.AspNet.Diagnostics then in your Startup.cs add app.UseErrorPage(); above App.UseMvc() in the configure method.
 
@@ -185,7 +185,7 @@ Our project.json currently only tarets Kestrel what if we want to run on Windows
 Change project.json to look like this...
 
 
-```language-javascript
+{% highlight javascript %}
 {
 	"commands": {
 		"kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:5005",
@@ -201,7 +201,7 @@ Change project.json to look like this...
 		"dnx451": {}
 	}
 }
-```
+{% endhighlight %}
 
 Now on OSX you run the website with DNX Kestrel and on Windows you use DNX Web. Pretty cool huh? 
 

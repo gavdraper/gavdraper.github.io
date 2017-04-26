@@ -68,7 +68,7 @@ When you run the tests you should see an error saying no tests were found...
 
 Create a new directory in your project called "Tests" with a new class in there called HomeControllerTests like this...
 
-```language-csharp
+{% highlight csharp %}
 using MinimalMVC.Controllers;
 using Microsoft.AspNet.Mvc;
 using Xunit;
@@ -86,7 +86,7 @@ namespace MinimalMVC.Tests
 		}
 	}
 }
-```
+{% endhighlight %}
 
 This is a simple test that just checks our HomeController index method sets the ViewBag.Hello dynamic property to "Hello". Save this class and run the test command again...
 

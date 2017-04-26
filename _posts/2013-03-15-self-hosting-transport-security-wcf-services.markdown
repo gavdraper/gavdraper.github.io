@@ -82,7 +82,7 @@ namespace ServiceLocalHost
             var removeSslCertCommand = string.Format("http delete sslcert ipport=0.00.0:{0}", baseAddress.Port);
             var removeReservationCommand = string.Format("http delete urlacl url=https://+:{0}/", baseAddress.Port);
             var addReservationCommand = string.Format("http add urlacl url=https://+:{0}/ user=EVERYONE", baseAddress.Port);
-            var addSslCertCommand = string.Format("http add sslcert ipport=0.0.0.0:{0} certhash={1} appid={{{2}}}", baseAddress.Port, certificate.Thumbprint, Guid.NewGuid());
+            var addSslCertCommand = string.Format("http add sslcert ipport=0.0.0.0:{0} certhash={1} appid={2}", baseAddress.Port, certificate.Thumbprint, Guid.NewGuid());
             var commands = new List&lt;string&gt; { removeSslCertCommand, removeReservationCommand, addReservationCommand, addSslCertCommand };
             
             var bindPortToCertificate = new Process();

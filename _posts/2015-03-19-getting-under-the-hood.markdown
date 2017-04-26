@@ -53,7 +53,6 @@ To do this...
 7. Click the dropdown in the bottom right and click find file
 8. Pick the file you saved to your local disk
 
-![](/content/images/2015/Mar/5.png)
 
 Now when chrome requests that file from the Deezer CDN Fiddler will serve the local version.
 

@@ -44,7 +44,7 @@ Test
 
 We then need to create a project.json for our test project. First remove the xUnit dependencies and command from the Web project.json as it's no longer needed there. Then create a new project.json in Tests/Web.Tests that looks like this...
 
-```language-javascript
+{% highlight javascript %}
 {
 	"commands": {
 		"test" : "xunit.runner.aspnet"
@@ -57,20 +57,20 @@ We then need to create a project.json for our test project. First remove the xUn
 		"dnx451": {}
 	}
 }
-```
+{% endhighlight %}
 In your shell navigate to the root directory of this solution and run "DNU restore", if you look at the output you'll see it only restored references for Src/Web/Project.json, this is because it looks in Src and the current directory for projects by default but won't look anywhere else. To fix this we need a global.json file that specified where to look for our projects. This global.json goes in the root of the solution and looks like this...
 
-```language-javascript
+{% highlight javascript %}
 {
 	"projects" : ["Src","Test"]
 }
-```
+{% endhighlight %}
 
 If you then run "DNU Restore" at the solution root again you'll see it finds both project.json files and restores the references. If you're using VS Code then reload the window to get it to see the new global.json changes by pressing Cmd+Shift+P then running "Reload Window".
 
 If you then run the Kestrel command for the Web project as we have done before (If doing this from shell you need to be in the web directory) you'll see the website runs fine as it always has. If you however try to run the Test command in the Web.Tests project you'll see it fail with an error saying it can't find the namespace MinimalMvc.Controllers, this is because our Test project does not reference our Web project. To fix this open the test projects project.json and add a new dependency to MinimalMvc like this...
 
-```language-javascript
+{% highlight javascript %}
 {
 	"commands": {
 		"test" : "xunit.runner.aspnet"
@@ -84,7 +84,7 @@ If you then run the Kestrel command for the Web project as we have done before (
 		"dnx451": {}
 	}
 }
-```
+{% endhighlight %}
 
 It will resolve the web dependency by looking at the folder system and finding a folder called Web under source. If you now run the Test command again you will see it resolved our 1 test and it passed.
 
