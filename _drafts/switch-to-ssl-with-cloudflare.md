@@ -42,7 +42,7 @@ Sign up for a CloudFlare account and follow the below steps...
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-7.png)
 
 1. Lastly you can optionally create a page rule to divert al HTTP traffic to HTTPS 
-    ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-8.png
+    ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-8.png)
 
 And... We're done.
 
