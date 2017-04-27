@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Switch To SSL With CloudFlare
+title: Switch to SSL With CloudFlare
 date: '2017-04-26 19:05:38'
 ---
 
-## SSL All The Things
-Browsers are starting to highlight sites without SSL and insecure in a bid to push everyone to using SSL. This is a great move and the sooner we can get to near 100% sites running on SSL the better. Google are also apparently going to be ranking sites running over SSL higher than their non encrypted counterparts. In the past switching to SSL has been a bit of a pain from expensive certififates to CA's that don't do the correct checks and hosts that don't allow SSL on their free/lower priced options.
+## SSL All the Things
+Browsers are starting to highlight sites without SSL as insecure in a bid to push everyone to using SSL. This is a great move and the sooner we can get to near 100% sites running on SSL the better. Google are also apparently going to be ranking sites running over SSL higher than their non-encrypted counterparts. In the past switching to SSL has been a bit of a pain from expensive certificates to CA's that don't do the correct checks and hosts that don't allow SSL on their free/lower priced options.
 
 ## Why CloudFlare
 CloudFlare is a lot of things, they insert themselves into the DNS path to your site, effectively becoming a man in the middle. This allows them to offer a host of services from CDN, DDoS protection, SSL, Page Rules, HTML Rewrites. They have a number of Enterprise level features but everything I discuss here can be done on their free plan. 
@@ -20,7 +20,7 @@ Sign up for a CloudFlare account and follow the below steps...
 1. Enter your domain name...
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-1.png)
 
-1. All being well all your DNS records will be picked up and imported into CloudFlare. If for somereason they're not then you can manually add them lated
+1. All being well all your DNS records will be picked up and imported into CloudFlare. If for some reason they're not then you can manually add them later
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-2.png)
 
 1. A business plan is selected by default, change that to the free plan. 
@@ -41,12 +41,9 @@ Sign up for a CloudFlare account and follow the below steps...
 1. At the bottom of the screen if you want HTTP resources rewritten to HTTPS without having to change the site then switch this setting on... 
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-7.png)
 
-1. Lastly you can optionally create a pagerule to divert al HTTP traffic to HTTPS 
+1. Lastly you can optionally create a page rule to divert al HTTP traffic to HTTPS 
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-8.png
 
 And... We're done.
 
-All of the above can be done without CloudFlare by require numerous configurations on the WebServer and possibly a lot of changes to your website to switch over any content referenced on HTTP. The abive can all be done in 5 minutes for free, I was really impressed how easy this made it to move all my content to HTTPS, not too mention all the other features CloudFlare offer that I've yet to explore
-And... We're done.
-
-All of the above can be done without CloudFlare by require numerous configurations on the WebServer and possibly a lot of changes to your website to switch over any content referenced on HTTP. The abive can all be done in 5 minutes for free, I was really impressed how easy this made it to move all my content to HTTPS, not too mention all the other features CloudFlare offer that I've yet to explore.
+All of the above can be done without CloudFlare by require numerous configurations on the WebServer and possibly a lot of changes to your website to switch over any content referenced on HTTP. Using CloudFlare this  can all be done in 5 minutes for free, I was really impressed how easy this made it to move all my content to HTTPS, not to mention all the other features CloudFlare offer that I've yet to explore
