@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Switch to SSL With CloudFlare
-date: '2017-04-26 19:05:38'
+date: '2017-04-26 21:05:38'
 ---
 
 ## SSL All the Things
