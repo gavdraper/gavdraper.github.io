@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Switch to SSL With CloudFlare
+title: Switch Your Site To HTTPS Using CloudFlare
 date: '2017-04-26 21:05:39'
 ---
 
