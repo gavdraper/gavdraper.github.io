@@ -24,7 +24,6 @@ permalink: /:year/:month/:day/:title/
 highlighter: rouge
 # Build settings
 markdown: kramdown
-theme: gavcustom
 gems:
   - jekyll-feed
 exclude:
