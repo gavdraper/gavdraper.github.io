@@ -43,9 +43,9 @@ $on-laptop:        800px !default;
 
 // Import partials.
 @import
-  "minima/base",
-  "minima/layout",
-  "minima/syntax-highlighting"
+  "gavcustom/base",
+  "gavcustom/layout",
+  "gavcustom/syntax-highlighting"
 ;
 .post-list > li{margin-bottom:5px;}
 h2{margin-bottom:5px;}
