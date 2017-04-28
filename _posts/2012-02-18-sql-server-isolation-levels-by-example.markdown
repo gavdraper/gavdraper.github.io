@@ -5,6 +5,7 @@ date: '2012-02-18 12:57:28'
 ---
 
 <p>Isolation levels in SQL Server control the way locking works between transactions.</p>  <p>SQL Server 2008 supports the following isolation levels</p>  <ul>   <li>Read Uncommitted </li>    <li>Read Committed (The default) </li>    <li>Repeatable Read </li>    <li>Serializable </li>    <li>Snapshot </li> </ul>  <p>Before I run through each of these in detail you may want to create a new database to run the examples, run the following script on the new database to create the sample data. <strong>Note</strong> : You’ll also want to drop the IsolationTests table and re-run this script before each example to reset the data.</p>  
+
 {% highlight sql %}
 CREATE TABLE IsolationTests
 (
@@ -42,6 +43,7 @@ UNION ALL SELECT 1,2,3
 
 <p>To see read uncommitted in action lets run Query1 in one tab of Management Studio and then quickly run Query2 in another tab before Query1 completes.</p>
 <p><u>Query1</u></p>
+
 {% highlight sql %}
 BEGIN TRAN
 UPDATE IsolationTests SET Col1 = 2
@@ -51,6 +53,7 @@ ROLLBACK
 {% endhighlight %}
 
 <p><u>Query2</u></p>
+
 {% highlight sql %}
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 SELECT * FROM IsolationTests
@@ -62,7 +65,7 @@ SELECT * FROM IsolationTests
 
 {% highlight sql %}
 SELECT * FROM IsolationTests WITH(NOLOCK)
-{% endhighlight %
+{% endhighlight %}
 
 <h3><font style="font-weight: bold">Read Committed</font></h3>
 
@@ -78,13 +81,13 @@ UPDATE IsolationTests SET Col1 = 2
 --Simulate having some intensive processing here with a wait
 WAITFOR DELAY '00:00:10'
 ROLLBACK
-{% endhighlight %
+{% endhighlight %}
 
 <p><u>Query2</u></p>
 
 {% highlight sql %}
 SELECT * FROM IsolationTests
-{% endhighlight %
+{% endhighlight %}
 
 <p>Notice how Query2 waited for the first transaction to complete before returning and also how the data returned is the data we started off with as Query1 did a rollback. The reason no isolation level was specified is because Read Committed is the default isolation level for SQL Server. If you want to check what isolation level you are running under you can run “DBCC useroptions”. Remember isolation levels are Connection/Transaction specific so different queries on the same database are often run under different isolation levels.</p>
 
@@ -103,14 +106,14 @@ SELECT * FROM IsolationTests
 WAITFOR DELAY '00:00:10'
 SELECT * FROM IsolationTests
 ROLLBACK
-{% endhighlight %
+{% endhighlight %}
 
 
 <p><u>Query2</u></p>
 
 {% highlight sql %}
 UPDATE IsolationTests SET Col1 = -1
-{% endhighlight %
+{% endhighlight %}
 
 <p>Notice that Query1 returns the same data for both selects even though you ran a query to modify the data before the second select ran. This is because the Update query was forced to wait for Query1 to finish due to the exclusive locks that were opened as you specified Repeatable Read.</p>
 
@@ -133,14 +136,14 @@ SELECT * FROM IsolationTests
 WAITFOR DELAY '00:00:10'
 SELECT * FROM IsolationTests
 ROLLBACK
-{% endhighlight %
+{% endhighlight %}
 
 <p><u>Query2</u></p>
 
 {% highlight sql %}
 INSERT INTO IsolationTests(Col1,Col2,Col3)
 VALUES (100,100,100)
-{% endhighlight %
+{% endhighlight %}
 
 <p>You’ll see that the insert in Query2 waits for Query1 to complete before it runs eradicating the chance of a phantom read. If you change the isolation level in Query1 to repeatable read, you’ll see the insert no longer gets blocked and the two select statements in Query1 return a different amount of rows. </p>
 
@@ -155,7 +158,7 @@ VALUES (100,100,100)
 {% highlight sql %}
 ALTER DATABASE IsolationTests
 SET ALLOW_SNAPSHOT_ISOLATION ON
-{% endhighlight %
+{% endhighlight %}
 
 <p>If you rerun the examples from serializable but change the isolation level to snapshot you will notice that you still get the same data returned but Query2 no longer waits for Query1 to complete.</p>
 
