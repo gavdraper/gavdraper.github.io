@@ -33,6 +33,19 @@ Obviously in this case on our website we could query the AdSettings table to get
 
 We can then use CROSS APPLY to populate this table with the following query. If you want to follow along the script to create and populate this database is at the bottom of this post.
 
+{% highlight sql %}
+INSERT INTO dbo.UserAds
+        ( Username, AdName,AdImagePAth )
+SELECT  dbo.AdSettings.Username, Ads.Name, Ads.ImagePath FROM AdSettings
+CROSS APPLY
+        (
+        SELECT  TOP (AdSettings.AdCount) *
+        FROM    Ads
+        ORDER BY
+                 id
+        ) Ads
+{% endhighlight %}
+
 
 
 The following script will setup a database and some sample data you can use to follow through the above examples.
