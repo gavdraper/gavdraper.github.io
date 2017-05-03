@@ -16,7 +16,6 @@ Obviously in this case our system could query the AdSettings table to get the Ad
 | **Username** | NVARCHAR | | | **Name** | NVARCHAR | | |**UserName** | NVARCHAR |
 | **AdCount** | SMALLINT | | | **ImagePath** | NVARCHAR | | | **AdId** | INT |
 
----
 You can use this script to create the database and seed data if you want to follow along...
 
 {% highlight sql %}
