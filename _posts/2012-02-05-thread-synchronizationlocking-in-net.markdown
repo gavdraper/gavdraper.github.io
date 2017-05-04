@@ -15,19 +15,19 @@ Here is an example of a C# Console App that has these race conditions. When the 
 
     static void Main(string[] args)
     {
-        var threads = new List&lt;Thread&gt;();
+        var threads = new List<Thread>();
         //Create 4 threads
-        for(int i = 0;i&lt;4;i++)
+        for(int i = 0;i<4;i++)
             threads.Add(new Thread(AddNumbers));
         foreach(var t in threads) t.Start();
         //wait for all the threads to finish then output the shared resource values
         foreach (var t in threads) t.Join();
-        Console.WriteLine(&quot;First Number : {0}\nSecond Number : {1}&quot;,firstNumber,secondNumber);
+        Console.WriteLine("First Number : {0}\nSecond Number : {1}",firstNumber,secondNumber);
      }
 
     static void AddNumbers()
     {
-        for (int i = 0; i &lt; 25; i++)
+        for (int i = 0; i < 25; i++)
         {
             firstNumber++;
             secondNumber++;
@@ -41,7 +41,7 @@ There are various ways to solve this problem, however in this post I am going to
 
 ### Monitor ###
 
-This is the most common lock used and is actually the lock type that gets used when you use the &quot;Lock&quot; keyword in C#. Monitor locks can be placed directly on the shared resource or on a new object that you can then use to control the access to a collection of shared resources.
+This is the most common lock used and is actually the lock type that gets used when you use the "Lock" keyword in C#. Monitor locks can be placed directly on the shared resource or on a new object that you can then use to control the access to a collection of shared resources.
 
 In order to make the above sample work using a Monitor lock it is as simple as adding a new lock object to the class and making a couple of changes to our AddNumbers method.
 
@@ -51,7 +51,7 @@ static object resourceLock = new object();
 
 static void AddNumbers()
 {
-    for (int i = 0; i &lt; 25; i++)
+    for (int i = 0; i < 25; i++)
     {
         Monitor.Enter(resourceLock);
         try
@@ -75,7 +75,7 @@ Its worth noting that the above code can be shortened by using the “Lock” ke
 {% highlight csharp %}
 static void AddNumbers()
 {
-    for (int i = 0; i &lt; 25; i++)
+    for (int i = 0; i < 25; i++)
     {
         lock(resourceLock)
         {
@@ -105,21 +105,21 @@ private static Mutex lockTwo = new Mutex();
 static void Main()
 {
     lockTwo.WaitOne();
-    var threads = new List&lt;Thread&gt;();
-    for (var i = 0; i &lt; 10; i++)
+    var threads = new List<Thread>();
+    for (var i = 0; i < 10; i++)
     {
         var threadNo = i;
-        threads.Add(new Thread(() =&gt;
+        threads.Add(new Thread(() =>;
                {
                    lockOne.WaitOne();
-                   Console.WriteLine(&quot;Thread {0} acquired 1st lock&quot;, threadNo);
+                   Console.WriteLine("Thread {0} acquired 1st lock", threadNo);
                    Thread.Sleep(500);
                    if (lockTwo.WaitOne(1000))
                    {
                        //Will never get here as lock is already open
                        lockTwo.ReleaseMutex();
                    }
-                   else Console.WriteLine(&quot;Acquiring Lock 2 Timed Out, Not Waiting Any Longer As Possible Deadlock&quot;);
+                   else Console.WriteLine("Acquiring Lock 2 Timed Out, Not Waiting Any Longer As Possible Deadlock");
                    lockOne.ReleaseMutex();
                }));
         threads[threads.Count - 1].Start();
@@ -144,14 +144,14 @@ public static void Main()
     //The main thread owns the entire semaphore count so we first need to free it so 
     //our other threads can take a lock from the pool
     pool.Release(3);
-    var threads = new List&lt;Thread&gt;();
-    for (var i = 1; i &lt;= 10; i++)
+    var threads = new List<Thread>();
+    for (var i = 1; i <= 10; i++)
     {
         var threadNo = i;
-        threads.Add(new Thread(() =&gt;
+        threads.Add(new Thread(() =>;
                {
                    pool.WaitOne();
-                   Console.WriteLine(&quot;Thread {0} acquired a lock&quot;, threadNo);
+                   Console.WriteLine("Thread {0} acquired a lock", threadNo);
                    Thread.Sleep(2000);
                    pool.Release();
                }));
