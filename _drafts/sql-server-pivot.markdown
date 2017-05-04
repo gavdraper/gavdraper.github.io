@@ -72,14 +72,12 @@ SELECT [January],
     [November],
     [December]
 FROM
-	(SELECT [Month], [Count] FROM Sales) AS Source
-	PIVOT
-	(
-		SUM([Count])
-		FOR [Month] IN ([January], [Febuary], [March], [April], [May], [June],
-			[July], [August], [September], [October], [November], [December]
-					   )
-	) AS PivotTable;
+    (SELECT [Month], [Count] FROM Sales) AS Source
+    PIVOT
+    (
+        SUM([Count])
+        FOR [Month] IN ([January], [Febuary], [March], [April], [May], [June], [July], [August], [September],[October], [November], [December])
+    ) AS PivotTable;
 {% endhighlight %}
 
 The result set will then look like this...
@@ -91,3 +89,5 @@ Lets take the reverse of before and have each month as a field. The following sc
 
 {% highlight sql %}
 {% endhighlight %}
+
+
