@@ -27,7 +27,27 @@ We can use a pivot to make it look like this...
 The following script will create a demo table with data to try out an example on...
 
 {% highlight sql %}
+CREATE TABLE Sales
+(
+	Id INT IDENTITY PRIMARY KEY,
+	[Month] NVARCHAR(20),
+	[Count] INT
+)
 
+INSERT INTO Sales([Month],[Count])
+VALUES
+	('January','10'), 
+	('Febuary','5'),
+	('March','10'), 
+	('April','10'), 
+	('May','10'), 
+	('June','10'), 
+	('July','10'), 
+	('August','3'), 
+	('September','10'), 
+	('October','10'), 
+	('November','100'), 
+	('December','103')
 {% endhighlight %}
 
 So in this case we want to PIVOT on this 
@@ -39,6 +59,27 @@ SELECT [Month], [COUNT] FROM Sales
 To do this our outter query needs to list all fields we want to select e.g January.. December. We then aply the PIVOT to the source query above telling it which field and values we want to PIVOT on...
 
 {% highlight sql %}
+SELECT [January],
+    [Febuary],
+    [March],
+    [April],
+    [May],
+    [June],
+    [July],
+    [August],
+    [September],
+    [October],
+    [November],
+    [December]
+FROM
+	(SELECT [Month], [Count] FROM Sales) AS Source
+	PIVOT
+	(
+		SUM([Count])
+		FOR [Month] IN ([January], [Febuary], [March], [April], [May], [June],
+			[July], [August], [September], [October], [November], [December]
+					   )
+	) AS PivotTable;
 {% endhighlight %}
 
 The result set will then look like this...
