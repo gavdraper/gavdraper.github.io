@@ -1,7 +1,7 @@
 ---
 layout: post
 title: C#7 New Features
-date: '2010-08-04 19:05:38'
+date: '2017-05-04 11:05:38'
 ---
 
 I'm going to walk through an example that we can build up and improve with a number of the new C# 7 features. 
@@ -30,7 +30,9 @@ public int? FindNumber(object o)
 }
 {% endhighlight %}
 
-With C# 7 we can use the IS clause the test for shape and assign it to a variable for example
+### Pattern Matching & Output Parameters ###
+
+With C# 7 we can use the is statement to test for shape and assign it to a variable for example
 
 {% highlight csharp %}
 if(o is int i)
@@ -87,3 +89,29 @@ From here we can look at the next new feature, Constructor expression bodies. We
 {% highlight csharp %}
 public BoxOfRandomStuff(object o) => obj = 0;
 {% endhighlight %}
+
+### Tuples ###
+
+Lets say we want a method in our new class that returns the current time 3 parts hours, minutes and seconds. We could create a class to represent this but in this case we only want to use it in one place and a class may be over kill. First lets see how we'd do this in C#6
+
+{% highlight csharp %}
+{% endhighlight %}
+
+Now lets take the next step and remove the out parameter declarations as they're not needed in C#7
+
+{% highlight csharp %}
+{% endhighlight %}
+
+Next lets look at the new Tuple syntax. 
+
+{% highlight csharp %}
+{% endhighlight %}
+
+You can see from the last example that we can use a single clean output parameter that has multiple properties without loosing any readability.  
+
+### Local Functions ###
+
+
+
+
+As a finishing not everything above is just to demo the new features and is in no way best practice. 
