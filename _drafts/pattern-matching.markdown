@@ -95,23 +95,49 @@ public BoxOfRandomStuff(object o) => obj = 0;
 Lets say we want a method in our new class that returns the current time 3 parts hours, minutes and seconds. We could create a class to represent this but in this case we only want to use it in one place and a class may be over kill. First lets see how we'd do this in C#6
 
 {% highlight csharp %}
+public void GetCurrentTime(out int hours, out int minutes, out int seconds)
+{
+    var time = DateTime.Now;
+    hours = time.Hour;
+    minutes = time.Minute;
+    seconds = time.Second;
+}
+{% endhighlight %}
+
+Which we would call like...
+
+{% highlight csharp %}
+int hour;
+int minute;
+int second;
+test.GetCurrentTime(out hour, out minute, out second);
 {% endhighlight %}
 
 Now lets take the next step and remove the out parameter declarations as they're not needed in C#7
 
 {% highlight csharp %}
+test.GetCurrentTime(out hour, out minute, out second);
 {% endhighlight %}
 
-Next lets look at the new Tuple syntax. 
+Next lets look at the new Tuple syntax. For this you may need to install the System.Tuple nuget package from Micorosft.
 
 {% highlight csharp %}
+public (int hours, int minutes, int seconds) GetCurrentTime()
+{
+    var time = DateTime.Now;
+    return (time.Hour, time.Minute, time.Second);
+}
 {% endhighlight %}
 
-You can see from the last example that we can use a single clean output parameter that has multiple properties without loosing any readability.  
+Which can be called like this
 
-### Local Functions ###
+{% highlight csharp %}
+var timeTuple = test.GetCurrentTime();
+Console.WriteLine($"{timeTuple.hours}:{timeTuple.minutes}:{timeTuple.seconds}");
+{% endhighlight %}
 
+In this case I named the output in the return type of the method but I could have just done (int,int,int) and then they could be referenced by their position e.g Item1, Item2, etc. 
 
-
+I find this much cleaner than out parameters and although I rarely use them anyway I can't see myself ever picking them over a named Tuple now.
 
 As a finishing not everything above is just to demo the new features and is in no way best practice. 
