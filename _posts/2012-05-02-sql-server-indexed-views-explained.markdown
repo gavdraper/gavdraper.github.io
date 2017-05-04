@@ -96,7 +96,7 @@ It’s still querying the underlying tables and the query plan is the same as it
 {% highlight sql %}
 SELECT * FROM UsersAndGroups WITH (NOEXPAND)
 {% endhighlight %}
-<
+
 On my machine the query then goes from about 120ms to 25ms, the query plan then looks like this ....
 
 <a href="/content/images/WPImport/2012/05/dsf.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="dsf" border="0" alt="dsf" src="/content/images/WPImport/2012/05/dsf_thumb.png" width="376" height="101"></a> 
