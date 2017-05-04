@@ -37,7 +37,7 @@ CREATE TABLE Sales
 INSERT INTO Sales([Month],[Count])
 VALUES
 	('January','10'), 
-	('Febuary','5'),
+	('February','5'),
 	('March','10'), 
 	('April','10'), 
 	('May','10'), 
@@ -60,7 +60,7 @@ To do this our outter query needs to list all fields we want to select e.g Janua
 
 {% highlight sql %}
 SELECT [January],
-    [Febuary],
+    [February],
     [March],
     [April],
     [May],
@@ -76,7 +76,7 @@ FROM
     PIVOT
     (
         SUM([Count])
-        FOR [Month] IN ([January], [Febuary], [March], [April], [May], [June], [July], [August], [September],[October], [November], [December])
+        FOR [Month] IN ([January], [February], [March], [April], [May], [June], [July], [August], [September],[October], [November], [December])
     ) AS PivotTable;
 {% endhighlight %}
 
@@ -88,6 +88,41 @@ UNPIVOT rotates in the opposite direction of PIVOT so fields become data.
 Lets take the reverse of before and have each month as a field. The following script will setup a test table with data
 
 {% highlight sql %}
+CREATE TABLE PivotedSales
+(
+	Id INT IDENTITY PRIMARY KEY,
+	January INT,
+    February INT,
+    March INT,
+    April INT,
+    May INT,
+    June INT,
+    July INT,
+    August INT,
+    September INT,
+    October INT,
+    November INT,
+    December INT
+)
+INSERT INTO PivotedSales(January,February,March, April, May, June, July, August, September, October, November, December)
+VALUES(1,2,3,4,5,6,7,8,9,10,11,12)
 {% endhighlight %}
 
+Much like the PIVOT example we create our source query which in this case is...
+
+{% highlight sql %}
+SELECT January,February,March, April, May, June, July, August, September, October, November, December FROM PivotedSales
+{% endhighlight %}
+
+We then wrap the source query in an outter query that specified the fields we want and add the UNPIVOT to it...
+
+{% highlight sql %}
+SELECT [Month], [Sales]
+FROM 
+	(SELECT January,February,March, April, May, June, July, August, September, October, November, December FROM PivotedSales) AS Source
+	UNPIVOT
+	(
+		Sales FOR [Month] IN (January,February,March, April, May, June, July, August, September, October, November, December)
+	) AS unpivoted
+{% endhighlight %}
 
