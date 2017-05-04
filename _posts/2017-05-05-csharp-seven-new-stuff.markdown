@@ -1,16 +1,16 @@
 ---
 layout: post
-title: C#7 New Features
-date: '2017-05-04 11:05:38'
+title: C#7 Show Me The New Stuff!
+date: '2017-05-05 08:05:38'
 ---
 
 I'm going to walk through an example that we can build up and improve with a number of the new C# 7 features. 
 
 Lets say we have a method that takes an object and tries to convert it to a number. There are two ways it does this
 
-* If it's an int then the object is the number
-* If it's a string then it will try to conert it using int.TryParse.
-* Else return null.
+* If it's an int then the object is the number.
+* If it's a string then it will try to convert it using int.TryParse.
+* If it's anything else then  return null.
 
 If we were writing this in C#6 it might look like this
 
@@ -50,9 +50,9 @@ if(o is int i || (o is string s && int.TryParse(s,out i)))
 }
 {% endhighlight %}
 
-You may also noticed another C# 7 feature in the code above. That is the out parameter wasnt declared before it was used, In C#7 it doesnt need to be. 
+You may also notice another C# 7 feature in the code above. That is the out parameter wasn't declared before it was used, In C#7 it doesn't need to be. 
 
-Given the new featurs our original method can now look like this
+Given the new features our original method can now look like this
 
 {% highlight csharp %}
 public int? FindNumber(object o)
@@ -84,7 +84,7 @@ public class BoxOfRandomStuff
 }
 {% endhighlight %}
 
-From here we can look at the next new feature, Constructor expression bodies. We've had expression bodies in C#6 for readonly properties and methods but we've now got them for read/write properties, constructors and deconstructors. With that the constructor in the above class can be rewriten as...
+From here we can look at the next new feature, Constructor expression bodies. We've had expression bodies in C#6 for readonly properties and methods but we've now got them for read/write properties, constructors and deconstructors. With that the constructor in the above class can be rewritten as...
 
 {% highlight csharp %}
 public BoxOfRandomStuff(object o) => obj = 0;
@@ -92,7 +92,7 @@ public BoxOfRandomStuff(object o) => obj = 0;
 
 ### Tuples ###
 
-Lets say we want a method in our new class that returns the current time 3 parts hours, minutes and seconds. We could create a class to represent this but in this case we only want to use it in one place and a class may be over kill. First lets see how we'd do this in C#6
+Lets say we want a method in our new class that returns the current time in 3 parts hours, minutes and seconds. We could create a class to represent this but in this case we only want to use it in one place and a class may be over kill and that would ruin the example. First lets see how we'd do this in C#6
 
 {% highlight csharp %}
 public void GetCurrentTime(out int hours, out int minutes, out int seconds)
@@ -119,7 +119,7 @@ Now lets take the next step and remove the out parameter declarations as they're
 test.GetCurrentTime(out hour, out minute, out second);
 {% endhighlight %}
 
-Next lets look at the new Tuple syntax. For this you may need to install the System.Tuple nuget package from Micorosft.
+Next lets look at the new Tuple syntax. For this you may need to install the System.Tuple nuget package from Microsoft.
 
 {% highlight csharp %}
 public (int hours, int minutes, int seconds) GetCurrentTime()
@@ -140,4 +140,4 @@ In this case I named the output in the return type of the method but I could hav
 
 I find this much cleaner than out parameters and although I rarely use them anyway I can't see myself ever picking them over a named Tuple now.
 
-As a finishing not everything above is just to demo the new features and is in no way best practice. 
+As a finishing note everything above is just to demo the new features and is in no way best practice. 
