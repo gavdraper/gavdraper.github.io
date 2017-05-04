@@ -8,7 +8,7 @@ Indexed views are a really powerful and possibly underused feature of SQL Server
 
 For this post I’m going to be using the following schema for my examples…
 
-{% highlight sql}
+{% highlight sql %}
 CREATE TABLE [dbo].[GroupTypes](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [nvarchar](50) NOT NULL

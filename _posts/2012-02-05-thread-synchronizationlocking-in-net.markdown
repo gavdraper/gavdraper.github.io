@@ -7,7 +7,7 @@ When you are creating multiple threads that need to access a shared resource the
 
 Here is an example of a C# Console App that has these race conditions. When the app finishes the number in firstNumber and secondNumber should be 100 however it will most likely be some random number significantly smaller than that due to the race condition.
 
- {% highlight csharp}
+ {% highlight csharp %}
  class Program
 {
     static int firstNumber = 0;
