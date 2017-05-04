@@ -90,8 +90,6 @@ The result set will then look like this...
 | --- | --- | --- |
 | 10 | 5 | 10 | 
 
-etc..
-
 ### What About Unpivot? ###
 Unpivot rotates in the opposite direction of Pivot so fields become data.
 
