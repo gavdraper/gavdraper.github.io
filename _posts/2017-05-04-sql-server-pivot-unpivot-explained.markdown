@@ -76,7 +76,11 @@ FROM
     PIVOT
     (
         SUM([Count])
-        FOR [Month] IN ([January], [February], [March], [April], [May], [June], [July], [August], [September],[October], [November], [December])
+        FOR [Month] IN 
+            (
+            [January], [February], [March], [April], [May], [June], [July], 
+            [August], [September],[October], [November], [December]
+            )
     ) AS PivotTable;
 {% endhighlight %}
 
@@ -153,6 +157,8 @@ This gives us a result set the looks similar to our pre Pivot example.
 
 | Sales | Month |
 | --- | --- |
-| 1 | Januray |
+| 1 | January |
 | 2 | February |
 | 3 | March | 
+
+Hopefully this post gives a good overview of what these two statements do and how to use them. 
