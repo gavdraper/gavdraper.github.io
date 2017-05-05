@@ -43,7 +43,7 @@ VALUES(
 )
 {% endhighlight %}
 
-### Querying JSON ###
+### Extracting JSON ###
 
 Now lets return a record that pulls out Country and Favorite foods from the JSON.
 
@@ -62,6 +62,58 @@ We have 2 new bits of syntax in the above example
 1. JSON_VALUE - This will pull out the value of a single property
 2. JSON_QUERY - This will pull out the contents of an array 
 
+As JSON is not bound to a schema you will probably have some records that have JSON properties that other records don't, this is one of the benefits of using a schemaless object, in this case both JSON_VALUE and JSON_QUERY wont error if you specify a field that doesnt exist they will just return null.
+
+### Convert JSON To A SQL Set ###
+We can use OPENJSON is convert and manipulate the JSON into a SQL Set. Lets say given the JSON in the table above we want to produce a typed list of fields containing Language and Town. The WITH statement on OPENJSON allows us the specify the properties we want the fields we want them to go to along with type information.
+
+{% highlight sql %}
+
+{% endhighlight %}
+
 ### Indexing JSON ###
 
+Indexing doesnt exist for JSON in the same way it does in NOSQL Databases. However what you can do is create a computed field based on one or more properties in the JSON and index on that. For example lets say I want to index on Town in the above example I could do this...
+
+{% highlight sql %}
+ALTER TABLE UserJson ADD Town AS CAST(JSON_VALUE(AdditionalInformation, '$.Address.Town') AS NVARCHAR(100))
+CREATE NONCLUSTERED INDEX ndx_userjson_town ON UserJson(Town)
+{% endhighlight %}
+
+I added the cast to NVARCHAR(100) to limit it's length and give some constaint to this data. We can now use the index town by querying the new town field directly.
+
 ### Converting Datasets to JSON ###
+
+Lets imagine we want Forename,Surname and Username as a JSON object. The new FOR JSON caluse can do this.
+
+{% highlight sql %}
+SELECT
+    Id AS [Person.Id],
+    Forename AS [Person.Forename],
+    Surname AS [Person.Surname]
+FROM UserJson
+FOR JSON PATH
+{% endhighlight %}
+
+The FOR JSON PATH syntax will convert to JSON and use the . syntax in our field names to create the object hierachy. The above query produced this JSON...
+
+{% highlight json %}
+[{
+    "Person":{
+        "Id":5,
+        "Forename":"Gavin",
+        "Surname":"Draper"
+    }
+}]
+{% endhighlight %}
+
+### Update JSON ###
+The JSON_MODIFY syntax allows us to modify a JSON string. For example lets say the user in the above table has moved to London and we want to update the town in the JSON (This will also update the computed field).
+
+{% highlight sql %}
+UPDATE [UserJson] 
+SET AdditionalInformation = JSON_MODIFY(AdditionalInformation,'$.Address.Town','London') 
+WHERE Username = 'GavinDraper'
+{% endhighlight %}
+
+As you can see JSON_MODIFY takes the JSON to modify, the property you want to change followed by the new value. After running the above SQL the town for the GavinDraper user will be set to London.
