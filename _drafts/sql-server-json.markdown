@@ -30,16 +30,14 @@ VALUES(
     'Gavin',
     'Draper',
     'GavinDraper',
-    '
-    {
+    '{
         "Language" : "English",
         "FavoriteFoods" : ["Pizza","Chicken","Nachos"],
         "Address" : {
             "Town" : "Brighton",
             "Country" : "England"
         }
-    }
-    '
+    }'
 )
 {% endhighlight %}
 
@@ -68,8 +66,35 @@ As JSON is not bound to a schema you will probably have some records that have J
 We can use OPENJSON is convert and manipulate the JSON into a SQL Set. Lets say given the JSON in the table above we want to produce a typed list of fields containing Language and Town. The WITH statement on OPENJSON allows us the specify the properties we want the fields we want them to go to along with type information.
 
 {% highlight sql %}
-
+DECLARE @Json NVARCHAR(3000)
+SELECT @Json = AdditionalInformation FROM UserJson WHERE Username = 'GavinDraper'
+SELECT * FROM OPENJSON(@Json) 
+WITH 
+(
+	Language NVARCHAR(50) '$.Language', 
+	[Town] NVARCHAR(50) '$.Address.Town'
+)
 {% endhighlight %}
+
+This will output
+
+| Language | Town |
+| --- | --- |
+| English | Brighton |
+
+We can also query JSON arrays and produce a row for each item in the array, this can be done by specifying a path to the array in OPENJSON
+
+{% highlight sql %}
+SELECT [Value] FROM OPENJSON(@Json, '$.FavoriteFoods')
+{% endhighlight %}
+
+Which produces the following output
+
+| Value |
+| --- |
+| Pizza |
+| Chicken |
+| Nachos |
 
 ### Indexing JSON ###
 
