@@ -35,12 +35,11 @@ FROM
 The problem is as new employees come into our table this query wont pick them up as we've not explicitly named them. We can get round this by using dynamic SQL with the Pivot statement...
 
 {% highlight sql %}
-DECLARE @Columns NVARCHAR(MAX) =
-     STUFF((SELECT ',' + QUOTENAME(Employee)
-            FROM EmployeeSales
-            FOR XML PATH(''), TYPE
-            ).value('.', 'NVARCHAR(MAX)') 
-        ,1,1,'')
+DECLARE @Columns NVARCHAR(MAX) = ''
+SELECT @Columns  = 
+    @Columns + QUOTENAME(Employee) + ',' 
+        FROM (SELECT Employee FROM EmployeeSales ) t
+SELECT @Columns = SUBSTRING(@Columns, 0, LEN(@Columns))        
     
 DECLARE @Query NVARCHAR(MAX) =  
     'SELECT ' + @Columns + ' FROM
@@ -57,13 +56,15 @@ EXECUTE(@query)
 The above query will build a dynamic Pivot SQL statement which will get all possible employee values from the EmployeeSales table and pivot on that. With this you can easily customize the query to limit which employees get pivoted on, for example only the top 2 performers...
 
 {% highlight sql %}
-DECLARE @Columns NVARCHAR(MAX) =
-     STUFF((SELECT  TOP 2 ',' + QUOTENAME(Employee)
-            FROM EmployeeSales
-            ORDER BY Sales DESC
-            FOR XML PATH(''), TYPE
-            ).value('.', 'NVARCHAR(MAX)') 
-        ,1,1,'')
+DECLARE @Columns NVARCHAR(MAX) = ''
+SELECT @Columns  = @Columns + 
+    QUOTENAME(Employee) + ',' 
+    FROM 
+    (
+        SELECT TOP 2 Employee 
+        FROM EmployeeSales ORDER BY Sales DESC
+    ) t
+SELECT @Columns = SUBSTRING(@Columns, 0, LEN(@Columns))        
     
 DECLARE @Query NVARCHAR(MAX) =  
     'SELECT ' + @Columns + ' FROM
