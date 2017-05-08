@@ -81,3 +81,36 @@ From that we get this...
 
 This shows us on the left how the row in the target table used to look and on the right how it looks after the merge.
 
+If you wanted to play with the above examples then the following script will setup the tables and data...
+
+{% highlight sql %}
+DROP TABLE UserSource
+DROP TABLE UserTarget
+
+CREATE TABLE UserSource
+(
+    Id INT IDENTITY PRIMARY KEY,
+    Username NVARCHAR(20),
+    [Location] NVARCHAR(20),
+    FavoriteColour NVARCHAR(20)
+)
+
+CREATE TABLE UserTarget
+(
+    Id INT IDENTITY PRIMARY KEY,
+    Username NVARCHAR(20),
+    [Location] NVARCHAR(20),
+    FavoriteColour NVARCHAR(20),
+    Age INT
+)
+
+INSERT INTO UserSource(Username,Location,FavoriteColour)
+VALUES
+    ('Gavin','UK','Red'),
+    ('Jane','USA','Purple'),
+    ('Joe','France','Pink')
+
+INSERT INTO dbo.UserTarget( Username, Location, FavoriteColour, Age)
+VALUES
+    ('Jane','USA','Pink',32)
+{% endhighlight %}
