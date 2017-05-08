@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using SQL Server Merge Statement
-date: '2017-05-08 13:05:38'
+date: '2017-05-08 09:05:38'
 ---
 The SQL Server merge statement kind of does what it says, given some source data and a destination table it can UPDATE data that already exists but has changed, INSERT data that is not in the destination, remove data from the destination that is not in the source.
 
@@ -31,7 +31,7 @@ The target table has an extra field (Age) which we will set to null when inserti
 
 So Jane's record got updated with her favorite colour from the source table, and Gavin/Joe got inserted as they didnt already exist on the target table.
 
-A merge needs to match on a specific column or set or columns in this case we'll use username, so if the username doesnt exist in the target we'll insert it and if it does we'll update it.
+A merge needs to match on a specific column or set or columns in this case we'll use username, so if the username doesn't exist in the target we'll insert it and if it does we'll update it.
 
 Lets pretend the two tables above are called UserSource and UserTarget we can write the merge like this...
 
@@ -41,11 +41,8 @@ MERGE
     USING (SELECT * FROM UserSource) AS Source
 	ON Source.Username = Target.Username
 WHEN MATCHED AND Source.FavoriteColour <> Target.FavoriteColour THEN
-    -- We have the record in both tables but the colour in the target table is different to source. 
-    -- Lets update it...
     UPDATE SET FavoriteColour = Source.FavoriteColour
 WHEN NOT MATCHED BY TARGET THEN
-    -- Record doesnt exist in target table (Lets Insert It)
     INSERT(Username,Location,FavoriteColour)
     VALUES(Source.Username, Source.Location, Source.FavoriteColour);
 {% endhighlight %}
@@ -61,11 +58,8 @@ MERGE
     USING (SELECT * FROM UserSource) AS Source
 	ON Source.Username = Target.Username
 WHEN MATCHED AND Source.FavoriteColour <> Target.FavoriteColour THEN
-    -- We have the record in both tables but the colour in the target table is different to source. 
-    -- Lets update it...
     UPDATE SET FavoriteColour = Source.FavoriteColour
 WHEN NOT MATCHED BY TARGET THEN
-    -- Record doesnt exist in target table (Lets Insert It)
     INSERT(Username,Location,FavoriteColour)
     VALUES(Source.Username, Source.Location, Source.FavoriteColour)
  OUTPUT deleted.*, $action, inserted.* ;
