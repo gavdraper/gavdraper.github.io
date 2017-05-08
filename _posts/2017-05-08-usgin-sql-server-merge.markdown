@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Using SQL Server Merge Statement
+title: Using The SQL Server Merge Statement
 date: '2017-05-08 06:05:38'
 ---
 The SQL Server merge statement kind of does what it says, given some source data and a table it can UPDATE data that already exists but has changed, INSERT data that is not in the destination and remove data from the destination that is not in the source. Each of these actions is optional and specified in the statement. I've mainly used this for syncing/importing  data across multiple databases.
