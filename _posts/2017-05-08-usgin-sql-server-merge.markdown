@@ -1,11 +1,9 @@
 ---
 layout: post
 title: Using SQL Server Merge Statement
-date: '2017-05-08 09:05:38'
+date: '2017-05-08 06:05:38'
 ---
-The SQL Server merge statement kind of does what it says, given some source data and a destination table it can UPDATE data that already exists but has changed, INSERT data that is not in the destination, remove data from the destination that is not in the source.
-
-I've mainly used this for syncing/importing  data across multiple databases.
+The SQL Server merge statement kind of does what it says, given some source data and a table it can UPDATE data that already exists but has changed, INSERT data that is not in the destination and remove data from the destination that is not in the source. Each of these actions is optional and specified in the statement. I've mainly used this for syncing/importing  data across multiple databases.
 
 Take this table as our Source
 
@@ -29,9 +27,9 @@ The target table has an extra field (Age) which we will set to null when inserti
 | 2 | Gavin | UK | Red | NULL |
 | 3 | Joe | France | Pink | NULL |
 
-So Jane's record got updated with her favorite colour from the source table, and Gavin/Joe got inserted as they didnt already exist on the target table.
+So Jane's record got updated with her favorite colour from the source table, and Gavin/Joe got inserted as they didn't already exist on the target table.
 
-A merge needs to match on a specific column or set or columns in this case we'll use username, so if the username doesn't exist in the target we'll insert it and if it does we'll update it.
+A merge needs to match on a specific column or set or columns(The ON Clause) in this case we'll use username, so if the username doesn't exist in the target we'll insert it and if it does we'll update it. Just to add an extra bit of complexity to the example we're only going to update the record in the target if the favorite colour is different. 
 
 Lets pretend the two tables above are called UserSource and UserTarget we can write the merge like this...
 
@@ -49,8 +47,22 @@ WHEN NOT MATCHED BY TARGET THEN
 
 We could have also done things the other way around and used NOT MATCHED BY TARGET to update or delete records in the source. 
 
-The Merge statement also has an OUTPUT clause that we can use to get a summary of what the merge has done. For example given the above example we can 
+So the key components of the merge statement are
 
+1. The Target
+
+    ``` UserTarget AS Target ```
+2. The Source
+    
+    ``` USING (SELECT * FROM UserSource) AS Source ```
+3. The ON clause to perform the match
+
+    ``` ON Source.Username = Target.Username ```
+4. The WHERE statements to defined what happens when data does or does not exist. Remember you can have multiple of these and can add extra clauses to take different paths. In our example we only update if their favorite colour has changed
+    
+    ``` WHEN MATCHED AND Source.FavoriteColour <> Target.FavoriteColour THEN```
+
+The Merge statement also has an OUTPUT clause that we can use to get a summary of what the merge has done. For example given the above example we can select out what actions were taken...
 
 {% highlight sql %}
 MERGE
@@ -75,3 +87,36 @@ From that we get this...
 
 This shows us on the left how the row in the target table used to look and on the right how it looks after the merge.
 
+If you wanted to play with the above examples then the following script will setup the tables and data...
+
+{% highlight sql %}
+DROP TABLE UserSource
+DROP TABLE UserTarget
+
+CREATE TABLE UserSource
+(
+    Id INT IDENTITY PRIMARY KEY,
+    Username NVARCHAR(20),
+    [Location] NVARCHAR(20),
+    FavoriteColour NVARCHAR(20)
+)
+
+CREATE TABLE UserTarget
+(
+    Id INT IDENTITY PRIMARY KEY,
+    Username NVARCHAR(20),
+    [Location] NVARCHAR(20),
+    FavoriteColour NVARCHAR(20),
+    Age INT
+)
+
+INSERT INTO UserSource(Username,Location,FavoriteColour)
+VALUES
+    ('Gavin','UK','Red'),
+    ('Jane','USA','Purple'),
+    ('Joe','France','Pink')
+
+INSERT INTO dbo.UserTarget( Username, Location, FavoriteColour, Age)
+VALUES
+    ('Jane','USA','Pink',32)
+{% endhighlight %}
