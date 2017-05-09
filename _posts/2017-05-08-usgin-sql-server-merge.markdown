@@ -3,6 +3,9 @@ layout: post
 title: Using The SQL Server Merge Statement
 date: '2017-05-08 06:05:38'
 ---
+
+> Note : Since publishing this I've been notified that there are a number of outstanding issues with the SQL Server merge statement. I currently work with a system the heavily relies on the Merge statement and we've not knowingly hit any of these issues but it is worth knowing about them. The list can be found here [https://www.mssqltips.com/sqlservertip/3074/use-caution-with-sql-servers-merge-statement/](https://www.mssqltips.com/sqlservertip/3074/use-caution-with-sql-servers-merge-statement/) , it's unclear however if any of these issues are resolved in SQL 2016 as most of them have either been closed or commented from Microsoft saying they will be fixed in the next major version which would have been SQL 2016.
+
 The SQL Server merge statement kind of does what it says, given some source data and a table it can UPDATE data that already exists but has changed, INSERT data that is not in the destination and remove data from the destination that is not in the source. Each of these actions is optional and specified in the statement. I've mainly used this for syncing/importing  data across multiple databases.
 
 Take this table as our Source
