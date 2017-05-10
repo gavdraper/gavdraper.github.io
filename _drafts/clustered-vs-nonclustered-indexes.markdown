@@ -57,5 +57,21 @@ If we had of added those fields to the index without making them include fields 
 
 ### Clustered Indexes ###
 
-A clustered index doesn't actually store an index separate to the data instead it defines the order to store the actual data in. The pros of this are once you find your data in the index you are at the data and don't need to do a pointer lookup from the index to the row. The downside is that you can only have one clustered index per table as the tables data is only stored one.
+A clustered index doesn't actually store an index separate to the data instead it defines the order to store the actual data in. The pros of this are once you find your data in the index you are at the data and don't need to do a pointer lookup from the index to the row. The downside is that you can only have one clustered index per table as the tables data is only stored one. So if we take the following table..
+
+| Id | Username | Forename | Location |
+| 1 | GavinDraper | Gavin | Brighton |
+| 2 | AmyPlumb | Amy | Worthing |
+| 3 | Jake200 | Jake | London |
+
+Then add a  clustered index username then the index/table will look like this...
+
+| Id | Username | Forename | Location |
+| 2 | AmyPlumb | Amy | Worthing |
+| 1 | GavinDraper | Gavin | Brighton |
+| 3 | Jake200 | Jake | London |
+
+This means any new records inserted into the table need to be stored in order of the index. It's for this reason that it is usually best practise to use a clustered key that is generated in order ie an INT IDENTITY or a UNQIUEIDENTIFIER generated using NEWID to stop updates and inserts being heavily affected. 
+
+
 
