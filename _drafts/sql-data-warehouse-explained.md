@@ -58,11 +58,11 @@ For example a fact table could be
 | Date | DATETIME |
 
 ### Dimension Table ###
-This is a table you will be joining to you fact table to give the data in the fact table meaning/catagorization.
+This is a table you will be joining to you fact table to give the data in the fact table meaning/categorization.
 
-Given the above example of a fact table Customer and Product table would be the dimensions, as they would allow us to report on the quentity of sales and aggregate on things like customer location, product type etc...
+Given the above example of a fact table Customer and Product table would be the dimensions, as they would allow us to report on the quantity of sales and aggregate on things like customer location, product type etc...
 
-Imagine the customer table in our warehous looked like this
+Imagine the customer table in our warehouse looked like this
 
 | Customers | | 
 | --- | --- |
@@ -84,19 +84,19 @@ GROUP BY
 {% endhighlight %}
 
 ### Star Schema ###
-A star schema is the result of dimension tables that are not normalised. If you visualize this in the centre you have your fact table then you have the dimension tables coming off around it.
+A star schema is the result of dimension tables that are not normalized. If you visualize this in the centre you have your fact table then you have the dimension tables coming off around it.
 
 ### Snowflake Schema ###
 A snowflake schema is when you have some normalization in your dimension tables, if you picture this model in the centre you have your fact table, round that you have your dimension tables and coming out of them you may have more dimension tables which can look a bit like a snowflake.
 
 ### Which Schema To Choose? ###
-There are reasons for and against on Snowflake vs Star and ultimatey it's about choosing the right trade offs for your environment.
+There are reasons for and against on Snowflake vs Star and ultimately it's about choosing the right trade offs for your environment.
 
-The star schema makes querires a lot simpler as there is less joins but at the cost of a lot of deplicated denormalized data. This can also make it harder to maintain integrity as the data is duplicated and far less constrained.
+The star schema makes queries a lot simpler as there is less joins but at the cost of a lot of duplicated denormalized data. This can also make it harder to maintain integrity as the data is duplicated and far less constrained.
 
 The snowflake schema makes sense if you have a lot of dimension data, normally the fact data will be the bigger part of your warehouse but if in your scenario there is a lot of dimension data then it may make sense to keep it normalized. 
 
 ### Transforming and Syncing Data To The Warehouse ###
 This is ultimately the hardest problem to solve with warehousing. Ultimated it comes down  to how much of a delay is acceptable. This process is often refered to as ETL (Extract, Transform and Load). SQL Server comes with an ETL tool called SSIS (SQL Server Integration Services) which can setup workflows for this process. 
 
-For example you could create an SSIS package that performs the ETL process every night and 9pm, or you could hae it run hourly. For examples when you need near to real time reporting then you need to start looking at triggering this process as data changes come in to your applicaion database.
+For example you could create an SSIS package that performs the ETL process every night and 9pm, or you could hae it run hourly. For examples when you need near to real time reporting then you need to start looking at triggering this process as data changes come in to your application database.
