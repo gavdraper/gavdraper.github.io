@@ -5,7 +5,7 @@ date: '2017-05-09 06:05:38'
 ---
 
 ### Why Warehouse ###
-Data warehousing is the act of transforming application database into a format more suited for reporting, this typically involves flattening the data.
+Data warehousing is the act of transforming application database into a format more suited for reporting and offloading it to a separate store so your day to day transactions are not affected. This process typically involves flattening the data.
 
 Let's imagine we have an online store
 
@@ -86,8 +86,16 @@ GROUP BY
 ### Star Schema ###
 A star schema is the result of dimension tables that are not normalized. If you visualize this in the centre you have your fact table then you have the dimension tables coming off around it.
 
+![StarSchemaDiagram]({{site.url}}/content/images/StarSchema.png)
+
+The above image is a basic star schema, you have a fact table in the middle with flat dimension tables around it.
+
 ### Snowflake Schema ###
 A snowflake schema is when you have some normalization in your dimension tables, if you picture this model in the centre you have your fact table, round that you have your dimension tables and coming out of them you may have more dimension tables which can look a bit like a snowflake.
+
+![StarSchemaDiagram]({{site.url}}/content/images/SnowflakeSchema.png)
+
+This an an example of a snowflake schema you can see a fact table in the middle surrounded by dimension tables, some of which link to other dimension tables.
 
 ### Which Schema To Choose? ###
 There are reasons for and against on Snowflake vs Star and ultimately it's about choosing the right trade offs for your environment.
