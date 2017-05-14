@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Data Warehousing Explained
+title: Data Warehousing Explained
 date: '2017-05-09 06:05:38'
 ---
 
@@ -88,14 +88,14 @@ A star schema is the result of dimension tables that are not normalized. If you 
 
 ![StarSchemaDiagram]({{site.url}}/content/images/StarSchema.png)
 
-The above image is a basic star schema, you have a fact table in the middle with flat dimension tables around it.
+The above diagram shows  a basic star schema, you have a fact table in the middle with flat dimension tables around it.
 
 ### Snowflake Schema ###
 A snowflake schema is when you have some normalization in your dimension tables, if you picture this model in the centre you have your fact table, round that you have your dimension tables and coming out of them you may have more dimension tables which can look a bit like a snowflake.
 
 ![StarSchemaDiagram]({{site.url}}/content/images/SnowflakeSchema.png)
 
-This an an example of a snowflake schema you can see a fact table in the middle surrounded by dimension tables, some of which link to other dimension tables.
+In the above diagram yu can see a basic snowflake schema, a fact table in the middle surrounded by dimension tables, some of which link to other dimension tables.
 
 ### Which Schema To Choose? ###
 There are reasons for and against on Snowflake vs Star and ultimately it's about choosing the right trade offs for your environment.
