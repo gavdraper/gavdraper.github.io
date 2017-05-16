@@ -41,10 +41,12 @@ If we wrote a query that was looking for a username of GavinDraper SQL Server wo
 1. Takes up more space as the index data is stored twice, once in the index and once in the actual table.
 1. Have a performance overhead as from the leaf node you need to do a lookup back to the actual table to get any data that is not in the index.
 
-### NonClustered Includes ###
-So one of the cons of a NonClustered index is you have to do a lookup back to the data once you've found your item in the index (Assuming the index doesn't contain all the data required by your query). With SQL Server you can add Include Fields to your NonClustered indexes this is extra fields you can store in your index but it wont be sorted, this allows you to make your index cover more queries without having to do lookups for data that doesn't need to be sorted.
+#### Key Lookups ####
+One of the cons of a NonClustered index is you have to do a lookup back to the data once you've found your item in the leaf node of the index (Assuming the index doesn't contain all the data required by your query). 
 
-Lets say we have the following table with sample data
+Lets take a look at what this mean and how it can affect performance...
+
+If you want to follow along this query will setup a table with some seed data.
 
 {% highlight sql %}
 DROP TABLE [User]
@@ -94,9 +96,9 @@ SELECT Firstname FROM [User] WHERE [Username] = 'lukecage'
 
 If we look at the query plan for this we can see it's scanning all the rows in the table to look for one with a username of lukecage.
 
-![Table Scan Query Plan]({{site.url}}/content/images/2017-2017-indexes-explained/tablescan.jpg)
+![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/tablescan.jpg)
 
-For our small table this is fine but imagine a larger table with thousends of records, in this case it's not optimal to have to look at every record to check if the username matches our search. 
+For our small table this is fine but imagine a larger table with millions of records where we are interested in more than a single one, in that case it's not optimal to have to look at every record to check if the username matches your predicate. 
 
 To solve this lets  create a Non Clustered index on Username so we can search on it without having to look at every record.
 
@@ -106,13 +108,13 @@ CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName)
 
 If we now look at the query plan we can see it's using our new index and once it's found the record it's doing a key lookup back to the heap to get the firstname.
 
-![Table Scan Query Plan]({{site.url}}/content/images/2017-2017-indexes-explained/nonclusteredkeylookup.jpg)
+![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/nonclusteredkeylookup.jpg)
 
-In this case the key lookup is very quick as we're only selecting one row. If however we were however selecting a lot of rows the key lookup can start to become slow as it's having to constantly jump from the index to the heap. 
+In this case the key lookup is very quick as we're only selecting one row. If however we were selecting a lot of rows the key lookup can start to become slow as it's having to constantly jump from the index to the heap. 
 
 Let's imagine we have a slow query, we've checked the execution plan and profiler it and it looks like the key lookup is what's causing the bad performance. What are our options? 
 
-1. We could add the field to the end of our index 
+* We could add the field to the end of our index 
 
 {% highlight sql %}
 CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName, Firstname)
@@ -120,17 +122,19 @@ CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName, Firstname)
 
 If we do this then we can see from our plan the key lookup has gone
 
-![Table Scan Query Plan]({{site.url}}/content/images/2017-2017-indexes-explained/nonclusterednokeylookup.jpg)
+![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/nonclusterednokeylookup.jpg)
 
 The problem with this approach is we're not actually wanting to search on firstname and we've added the overhead when maintaining the index that it has to be stored in Username, Firstname order. This is going to slow down inserts and updates on the firstname field when it doesn't really need to.
 
-2. We could use an include field. This is a field that gets stored in the leaf node of the index and doesn't affect the order of the index, perfect when it's not a field we're filtering or sorting on.
+*  We could use an include field. This is a field that gets stored in the leaf node of the index and doesn't affect the order of the index, perfect when it's not a field we're filtering or sorting on.
 
 {% highlight sql %}
 CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName) INCLUDE (firstname)
 {% endhighlight %}
 
 You'll notice the query plan is now the same as above but with the benefit of not having the overhead of maintaining firstname sorting in the index.
+
+Both these techniques are creating what's called a covering index and that is an index that contains all the information required by your query without the need togo back to the actual table/heap.
 
 ### Clustered Indexes ###
 
@@ -157,5 +161,9 @@ This means any new records inserted into the table need to be stored in order of
 ### Cons ###
 * You're limited to one per table
 * Non sequential clustered indexes an cause a lot of fragmentation when inserting and updating data.
+
+Using the examples from above let's drop the Non Clustered index and create a Clustered index on Username
+
+
 
 
