@@ -44,25 +44,93 @@ If we wrote a query that was looking for a username of GavinDraper SQL Server wo
 ### NonClustered Includes ###
 So one of the cons of a NonClustered index is you have to do a lookup back to the data once you've found your item in the index (Assuming the index doesn't contain all the data required by your query). With SQL Server you can add Include Fields to your NonClustered indexes this is extra fields you can store in your index but it wont be sorted, this allows you to make your index cover more queries without having to do lookups for data that doesn't need to be sorted.
 
-Lets say we have the following query...
+Lets say we have the following table with sample data
 
 {% highlight sql %}
-SELECT Id,Username, PlaceOfBirth FROM [dbo].[user] WHERE [Username] = 'Gavin'
+DROP TABLE [User]
+CREATE TABLE [User]
+(
+	Id INT IDENTITY PRIMARY KEY NONCLUSTERED,
+	Username NVARCHAR(100),
+	Firstname NVARCHAR(100),
+	LastName NVARCHAR(100),
+	PlaceOfBirth NVARCHAR(100)
+)
+
+INSERT INTO [dbo].[User]
+    ( 	
+	Username,
+	FirstName,
+	LastName
+	)
+VALUES
+	('clairetemple','Claire','Temple'),
+	('lukecage','Luke','Cage'),
+	('jessiejones','Jessie','Jones'),
+	('tonystark','Tony','Stark'),
+	('mattmurdock','Matt','Murdock')
+
+DECLARE @LoopCount INT = 1
+WHILE @LoopCount < 18
+	BEGIN
+	INSERT INTO [dbo].[User](Username,FirstName,LastName)
+	SELECT 
+		CAST(@LoopCount AS NVARCHAR(4)) + Username,
+		CAST(@LoopCount AS NVARCHAR(4)) + FirstName,
+		CAST(@LoopCount AS NVARCHAR(4)) + LastName 
+	FROM [dbo].[User]
+	SET @LoopCount = @LoopCount +1
+	END
+
 {% endhighlight %}
 
-We can create a NonClustered index on Username as we want to be able to quickly search on that field
+This will create us a User table with 655,000 records in it.
+
+Given a username we want to get their first name
 
 {% highlight sql %}
-CREATE NONCLUSTERED INDEX ON [dbo].[user](UserName)
+SELECT Firstname FROM [User] WHERE [Username] = 'lukecage'
 {% endhighlight %}
 
-Lets pretend the user table is a really really big table and this query is run a LOT we can stop the new index having to do lookups back to the row by INCLUDING id and PlaceOfBirth in the index, this then makes it a covering index for our query and the lookup will be gone.
+If we look at the query plan for this we can see it's scanning all the rows in the table to look for one with a username of lukecage.
+
+![Table Scan Query Plan]({{site.url}}/content/images/2017-2017-indexes-explained/tablescan.jpg)
+
+For our small table this is fine but imagine a larger table with thousends of records, in this case it's not optimal to have to look at every record to check if the username matches our search. 
+
+To solve this lets  create a Non Clustered index on Username so we can search on it without having to look at every record.
 
 {% highlight sql %}
-CREATE NONCLUSTERD INDEX ON [dbo].[User](Username) INCLUDE(id,PlaceOfBirth)
+CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName)
 {% endhighlight %}
 
-If we had of added those fields to the index without making them include fields then the index would have been sorted by all 3 fields (2 of which we don't need to search on) which would have slowed down index updates.
+If we now look at the query plan we can see it's using our new index and once it's found the record it's doing a key lookup back to the heap to get the firstname.
+
+![Table Scan Query Plan]({{site.url}}/content/images/2017-2017-indexes-explained/nonclusteredkeylookup.jpg)
+
+In this case the key lookup is very quick as we're only selecting one row. If however we were however selecting a lot of rows the key lookup can start to become slow as it's having to constantly jump from the index to the heap. 
+
+Let's imagine we have a slow query, we've checked the execution plan and profiler it and it looks like the key lookup is what's causing the bad performance. What are our options? 
+
+1. We could add the field to the end of our index 
+
+{% highlight sql %}
+CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName, Firstname)
+{% endhighlight %}
+
+If we do this then we can see from our plan the key lookup has gone
+
+![Table Scan Query Plan]({{site.url}}/content/images/2017-2017-indexes-explained/nonclusterednokeylookup.jpg)
+
+The problem with this approach is we're not actually wanting to search on firstname and we've added the overhead when maintaining the index that it has to be stored in Username, Firstname order. This is going to slow down inserts and updates on the firstname field when it doesn't really need to.
+
+2. We could use an include field. This is a field that gets stored in the leaf node of the index and doesn't affect the order of the index, perfect when it's not a field we're filtering or sorting on.
+
+{% highlight sql %}
+CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName) INCLUDE (firstname)
+{% endhighlight %}
+
+You'll notice the query plan is now the same as above but with the benefit of not having the overhead of maintaining firstname sorting in the index.
 
 ### Clustered Indexes ###
 
