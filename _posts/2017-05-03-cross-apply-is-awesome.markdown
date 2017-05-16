@@ -12,7 +12,7 @@ Obviously in this case our system could query the AdSettings table to get the Ad
 
 | AdSettings | |  Ads | | UserAds | |
 | --- | --- | ---| ---| ---| --- |
-| **Id** | INT | **Id** | INT | **Id** | INT | | 
+| **Id** | INT | **Id** | INT | **Id** | INT | 
 | **Username** | NVARCHAR | **Name** | NVARCHAR | **UserName** | NVARCHAR |
 | **AdCount** | SMALLINT | **ImagePath** | NVARCHAR | **AdId** | INT |
 
