@@ -1,9 +1,9 @@
 ---
 layout: post
-title: SQL Server Clustered & Non Clustered Indexes Explained
+title: SQL Server Clustered & NonClustered Indexes Explained
 date: '2017-05-16 07:03:38'
 ---
-When using row level indexes there are two types Clustered and Non Clustered both of which are there to make data easy to find and sort. Before we look at these index types lets go over a couple of things
+When using row level indexes there are two types Clustered and NonClustered both of which are there to make data easy to find and sort. Before we look at these index types lets go over a couple of things
 
 * Both these indexes are stored as [B-Trees](https://en.wikipedia.org/wiki/B-tree)
 * Root node is the entry point to the index and each index contains exactly one.
@@ -11,10 +11,10 @@ When using row level indexes there are two types Clustered and Non Clustered bot
 * Heap is a table without a clustered index
 
 ## NonClustered Indexes ##
-Non clustered indexes work much like an index in a book, The index is stored separate to the actual rows  and contains a pointer back to the data (Just like a page number). The leaf node in a non clustered index contains the fields in the index, any included fields in the index and the key for either the clustered index on the table if there is no clustered index a RowId key to the heap.
+Nonclustered indexes work much like an index in a book, The index is stored separate to the actual rows  and contains a pointer back to the data (Just like a page number). The leaf node in a nonclustered index contains the fields in the index, any included fields in the index and the key for either the clustered index on the table if there is no clustered index a RowId key to the heap.
 
 #### Key Lookups ####
-One of the cons of a non clustered index is if your query is looking at fields that are not in the index you have to do a lookup back to the data once you've found your item in the leaf node of the index.
+One of the cons of a nonclustered index is if your query is looking at fields that are not in the index you have to do a lookup back to the data once you've found your item in the leaf node of the index.
 
 Lets take a look at what this means and how it can affect performance...
 
@@ -71,7 +71,7 @@ If we look at the query plan for this we can see it's scanning all the rows in t
 
 For our small table this is fine but imagine a larger table with millions of records where we are interested in more than a single one, in that case it's not optimal to have to look at every record to check if the username matches your predicate. 
 
-To solve this lets  create a non clustered index on Username so we can search on it without having to look at every record.
+To solve this lets  create a nonclustered index on Username so we can search on it without having to look at every record.
 
 {% highlight sql %}
 CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName)
@@ -108,8 +108,8 @@ You'll notice the query plan is now the same as above but with the benefit of no
 Both these techniques are creating what's called a covering index and that is an index that contains all the information required by your query without the need to go back to the actual table/heap.
 
 ### Pros ###
-1. You can have an unlimited amount of non clustered indexes on any give table.
-2. Inserting and Updating data in non clustered indexes is generally faster than a clustered index as there is less data in the index which can result in less fragmentation on complex indexes.
+1. You can have an unlimited amount of nonclustered indexes on any give table.
+2. Inserting and Updating data in nonclustered indexes is generally faster than a clustered index as there is less data in the index which can result in less fragmentation on complex indexes.
 
 ### Cons ###
 1. Takes up more space as the index data is stored twice, once in the index and once in the actual table.
@@ -125,7 +125,7 @@ As you can have only one clustered index and it's often the fastest way to get d
 
 It's worth noting that by default SQL Server will create a clustered index automatically on your primary key unless you explicitly tell it not to.
 
-Using the examples from above let's drop the non clustered index and create a clustered index on Username
+Using the examples from above let's drop the nonclustered index and create a clustered index on Username
 
 {% highlight sql %}
 DROP INDEX ndx_user_username ON [dbo].[user]
@@ -140,7 +140,7 @@ This is because the data is now all stored in username order so we've seeked str
 
 ### Pros ###
 * There is no lookup from the leaf of the index back to the table data as the data is stored there.
-* Takes less disk space than a non clustered index as you're not storing the index data twice.
+* Takes less disk space than a nonclustered index as you're not storing the index data twice.
 
 ### Cons ###
 * You're limited to one per table.
