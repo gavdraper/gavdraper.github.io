@@ -3,10 +3,17 @@ layout: post
 title: SQL ServerClustered vs NonClustered Indexes
 date: '2017-05-09 06:05:38'
 ---
-When using row level indexes there are two types Clustered and Non Clustered both of which are there to make data easy to find and sort. To understand the difference we need to look at how each of these work...
+When using row level indexes there are two types Clustered and Non Clustered both of which are there to make data easy to find and sort. Before we look at these index types lets go over a couple of things
+
+* Both these indexes are stored as [B-Trees](https://en.wikipedia.org/wiki/B-tree)
+* Root node is the entry point to the index and each index contains exactly one.
+* Leaf Nodes are the destination of the index, exactly what is stored here depends on if it's a clustered or non clustered index. To get to a leaf node SQL Server starts at the root node and uses the B-Tree structure to find the relevant Lead Nodes.
+* Heap is a table without a clustered index
+
+ To understand the difference we need to look at how each of these work...
 
 ## NonClustered Indexes ##
-Non clustered indexes work much like an index in a book, The index is stored separate to the actual rows  and contains a pointer back to the data (Just like a page number)
+Non clustered indexes work much like an index in a book, The index is stored separate to the actual rows  and contains a pointer back to the data (Just like a page number). The leaf node in a non clustered index contains the fields in the index, any included fields in the index and a the key for either the clustered index on the table if one exists or a RowId key if the table is a heap.
 
 For example 
 
@@ -16,7 +23,7 @@ CREATE NONCLUSTERED INDEX ndxUsersUsername ON Users(Username)
 
 Will create an index like this
 
-| IndexFields | Pointer |
+| IndexFields | RowID |
 | --- | --- |
 | AliceJones | 3114 |
 | CaseyFlow | 56 |
@@ -28,6 +35,7 @@ If we wrote a query that was looking for a username of GavinDraper SQL Server wo
 
 ### Pros ###
 1. You can have an unlimited amount of Non Clustered indexes on any give table.
+2. Inserting and Updating data in non clustered indexes is generally faster.
 
 ### Cons ###
 1. Creating too many NonClustered indexes can depending on your system impact write performance on the indexed tables as the index is maintained in realtime.
