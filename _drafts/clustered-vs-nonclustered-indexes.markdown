@@ -33,14 +33,6 @@ Will create an index like this
 
 If we wrote a query that was looking for a username of GavinDraper SQL Server would potentially use the Username index above to find quick find GavinDraper, if your query selected fields that are not in the index it would then using the pointer in the index go to the actual row and return you the requested data.
 
-### Pros ###
-1. You can have an unlimited amount of Non Clustered indexes on any give table.
-2. Inserting and Updating data in non clustered indexes is generally faster.
-
-### Cons ###
-1. Takes up more space as the index data is stored twice, once in the index and once in the actual table.
-1. Have a performance overhead as from the leaf node you need to do a lookup back to the actual table to get any data that is not in the index.
-
 #### Key Lookups ####
 One of the cons of a NonClustered index is you have to do a lookup back to the data once you've found your item in the leaf node of the index (Assuming the index doesn't contain all the data required by your query). 
 
@@ -136,23 +128,34 @@ You'll notice the query plan is now the same as above but with the benefit of no
 
 Both these techniques are creating what's called a covering index and that is an index that contains all the information required by your query without the need togo back to the actual table/heap.
 
+### Pros ###
+1. You can have an unlimited amount of Non Clustered indexes on any give table.
+2. Inserting and Updating data in non clustered indexes is generally faster.
+
+### Cons ###
+1. Takes up more space as the index data is stored twice, once in the index and once in the actual table.
+1. Have a performance overhead as from the leaf node you need to do a lookup back to the actual table to get any data that is not in the index.
+
 ### Clustered Indexes ###
 
-A clustered index doesn't actually store an index separate to the data instead it defines the order to store the actual data in. The pros of this are once you find your data in the index you are at the data and don't need to do a pointer lookup from the index to the row. The downside is that you can only have one clustered index per table as the tables data is only stored one. So if we take the following table..
+A clustered index doesn't actually store an index separate to the data instead it defines the order to store the actual data in. The pros of this are once you find your data in the index you are at the data and don't need to do a pointer lookup from the index to the row. The downside is that you can only have one clustered index per table as the tables data is only stored one. 
 
-| Id | Username | Forename | Location |
-| 1 | GavinDraper | Gavin | Brighton |
-| 2 | AmyPlumb | Amy | Worthing |
-| 3 | Jake200 | Jake | London |
+This means any new records inserted into the table need to be stored in order of the index, this can cause a lot of fragmentation for non sequential indexes. If the priority is for high speed inserts it may be better to use a sequential clustered index so data can be quickly appended this is where things like IDENTITY fields can be great.
 
-Then add a  clustered index username then the index/table will look like this...
+As you can have only one clustered index and it's often the fastest way to get data you should think carefull about how to use it best.
 
-| Id | Username | Forename | Location |
-| 2 | AmyPlumb | Amy | Worthing |
-| 1 | GavinDraper | Gavin | Brighton |
-| 3 | Jake200 | Jake | London |
+Using the examples from above let's drop the Non Clustered index and create a Clustered index on Username
 
-This means any new records inserted into the table need to be stored in order of the index, this can cause a lot of fragmentation for non sequential indexes. If the priority is for high speed inserts it may be better to use a sequential clustered index so data can be quickly appended.
+{% highlight sql}
+DROP INDEX ndx_user_username ON [dbo].[user]
+CREATE CLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName) 
+{% endhighlight %}
+
+If we run this with our username query we'll see that there is no key lookup
+
+![Clustered Seek Query Plan]({{site.url}}/content/images/2017-indexes-explained/clusteredseek.jpg)
+
+This is because the data is now all stored in username order so we've seeked straight to that leaf node and because it's a clustered index the leaf node will contain the actual data pages of the row rather than a pointer to them.
 
 ### Pros ###
 * There is no key lookup from the leaf of the index back to the table data as the data is stored there.
@@ -161,9 +164,6 @@ This means any new records inserted into the table need to be stored in order of
 ### Cons ###
 * You're limited to one per table
 * Non sequential clustered indexes an cause a lot of fragmentation when inserting and updating data.
-
-Using the examples from above let's drop the Non Clustered index and create a Clustered index on Username
-
 
 
 
