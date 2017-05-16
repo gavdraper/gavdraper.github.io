@@ -91,3 +91,33 @@ border-right: none;
 .post-title{
   margin-top:17px;
 }
+
+.PageNavigation {
+  font-size: 14px;
+  display: block;
+  width: auto;
+  overflow: hidden;
+}
+
+.PageNavigation a {
+  display: block;
+  width: 50%;
+  float: left;
+  margin: 1em 0;
+}
+
+.PageNavigation .next {
+  text-align: right;
+}
+
+.share-page {
+    padding: 0px 15px;
+
+    a {
+        font-weight: 700;
+        margin-left: 10px;
+        &:hover {
+            border-bottom: 1px dashed #fff;
+        }
+    }
+}
