@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Clustered &  Non Clustered Indexes Explained
-date: '2017-05-09 06:05:38'
+date: '2017-05-16 07:03:38'
 ---
 When using row level indexes there are two types Clustered and Non Clustered both of which are there to make data easy to find and sort. Before we look at these index types lets go over a couple of things
 
@@ -117,11 +117,13 @@ Both these techniques are creating what's called a covering index and that is an
 
 ### Clustered Indexes ###
 
-A clustered index doesn't actually store an index separate to the data instead it defines the order to store the actual data in. The pros of this are once you find your data in the index you are at the data and don't need to do a pointer lookup from the index to the row. The downside is that you can only have one clustered index per table as the tables data is only stored one. 
+A clustered index doesn't actually store an index separate to the data instead it defines the order to store the actual data in. This can be a big benefit as the data is stored in the leaf node so you don't have to do a lookup from the index to the data. The downside is that you can only have one clustered index per table as the tables data is only stored once. 
 
 This means any new records inserted into the table need to be stored in order of the index, this can cause a lot of fragmentation for non sequential indexes. If the priority is for high speed inserts it may be better to use a sequential clustered index so data can be quickly appended this is where things like IDENTITY fields can be great.
 
 As you can have only one clustered index and it's often the fastest way to get data you should think careful about how to use it best.
+
+It's worth noting that by default SQL Server will create a clustered index automatically on your primary key unless you explicitly tell it not to.
 
 Using the examples from above let's drop the non clustered index and create a clustered index on Username
 
@@ -134,14 +136,14 @@ If we run this with our username query we'll see that there is no key lookup
 
 ![Clustered Seek Query Plan]({{site.url}}/content/images/2017-indexes-explained/clusteredseek.jpg)
 
-This is because the data is now all stored in username order so we've seeked straight to that leaf node and because it's a clustered index the leaf node will contain the actual data pages of the row rather than a pointer to them.
+This is because the data is now all stored in username order so we've seeked straight to that leaf node and as it's a clustered index the leaf node will contain the actual data pages of the row rather than a pointer to them.
 
 ### Pros ###
-* There is no key lookup from the leaf of the index back to the table data as the data is stored there.
+* There is no lookup from the leaf of the index back to the table data as the data is stored there.
 * Takes less disk space than a non clustered index as you're not storing the index data twice.
 
 ### Cons ###
-* You're limited to one per table
+* You're limited to one per table.
 * Non sequential clustered indexes an cause a lot of fragmentation when inserting and updating data.
 
 
