@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Clustered &  Non Clustered Indexes Explained
+title: SQL Server Clustered & Non Clustered Indexes Explained
 date: '2017-05-16 07:03:38'
 ---
 When using row level indexes there are two types Clustered and Non Clustered both of which are there to make data easy to find and sort. Before we look at these index types lets go over a couple of things
