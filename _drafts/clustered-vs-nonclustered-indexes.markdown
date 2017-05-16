@@ -38,7 +38,8 @@ If we wrote a query that was looking for a username of GavinDraper SQL Server wo
 2. Inserting and Updating data in non clustered indexes is generally faster.
 
 ### Cons ###
-1. Creating too many NonClustered indexes can depending on your system impact write performance on the indexed tables as the index is maintained in realtime.
+1. Takes up more space as the index data is stored twice, once in the index and once in the actual table.
+1. Have a performance overhead as from the leaf node you need to do a lookup back to the actual table to get any data that is not in the index.
 
 ### NonClustered Includes ###
 So one of the cons of a NonClustered index is you have to do a lookup back to the data once you've found your item in the index (Assuming the index doesn't contain all the data required by your query). With SQL Server you can add Include Fields to your NonClustered indexes this is extra fields you can store in your index but it wont be sorted, this allows you to make your index cover more queries without having to do lookups for data that doesn't need to be sorted.
@@ -79,7 +80,14 @@ Then add a  clustered index username then the index/table will look like this...
 | 1 | GavinDraper | Gavin | Brighton |
 | 3 | Jake200 | Jake | London |
 
-This means any new records inserted into the table need to be stored in order of the index. It's for this reason that it is usually best practise to use a clustered key that is generated in order ie an INT IDENTITY or a UNQIUEIDENTIFIER generated using NEWID to stop updates and inserts being heavily affected. 
+This means any new records inserted into the table need to be stored in order of the index, this can cause a lot of fragmentation for non sequential indexes. If the priority is for high speed inserts it may be better to use a sequential clustered index so data can be quickly appended.
 
+### Pros ###
+* There is no key lookup from the leaf of the index back to the table data as the data is stored there.
+* Takes less disk space than a non clustered index as you're not storing the index data twice.
+
+### Cons ###
+* You're limited to one per table
+* Non sequential clustered indexes an cause a lot of fragmentation when inserting and updating data.
 
 
