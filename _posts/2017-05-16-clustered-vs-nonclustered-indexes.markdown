@@ -67,7 +67,7 @@ SELECT Firstname FROM [User] WHERE [Username] = 'lukecage'
 
 If we look at the query plan for this we can see it's scanning all the rows in the table to look for one with a username of lukecage.
 
-![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/tablescan.jpg)
+![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/tablescan.JPG)
 
 For our small table this is fine but imagine a larger table with millions of records where we are interested in more than a single one, in that case it's not optimal to have to look at every record to check if the username matches your predicate. 
 
@@ -79,7 +79,7 @@ CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName)
 
 If we now look at the query plan we can see it's using our new index and once it's found the record it's doing a key lookup back to the heap to get the firstname.
 
-![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/nonclusteredkeylookup.jpg)
+![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/nonclusteredkeylookup.JPG)
 
 In this case the key lookup is very quick as we're only selecting one row. If however we were selecting a lot of rows the key lookup can start to become slow as it's having to constantly jump from the index to the heap. 
 
@@ -93,7 +93,7 @@ CREATE NONCLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName, Firstname)
 
 If we do this then we can see from our plan the key lookup has gone
 
-![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/nonclusterednokeylookup.jpg)
+![Table Scan Query Plan]({{site.url}}/content/images/2017-indexes-explained/nonclusterednokeylookup.JPG)
 
 The problem with this approach is we're not actually wanting to search on firstname and we've added the overhead when maintaining the index in that it now has to be stored in Username, Firstname order. This is going to slow down inserts and updates on the firstname field when it doesn't really need to.
 
@@ -134,7 +134,7 @@ CREATE CLUSTERED INDEX ndx_user_username ON [dbo].[user](UserName)
 
 If we run this with our username query we'll see that there is no key lookup
 
-![Clustered Seek Query Plan]({{site.url}}/content/images/2017-indexes-explained/clusteredseek.jpg)
+![Clustered Seek Query Plan]({{site.url}}/content/images/2017-indexes-explained/clusteredseek.JPG)
 
 This is because the data is now all stored in username order so we've seeked straight to that leaf node and as it's a clustered index the leaf node will contain the actual data pages of the row rather than a pointer to them.
 
