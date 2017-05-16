@@ -112,12 +112,14 @@ border-right: none;
 
 .share-page {
     padding: 0px 15px;
-
+    background-color:$brand-color;
     a {
+        color:#fff;
         font-weight: 700;
         margin-left: 10px;
         &:hover {
-            border-bottom: 1px dashed #fff;
+            color:$background-color;
+            border-bottom: 1px dashed $background-color;
         }
     }
 }
