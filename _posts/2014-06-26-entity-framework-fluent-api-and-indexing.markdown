@@ -8,7 +8,7 @@ With the release of Entity Framework 6.1 the Fluent API can now be used to creat
 
 For all the examples below I'm using the following model
 
-```language-csharp
+{% highlight csharp %}
 public class People
 {
     public int Id { get; set; }
@@ -17,50 +17,50 @@ public class People
     public string PhoneNumber { get; set; }
     public string NationalInsuranceNo { get; set; }
 }
-```
+{% endhighlight %}
 
 ## Samples ##
 
 You can find the Visual Studio project for these samples at [https://github.com/gavdraper/EntityFrameworkFluentApiIndexing](https://github.com/gavdraper/EntityFrameworkFluentApiIndexing "https://github.com/gavdraper/EntityFrameworkFluentApiIndexing")
 
 ### Single column Indexes ###
-```language-csharp
+{% highlight csharp %}
 modelBuilder.Entity<People>()
     .Property(x => x.Firstname)
     .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_people_firstname")));
-```
+{% endhighlight %}
 
 One thing to note here is that if your single column index matches the start of a multi column index the Entity Framework is smart enough not to create it as it's already covered by the multi column one.
 
 ### Multi Column Indexes ###
-```language-csharp
+{% highlight csharp %}
 modelBuilder.Entity<People>()
     .Property(x => x.Firstname)
     .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_people_fullname", 1)));
 modelBuilder.Entity<People>()
     .Property(x => x.Lastname)
     .HasColumnAnnotation("Index", new IndexAnnotation(new IndexAttribute("ix_people_fullname", 2)));
-```
+{% endhighlight %}
  
 
 
 ### Unique Indexes ###
-```language-csharp
+{% highlight csharp %}
 modelBuilder.Entity<People>()
     .Property(x => x.NationalInsuranceNo)
     .HasColumnAnnotation("Index",
         new IndexAnnotation(new IndexAttribute("ix_people_nationalinsurance") {IsUnique = true}));
-```
+{% endhighlight %}
  
 
 
 ### Clustered Indexes
-```language-csharp
+{% highlight csharp %}
 modelBuilder.Entity<People>()
     .Property(x => x.Id)
     .HasColumnAnnotation("Index",
         new IndexAnnotation(new IndexAttribute("ix_people_nationalinsurance") { IsClustered = true}));
-```
+{% endhighlight %}
  
 
 
@@ -73,6 +73,6 @@ As of Entity Framework 6.1.1
 
 Whilst this is a big step forwards it still feels like a work in progress. I would hope to end up with a friendlier and more complete syntax for doing this something like...
 
-```language-csharp
+{% highlight csharp %}
 modelBuilder.Entity<People>().Index("ix_people_firstname").SortByAsc();
-```
+{% endhighlight %}
