@@ -10,11 +10,11 @@ For example let's say we have a set that defines the second set it wants to join
 
 Obviously in this case our system could query the AdSettings table to get the AdCount then perform a seperate query to get the TOP(X) ads but that wouldnt demonstrate the power of CROSS APPLY, so to make this more useful lets say we want to cache all the Users and their specified ads in a table called UserAds. The final Schema looks like this...
 
-| AdSettings | | | |  Ads | | | | UserAds | |
-| --- | --- | ---| ---| ---| --- | --- | --- | 
-| **Id** | INT | | | **Id** | INT | | | **Id** | INT | | 
-| **Username** | NVARCHAR | | | **Name** | NVARCHAR | | |**UserName** | NVARCHAR |
-| **AdCount** | SMALLINT | | | **ImagePath** | NVARCHAR | | | **AdId** | INT |
+| AdSettings | |  Ads | | UserAds | |
+| --- | --- | ---| ---| ---| --- |
+| **Id** | INT | **Id** | INT | **Id** | INT | 
+| **Username** | NVARCHAR | **Name** | NVARCHAR | **UserName** | NVARCHAR |
+| **AdCount** | SMALLINT | **ImagePath** | NVARCHAR | **AdId** | INT |
 
 You can use this script to create the database and seed data if you want to follow along...
 
