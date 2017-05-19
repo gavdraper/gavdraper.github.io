@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Statistics From The Ground Up
-date: '2017-05-29 07:03:38'
+date: '2017-05-19 07:03:38'
 ---
 SQL Server statistis are often thought of as a bit of a black box, this is completely not the case and I want to use this post to detail what they are, how they work and how we can view what they're doing....
 
@@ -202,7 +202,7 @@ Data will normally be a lot more distinct than in our sample but we can see we h
 
 I mentioned above the Statistics are not live and can long periods without being updated. Depending on your SQL version the default settings are set around 20%. So a table with 5000 records will update it's statics when 1000 updates or inserts are made. There are some rules about smaller tables getting updates less frequently but it's not something to really worry about. 
 
-Let's imagine we have a table with 1 Million records, given the rules above that means that 200,000 rows can be changed or added before statistics are updated. In this case SQL uses things like density and the table row count to predict the amound of data a given operation will touch to generate an optimized plan. 
+Let's imagine we have a table with 1 Million records, given the rules above that means that 200,000 rows can be changed or added before statistics are updated. In this case SQL uses things like density and the table row count to predict the amount of data a given operation will touch to generate an optimized plan. 
 
 Let's assume our 1 Million record user table has have 100,000 records changed, how will SQL know how many records a given query operation will access to optimize it's plan?
 
