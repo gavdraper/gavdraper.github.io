@@ -156,7 +156,7 @@ INNER JOIN sys.stats_columns AS sc
 INNER JOIN sys.columns AS c   
     ON sc.object_id = c.object_id AND c.column_id = sc.column_id  
 WHERE s.object_id = OBJECT_ID('dbo.User');  
-{% endhighligh %}
+{% endhighlight %}
 
 ![Index Stats Query Plan]({{site.url}}/content/images/2017-statistics-explained/index-stats.JPG)
 
