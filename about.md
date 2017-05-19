@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Gavin Draper's Blog | About
+title: About
 permalink: /about/
 ---
 
