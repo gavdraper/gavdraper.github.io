@@ -6,7 +6,7 @@ permalink: /about/
 
 Hi!
 
-I'm Gavin Draper, a software developer with over 16 years commercial experience delivering software and 12 of which in the finance sector.  
+I'm Gavin Draper, a software developer with over 16 years commercial experience delivering software, 12 of which in the finance sector.  
 
 I'm passionate about the full software cycle from requirements to delivery. I mainly work in the Microsoft stack but will pick up other tools where it makes sense to for any given product. 
 
