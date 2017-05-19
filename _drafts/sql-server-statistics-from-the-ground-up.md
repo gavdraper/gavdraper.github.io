@@ -96,8 +96,12 @@ If we then repeat our select query the plan will now use our nonclustered index 
 
 ![Index Seek Query Plan]({{site.url}}/content/images/2017-statistics-explained/user-index-seek.JPG)
 
-We can see at this point SQL has decided a table scan is no longer optimal and has switched to using an index seek. SQL Server doesnt directly look at the table data before each query as that would be far to slow, instead it stores statistics on the volume and shape of the data in each table, then when creating a query plan it looks at the statistics to see which approach it thinks will perform best.
+We can see at this point SQL has decided a table scan is no longer optimal and has switched to using an index seek. SQL Server doesnt directly look at the table data before each query as that would be far to slow, instead it stores statistics on the volume and shape of the data in each table, then when creating a query plan it looks at the statistics to see which approach it thinks will perform best. Given the statistics for a given column SQL Server can estimate how many values fall within a given range which can then be used to estimate the row counts for each step of our query plan to find the best path. 
 
 ### When Are Statistcs Created/Updated ###
+Statistics are not updated in realtime and the frequency can be configured on your SQL Server by setting a threshold value of how much data has to change to force a statistic update. There are however a number of techniques SQL Server uses to still estimate row counts for given ranges on out of date statistics which we will discuss below. 
 
 ### Maintaining Statistics ###
+Maintenance Plans
+Configuration Settings
+Spotting Statistic Issues
