@@ -99,7 +99,7 @@ If we then repeat our select query the plan will now use our nonclustered index 
 We can see at this point SQL has decided a table scan is no longer optimal and has switched to using an index seek. SQL Server doesnt directly look at the table data before each query as that would be far to slow, instead it stores statistics on the volume and shape of the data in each table, then when creating a query plan it looks at the statistics to see which approach it thinks will perform best. Given the statistics for a given column SQL Server can estimate how many values fall within a given range which can then be used to estimate the row counts for each step of our query plan to find the best path. 
 
 ### When Are Statistcs Created/Updated ###
-Statistics are not updated in realtime and the frequency can be configured on your SQL Server by setting a threshold value of how much data has to change to force a statistic update. There are however a number of techniques SQL Server uses to still estimate row counts for given ranges on out of date statistics which we will discuss below. 
+Statistics are not updated in realtime, when auto update statistics is enabled then they are updated after a threahold percentage of records is added or updated.. There are however a number of techniques SQL Server uses to still estimate row counts for given ranges on out of date statistics which we will discuss below. 
 
 If you want to follow along then everytime I say recreate the table run this script...
 
@@ -178,7 +178,37 @@ DBCC SHOW_STATISTICS('dbo.User','_WA_Sys_00000003_20C1E124') WITH STAT_HEADER
 
 ![Auto Created Stat Header]({{site.url}}/content/images/2017-statistics-explained/auto-stat-header.JPG)
 
+From this we can see when the statistics were last updated and also how many rows of the full data it samples to generate itself. 
 
+We can view the density by running
+
+{% highlight sql %}
+DBCC SHOW_STATISTICS('dbo.User','_WA_Sys_00000003_20C1E124') WITH DENSITY_VECTOR
+{% endhighlight %}
+
+![Auto Created Stat Density]({{site.url}}/content/images/2017-statistics-explained/density-vector.JPG)
+
+This is quite interesting as we can see an all density of 0.2. In our case we have 5 distinct firenames and 0.2 * 5 = 1 which is how density is calculated, the lower the name the more distinct data you have. We'll come to how this is useful in a little bit.
+
+Lastly we have the Histogram option on SHOW_STATISTICS...
+
+{% highlight sql %}
+DBCC SHOW_STATISTICS('dbo.User','_WA_Sys_00000003_24927208') WITH HISTOGRAM
+{% endhighlight %}
+
+Data will normally be a lot more distinct than in our sample but we can see we have 512 firstnames in each range...
+
+![Auto Created Stat Histogram]({{site.url}}/content/images/2017-statistics-explained/histogram.JPG)
+
+I mentioned above the Statistics are not live and can long periods without being updated. Depending on your SQL version the default settings are set around 20%. So a table with 5000 records will update it's statics when 1000 updates or inserts are made. There are some rules about smaller tables getting updates less frequently but it's not something to really worry about. 
+
+Let's imagine we have a table with 1 Million records, given the rules above that means that 200,000 rows can be changed or added before statistics are updated. In this case SQL uses things like density and the table row count to predict the amound of data a given operation will touch to generate an optimized plan. 
+
+Let's assume our 1 Million record user table has have 100,000 records changed, how will SQL know how many records a given query operation will access to optimize it's plan?
+
+It can do a couple of things 
+
+* It can use the density number 
 
 ### Maintaining Statistics ###
 Maintenance Plans
