@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Statistics From The Ground Up
-date: '2017-05-29 07:03:38'
+date: '2017-05-22 08:20:38'
 ---
 SQL Server statistis are often thought of as a bit of a black box, this is completely not the case and I want to use this post to detail what they are, how they work and how we can view what they're doing....
 
@@ -200,17 +200,13 @@ Data will normally be a lot more distinct than in our sample but we can see we h
 
 ![Auto Created Stat Histogram]({{site.url}}/content/images/2017-statistics-explained/histogram.JPG)
 
-I mentioned above the Statistics are not live and can long periods without being updated. Depending on your SQL version the default settings are set around 20%. So a table with 5000 records will update it's statics when 1000 updates or inserts are made. There are some rules about smaller tables getting updates less frequently but it's not something to really worry about. 
+I mentioned above the Statistics are not live and can long periods without being updated. Depending on your SQL version the default settings are set around 20%. So a table with 5000 records will update it's statics when 1000 updates or inserts are made. More about this can be found here [MSDN Statistics](https://docs.microsoft.com/en-us/sql/relational-databases/statistics/statistics)...
 
-Let's imagine we have a table with 1 Million records, given the rules above that means that 200,000 rows can be changed or added before statistics are updated. In this case SQL uses things like density and the table row count to predict the amound of data a given operation will touch to generate an optimized plan. 
+> * SQL Server (2014 and earlier) uses a threshold based on the percent of rows changed. This is regardless of the number of rows in the table.
+> * SQL Server (starting with 2016 and under the compatibility level 130) uses a threshold that adjusts according to the number of rows in the table. With this change, statistics on large tables will be updated more often.
 
-Let's assume our 1 Million record user table has have 100,000 records changed, how will SQL know how many records a given query operation will access to optimize it's plan?
+Let's imagine we have a table with 1 Million records, given the rules above that means that 200,000 rows can be changed or added before statistics are updated. In this case SQL uses things like it's density measures and histogram steps to predict the amound of data a given operation will touch to generate an optimized plan. This works really well when the new data follows a similar cardinality to the data in the statistcs but can cause really bad query plans if the changed data changes this cardinality pattern.
 
-It can do a couple of things 
+For the most part assuming Auto Update Statistics hasnt been disabled (It really shouldnt have been unless you have a good reason) SQL Server will manage the statistics without you having to do anything. There are cases though where the statistics are out of date and the cardinality in histogram no longer accurately reflects the data you are querying. A tell tell sign when this is happening is that when you look at your actual query plans estimated rows it radically different from actual rows. If you're profiling a slow query and notice the difference in Actual/Estimated then it might be work looking at the statistics to work out why there is a difference and if it could be what's causing the slower performance.
 
-* It can use the density number 
-
-### Maintaining Statistics ###
-Maintenance Plans
-Configuration Settings
-Spotting Statistic Issues
+I mnetioned above statistics are normally managed and updated with no manaul input needed, however it's common that maintenance plans run over night in periods of low to no use, you could add a step here to rebuild any out of data statistics. On the subject of maintenance plans Ola Hallengren has created a great one that I've used many times before, it will rebuild/reorganize indexes and update statistcs and allow you to specify the methods it does this and the threaholds things need to be fragmented/out dated by.
