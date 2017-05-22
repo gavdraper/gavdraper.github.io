@@ -311,6 +311,7 @@ We can see in this case our estimated row count is quite different to our actual
 We can see where this estimate came from by taking the range in our histogram and seeing the count of 512 then using our density value...
 
 Rows In Range + (Density * New Rows)
+
 512 + (0.2 * 100) = 532 (Which matches our query plan estimate)
 
 Hopefully this shows that statistics are not just magic but are predictable things that we can view.
