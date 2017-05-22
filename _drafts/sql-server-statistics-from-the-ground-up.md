@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Statistics From The Ground Up
-date: '2017-05-22 08:20:38'
+date: '2017-05-22 07:20:38'
 ---
 SQL Server statistis are often thought of as a bit of a black box, this is completely not the case and I want to use this post to detail what they are, how they work and how we can view what they're doing....
 
@@ -156,7 +156,7 @@ INNER JOIN sys.stats_columns AS sc
 INNER JOIN sys.columns AS c   
     ON sc.object_id = c.object_id AND c.column_id = sc.column_id  
 WHERE s.object_id = OBJECT_ID('dbo.User');  
-{% endhighligh %}
+{% endhighlight %}
 
 ![Index Stats Query Plan]({{site.url}}/content/images/2017-statistics-explained/index-stats.JPG)
 
