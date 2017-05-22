@@ -3,10 +3,10 @@ layout: post
 title: SQL Server Statistics From The Ground Up
 date: '2017-05-22 07:20:38'
 ---
-SQL Server statistis are often thought of as a bit of a black box, this is completely not the case and I want to use this post to detail what they are, how they work and how we can view what they're doing....
+SQL Server statistics are often thought of as a bit of a black box, this is completely not the case and I want to use this post to detail what they are, how they work and how we can view what they're doing....
 
 ### What Are Statistics ###
-Statistics is information SQL Server stores about what's in your tables, SQL then uses this data to work out how to generate optimised query plans.
+Statistics is information SQL Server stores about what's in your tables, SQL then uses this data to work out how to generate optimized query plans.
 
 For a simplistic example imagine the following query works on a table with clustered index on Id and a nonclustered index of username. For information about nonclustered indexes see [SQL Server Clustered & NonClustered Indexes Explained](https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/).
 
@@ -62,7 +62,7 @@ WHERE
 
 ![Table Scan Query Plan]({{site.url}}/content/images/2017-statistics-explained/empty-table-query.JPG)
 
-We can see that with a small amount of data SQL Server created a plan that performs a table scan. This is because it knows there is a very small amount of data and has decided in this case a table scan is quicker than an index seek with a key lookup. Let's now add a few thousen users to our table
+We can see that with a small amount of data SQL Server created a plan that performs a table scan. This is because it knows there is a very small amount of data and has decided in this case a table scan is quicker than an index seek with a key lookup. Let's now add a few thousand users to our table
 
 {% highlight sql %}
 DELETE FROM [Dbo].[User]
@@ -96,12 +96,12 @@ If we then repeat our select query the plan will now use our nonclustered index 
 
 ![Index Seek Query Plan]({{site.url}}/content/images/2017-statistics-explained/user-index-seek.JPG)
 
-We can see at this point SQL has decided a table scan is no longer optimal and has switched to using an index seek. SQL Server doesnt directly look at the table data before each query as that would be far to slow, instead it stores statistics on the volume and shape of the data in each table, then when creating a query plan it looks at the statistics to see which approach it thinks will perform best. Given the statistics for a given column SQL Server can estimate how many values fall within a given range which can then be used to estimate the row counts for each step of our query plan to find the best path. 
+We can see at this point SQL has decided a table scan is no longer optimal and has switched to using an index seek. SQL Server doesn't directly look at the table data before each query as that would be far to slow, instead it stores statistics on the volume and shape of the data in each table, then when creating a query plan it looks at the statistics to see which approach it thinks will perform best. Given the statistics for a given column SQL Server can estimate how many values fall within a given range which can then be used to estimate the row counts for each step of our query plan to find the best path. 
 
 ### When Are Statistcs Created/Updated ###
-Statistics are not updated in realtime, when auto update statistics is enabled then they are updated after a threahold percentage of records is added or updated.. There are however a number of techniques SQL Server uses to still estimate row counts for given ranges on out of date statistics which we will discuss below. 
+Statistics are not updated in real time, when auto update statistics is enabled then they are updated after a threshold percentage of records is added or updated.. There are however a number of techniques SQL Server uses to still estimate row counts for given ranges on out of date statistics which we will discuss below. 
 
-If you want to follow along then everytime I say recreate the table run this script...
+If you want to follow along then every time I say recreate the table run this script...
 
 {% highlight sql %}
 DROP TABLE [User]
@@ -188,7 +188,7 @@ DBCC SHOW_STATISTICS('dbo.User','_WA_Sys_00000003_20C1E124') WITH DENSITY_VECTOR
 
 ![Auto Created Stat Density]({{site.url}}/content/images/2017-statistics-explained/density-vector.JPG)
 
-This is quite interesting as we can see an all density of 0.2. In our case we have 5 distinct firenames and 0.2 * 5 = 1 which is how density is calculated, the lower the name the more distinct data you have. We'll come to how this is useful in a little bit.
+This is quite interesting as we can see an all density of 0.2. In our case we have 5 distinct firstnames and 0.2 * 5 = 1 which is how density is calculated, the lower the name the more distinct data you have. We'll come to how this is useful in a little bit.
 
 Lastly we have the Histogram option on SHOW_STATISTICS...
 
@@ -205,8 +205,8 @@ I mentioned above the Statistics are not live and can long periods without being
 > * SQL Server (2014 and earlier) uses a threshold based on the percent of rows changed. This is regardless of the number of rows in the table.
 > * SQL Server (starting with 2016 and under the compatibility level 130) uses a threshold that adjusts according to the number of rows in the table. With this change, statistics on large tables will be updated more often.
 
-Let's imagine we have a table with 1 Million records, given the rules above that means that 200,000 rows can be changed or added before statistics are updated. In this case SQL uses things like it's density measures and histogram steps to predict the amound of data a given operation will touch to generate an optimized plan. This works really well when the new data follows a similar cardinality to the data in the statistcs but can cause really bad query plans if the changed data changes this cardinality pattern.
+Let's imagine we have a table with 1 Million records, given the rules above that means that 200,000 rows can be changed or added before statistics are updated. In this case SQL uses things like it's density measures and histogram steps to predict the amount of data a given operation will touch to generate an optimized plan. This works really well when the new data follows a similar cardinality to the data in the statistics but can cause really bad query plans if the changed data changes this cardinality pattern.
 
-For the most part assuming Auto Update Statistics hasnt been disabled (It really shouldnt have been unless you have a good reason) SQL Server will manage the statistics without you having to do anything. There are cases though where the statistics are out of date and the cardinality in histogram no longer accurately reflects the data you are querying. A tell tell sign when this is happening is that when you look at your actual query plans estimated rows it radically different from actual rows. If you're profiling a slow query and notice the difference in Actual/Estimated then it might be work looking at the statistics to work out why there is a difference and if it could be what's causing the slower performance.
+For the most part assuming Auto Update Statistics hasn't been disabled (It really shouldnt have been unless you have a good reason) SQL Server will manage the statistics without you having to do anything. There are cases though where the statistics are out of date and the cardinality in histogram no longer accurately reflects the data you are querying. A tell tell sign when this is happening is that when you look at your actual query plans estimated rows it radically different from actual rows. If you're profiling a slow query and notice the difference in Actual/Estimated then it might be work looking at the statistics to work out why there is a difference and if it could be what's causing the slower performance.
 
-I mnetioned above statistics are normally managed and updated with no manaul input needed, however it's common that maintenance plans run over night in periods of low to no use, you could add a step here to rebuild any out of data statistics. On the subject of maintenance plans Ola Hallengren has created a great one that I've used many times before, it will rebuild/reorganize indexes and update statistcs and allow you to specify the methods it does this and the threaholds things need to be fragmented/out dated by.
+I mentioned above statistics are normally managed and updated with no manual input needed, however it's common that maintenance plans run over night in periods of low to no use, you could add a step here to rebuild any out of data statistics. On the subject of maintenance plans Ola Hallengren has created a great one that I've used many times before, it will rebuild/reorganize indexes and update statistics and allow you to specify the methods it does this and the thresholds things need to be fragmented/out dated by.
