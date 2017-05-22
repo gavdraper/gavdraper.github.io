@@ -308,6 +308,12 @@ SELECT * FROM [User] WHERE Firstname = 'Luke'
 
 We can see in this case our estimated row count is quite different to our actual row count, in this case the cardinality has changed sufficiently to throw the statistics out. 
 
+We can see where this estimate came from by taking the range in our histogram and seeing the count of 512 then using our density value...
+
+512 Range Rows + (0.2 * 100) = 532
+
+Hopefully this shows that statistics are not just magic but are predictable.
+
 ### Maintenance ###
 For the most part assuming Auto Update Statistics hasn't been disabled (It really shouldnt have been unless you have a good reason) SQL Server will manage the statistics without you having to do anything. There are cases though where the statistics are out of date and the cardinality in histogram no longer accurately reflects the data you are querying. A tell tell sign when this is happening is that when you look at your actual query plans estimated rows it's radically different from actual rows. If you're profiling a slow query and notice the difference in Actual/Estimated then it might be worth looking at the statistics to work out why there is a difference and if it could be what's causing the slower performance.
 
