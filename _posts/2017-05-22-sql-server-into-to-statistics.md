@@ -266,6 +266,8 @@ VALUES
 
 Run the SELECT query above again and you'll see estimated 513, actual 513. So if the statistics are out of date how did SQL server get this figure? 
 
+![Actual Matches Estimated Query Plan]({{site.url}}/content/images/2017-statistics-explained/actual-density-match.jpg)
+
 SQL Server knows when the statistics were built there were 2560 rows and it also knows there are now 2565 rows. If we check the density of the statistics by running...
 
 {% highlight sql %}
