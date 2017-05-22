@@ -207,6 +207,118 @@ I mentioned above the Statistics are not live and can long periods without being
 
 Let's imagine we have a table with 1 Million records, given the rules above that means that 200,000 rows can be changed or added before statistics are updated. In this case SQL uses things like it's density measures and histogram steps to predict the amount of data a given operation will touch to generate an optimized plan. This works really well when the new data follows a similar cardinality to the data in the statistics but can cause really bad query plans if the changed data changes this cardinality pattern.
 
+### Out Of Date Statistics Estimating Correctly ###
+
+
+
+If you want to see an example of this...
+
+1. Reset and reseed the database with the scripts above.
+1. Run our firstname query again to build the statistics
+
+{% highlight sql %}
+SELECT * FROM [User] WHERE Firstname = 'Luke'
+{% endhighlight %}
+
+3. Get the name of our auto created statistic
+
+{% highlight sql %}
+SELECT s.name AS statistics_name  
+      ,c.name AS column_name  
+      ,sc.stats_column_id  
+      ,s.auto_created
+FROM sys.stats AS s  
+INNER JOIN sys.stats_columns AS sc   
+    ON s.object_id = sc.object_id AND s.stats_id = sc.stats_id  
+INNER JOIN sys.columns AS c   
+    ON sc.object_id = c.object_id AND c.column_id = sc.column_id  
+WHERE s.object_id = OBJECT_ID('dbo.User');  
+{% endhighlight %}
+
+4. Run SHOW_STATISTICS to get the histogram 
+
+{% highlight sql %}
+DBCC SHOW_STATISTICS('dbo.User','Put Statistic Name Here') WITH HISTOGRAM
+{% endhighlight %}
+
+![Auto Created Stat Histogram]({{site.url}}/content/images/2017-statistics-explained/histogram.JPG)
+
+At this point our statistics are up to do, so if we turn on query plans and run our select query again
+
+{% highlight sql %}
+SELECT * FROM [User] WHERE Firstname = 'Luke'
+{% endhighlight %}
+
+![Actual Matches Estimated Query Plan]({{site.url}}/content/images/2017-statistics-explained/actual-matches-estimated.jpg)
+
+We can see the estimated number of rows is the same as the actual. Now lets add one row for each existing user, this wont cause the statistics to update because we're not changing enough records.
+
+{% highlight sql %}
+INSERT INTO [dbo].[User]
+    ( 	
+    Username,
+    FirstName,
+    LastName
+	)
+VALUES
+    ('clairetemple','Claire','Temple'),
+    ('lukecage','Luke','Cage'),
+    ('jessiejones','Jessie','Jones'),
+    ('tonystark','Tony','Stark'),
+    ('mattmurdock','Matt','Murdock')
+{% endhighlight %}    
+
+Run the SELECT query above again and you'll see estimate 513, actual 513. So if the statistics are out of date how did SQL server get this figure? 
+
+SQL Server knows when the statistics were built there were 2560 rows and it also knows there are no 2565 rows. If we check the density of the statistics by running...
+
+{% highlight sql %}
+DBCC SHOW_STATISTICS('dbo.User','Put Statistic Name Here') WITH DENSITY_VECTOR
+{% endhighlight %}   
+
+We can see 0.2 so we can see for a given range in the histogram e.g RANGE_HI_KEY = Luke the EQ_ROWS = EQ_ROWS + (5*.02) which gives us our value of 513. This is a good example of SQL Server getting accurate results from statistics even when they are out of date.
+
+### Out Of Date Statistics Estimating Correctly ###
+
+Follow steps 1-4 in the above example to reset the data and statistics.
+
+This time however let's insert 100 new Luke records, this again will not be enough to trigger a statistics update
+
+{% highlight sql %}
+DECLARE @Count INT = 1
+WHILE @Count < 101
+	BEGIN
+	INSERT INTO [dbo].[User]
+		( 	
+		Username,
+		FirstName,
+		LastName
+		)
+	VALUES
+		('lukecage','Luke','Cage')
+	SET @Count = @Count + 1
+	END
+{% endhighlight %}   
+
+Let's then run our Select statement again with actual query plan turned on...
+
+{% highlight sql %}
+SELECT * FROM [User] WHERE Firstname = 'Luke'
+{% endhighlight %}
+
+![Actual Matches Estimated Query Plan]({{site.url}}/content/images/2017-statistics-explained/actual-does-not-match-estimates.jpg)
+
+We can see in this case our estimated row count is quite different to our actual row count, in this case the cardinality has changed sufficiently to throw the statistics out. 
+
+### Maintenance ###
 For the most part assuming Auto Update Statistics hasn't been disabled (It really shouldnt have been unless you have a good reason) SQL Server will manage the statistics without you having to do anything. There are cases though where the statistics are out of date and the cardinality in histogram no longer accurately reflects the data you are querying. A tell tell sign when this is happening is that when you look at your actual query plans estimated rows it radically different from actual rows. If you're profiling a slow query and notice the difference in Actual/Estimated then it might be work looking at the statistics to work out why there is a difference and if it could be what's causing the slower performance.
 
 I mentioned above statistics are normally managed and updated with no manual input needed, however it's common that maintenance plans run over night in periods of low to no use, you could add a step here to rebuild any out of data statistics. On the subject of maintenance plans Ola Hallengren has created a great one that I've used many times before, it will rebuild/reorganize indexes and update statistics and allow you to specify the methods it does this and the thresholds things need to be fragmented/out dated by.
+
+If profiling is showing a statistics object to be really giving a query problems you can manually rebuild that statistic using the UPDATE STATISTICS 
+
+{% highlight sql %}
+UPDATE STATISTICS [dbo].[user] (StatisticName) 
+{% endhighlight %}
+
+You can pass Sample counts into update statistics to limit the work here more information on this can be found on the  [Update Statistics MSDN page](https://docs.microsoft.com/en-us/sql/t-sql/statements/update-statistics-transact-sql)
