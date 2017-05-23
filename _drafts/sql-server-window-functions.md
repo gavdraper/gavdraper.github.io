@@ -82,3 +82,43 @@ SELECT * FROM
 {% endhighlight %}
 
 ![Row Number Partition By Result Set]({{site.url}}/content/images/2017-window-functions/rownumber-partition.JPG)
+
+There are many different Windows functions now available in SQL Sever and we've just looked a ROW_NUMBER. Let's move on and look at aggregates SUM, AVG, COUNT, MIN and MAX all work with window functions. At first glance it may seem like you can do all that with a join so why use a window function? Let's look at another example.
+
+Let's imagine given the usertable we have above we want to get each user along with a count of how many users exist with the same first name. In this case we can't use a group by as we want the user id in the result set and if we group by that everything will have a firstname count of 1, for example...
+
+{% highlight sql %}
+SELECT
+	[User].Id,
+	[User].Username,
+	[User].Firstname,
+	[User].LastName,
+	COUNT(DISTINCT Firstname) UsersWithThisName
+FROM
+	[User]
+GROUP BY
+	[User].Id,
+	[User].Username,
+	[User].Firstname,
+	[User].LastName
+{% endhighlight %}
+
+![Group By ResultSet]({{site.url}}/content/images/2017-window-functions/groupby.JPG)
+
+A groupby works great for aggregates in most cases because we normally actually want to group the data. In this case however we want all the data along with an aggregate on each record. Let's look at how we can use a window function to partition on firstname and do this...
+
+{% highlight sql %}
+
+SELECT
+	[User].Id,
+	[User].Username,
+	[User].Firstname,
+	[User].LastName,
+	COUNT(*) OVER (PARTITION BY FirstName) UsersWithThisName
+FROM
+	[User]
+{% endhighlight %}
+
+We're telling our window function to count each set of data with the same firstname .
+
+![Partition By ResultSet]({{site.url}}/content/images/2017-window-functions/partitionby.JPG)
