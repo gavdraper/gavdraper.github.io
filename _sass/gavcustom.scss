@@ -123,3 +123,17 @@ border-right: none;
         }
     }
 }
+
+.page-content {
+    margin: 15px auto;
+    max-width: 1000px;
+    border-radius: 4px;
+    padding: 15px 0;
+}
+
+.wrapper
+{
+      padding-right: 15px;
+    padding-left: 15px;
+    max-width:calc(800px - (30px * 2));
+}
