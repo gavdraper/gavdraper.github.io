@@ -144,16 +144,17 @@ WHILE @LoopCount < 10
 We can use the sys.stats view in SQL Server to see what stats we have on our newly created User table..
 
 {% highlight sql %}
-SELECT s.name AS statistics_name  
-      ,c.name AS column_name  
-      ,sc.stats_column_id  
-      ,s.auto_created
-FROM sys.stats AS s  
-INNER JOIN sys.stats_columns AS sc   
-    ON s.object_id = sc.object_id AND s.stats_id = sc.stats_id  
-INNER JOIN sys.columns AS c   
-    ON sc.object_id = c.object_id AND c.column_id = sc.column_id  
-WHERE s.object_id = OBJECT_ID('dbo.User');  
+SELECT 
+    s.name AS statistics_name,
+    c.name AS column_name,
+    sc.stats_column_id,
+    s.auto_created
+FROM 
+    sys.stats AS s  
+    INNER JOIN sys.stats_columns AS sc ON s.object_id = sc.object_id AND s.stats_id = sc.stats_id  
+    INNER JOIN sys.columns AS c ON sc.object_id = c.object_id AND c.column_id = sc.column_id  
+WHERE 
+    s.object_id = OBJECT_ID('dbo.User');  
 {% endhighlight %}
 
 ![Index Stats Query Plan]({{site.url}}/content/images/2017-statistics-explained/index-stats.JPG)
@@ -219,16 +220,17 @@ SELECT * FROM [User] WHERE Firstname = 'Luke'
 3. Get the name of our auto created statistic
 
 {% highlight sql %}
-SELECT s.name AS statistics_name  
-      ,c.name AS column_name  
-      ,sc.stats_column_id  
-      ,s.auto_created
-FROM sys.stats AS s  
-INNER JOIN sys.stats_columns AS sc   
-    ON s.object_id = sc.object_id AND s.stats_id = sc.stats_id  
-INNER JOIN sys.columns AS c   
-    ON sc.object_id = c.object_id AND c.column_id = sc.column_id  
-WHERE s.object_id = OBJECT_ID('dbo.User');  
+SELECT 
+    s.name AS statistics_name,
+    c.name AS column_name,
+    sc.stats_column_id,
+    s.auto_created
+FROM 
+    sys.stats AS s  
+    INNER JOIN sys.stats_columns AS sc ON s.object_id = sc.object_id AND s.stats_id = sc.stats_id  
+    INNER JOIN sys.columns AS c ON sc.object_id = c.object_id AND c.column_id = sc.column_id  
+WHERE 
+    s.object_id = OBJECT_ID('dbo.User');  
 {% endhighlight %}
 
 4. Run SHOW_STATISTICS to get the histogram 
