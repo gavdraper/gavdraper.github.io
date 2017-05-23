@@ -1,13 +1,13 @@
 ---
 layout: post
-title: SQL Server Window Functions
+title: SQL Server Window Functions In Action
 date: '2017-05-23 07:20:38'
 ---
 SQL Server Window Functions were introduced in SQL Server 2005 with a basic set of operators and massively upgraded in SQL Server 2012 to include a lot more operators.
 
 A window function is a function that takes a window descriptor which describes the subset of rows on the overall dataset it operates on and returns a single value per row. The OVER keyword in SQL Server opens a window function. That probably sounds more complex than it actually is, let's take a simple example...
 
-Imagine we have a table of users and we want to be able to page that table in our application rather than get all the data back in one go. In this case we want the table ordered by Username, for paging to work each row in order of username will need a row number so we can say for page 1 get records 1-10 for page 2 get records 11-20 etc...
+Imagine we have a table of users and we want to be able to page that table in SQL Server rather than get all the data back in one go. In this case we want the table ordered by Username, for paging to work each row in order of username will need a row number so we can say for page 1 get records 1-10 for page 2 get records 11-20 etc...
 
 The following script will setup a user table and insert some records so you can follow along...
 
@@ -64,9 +64,10 @@ WHERE
     u.RowNumber BETWEEN 1 AND 10
 {% endhighlight %}
 
-In this case our window function is ordering the data by Username and applying the ROWNUMBER() function to it which just gives each row an incrementing number. In our outter query we then filter by the row number returned.
+In this case our window function is ordering the data by Username and applying the ROW_NUMBER() function to it which just gives each row an incrementing number. In our outer query we then filter by the row number returned.
 
-We can use the PARTITION BY syntax to apply our Window Function on a set of data, for example if we PARTITION BY and ORDER BY Firstname then as we have 10 users for user name we'll get a row number of 1-8 for each firstname that resets...
+### Partition By ###
+We can use the PARTITION BY syntax to apply our Window Function on a set of data, for example if we PARTITION BY and ORDER BY firstname then as we have 8 users for each name we'll get row numbers 1-8 repeated for each firstname...
 
 {% highlight sql %}
 SELECT * FROM 
@@ -83,7 +84,9 @@ SELECT * FROM
 
 ![Row Number Partition By Result Set]({{site.url}}/content/images/2017-window-functions/rownumber-partition.JPG)
 
-There are many different Windows functions now available in SQL Sever and we've just looked a ROW_NUMBER. Let's move on and look at aggregates SUM, AVG, COUNT, MIN and MAX all work with window functions. At first glance it may seem like you can do all that with a join so why use a window function? Let's look at another example.
+### Aggregation Without Group By ###
+
+There are many different Windows functions now available in SQL Sever and we've just looked a ROW_NUMBER. Let's move on and look at aggregates SUM, AVG, COUNT, MIN and MAX all work with window functions. At first glance it may seem like you can do all that with group by so why use a window function? Let's look at another example.
 
 Let's imagine given the user table we have above we want to get each user along with a count of how many users exist with the same first name. In this case we can't use a group by as we want the user id in the result set and if we group by that everything will have a firstname count of 1, for example...
 
@@ -105,7 +108,7 @@ GROUP BY
 
 ![Group By ResultSet]({{site.url}}/content/images/2017-window-functions/groupby.JPG)
 
-A groupby works great for aggregates in most cases because we normally actually want to group the data. In this case however we want all the data along with an aggregate on each record. Let's look at how we can use a window function to partition on firstname and do this...
+A group by works great for aggregates in most cases because we normally actually want to group on the data. In this case however we want all the data along with an aggregate on each record. Let's look at how we can use a window function to partition on firstname and do this...
 
 {% highlight sql %}
 
@@ -119,14 +122,14 @@ FROM
     [dbo].[User]
 {% endhighlight %}
 
-We're telling our window function to count each set of data with the same firstname .
+We're telling our window function to count each set of data with the same firstname.
 
 ![Partition By ResultSet]({{site.url}}/content/images/2017-window-functions/partitionby.JPG)
 
 ### Bounding ###
 Window functions allow you to specify an upper and lower bounds for the function to run in, in combination with an order by this can be a really handy tool. Let's look at an example to see why...
 
-Imagine we have a sales aggregate table that stores quantity and value against a month.
+Imagine we have a sales aggregate table that stores sales quantity against a year and month.
 
 {% highlight sql %}
 CREATE TABLE SalesWarehouse
@@ -151,7 +154,7 @@ VALUES
     (201612, 60)
 {% endhighlight %}
 
-Let's imagine that we want to see the qunatity for each month along side the quantity for the month before and after it...
+Let's imagine that we want to see the quantity for each month along side the quantity for the month before and after it...
 
 {% highlight sql %}
 SELECT 
@@ -171,9 +174,9 @@ You can see in the above example we bounded last month to start and end on the p
 ROWS BETWEEN 1 PRECEDING AND 1 PRECEDING
 {% endhighlight %}
 
-We could easily have aggregates the current month with the month before and after by bounding 1 PRECEDING and 1 FOLLOWING. This is great for things like rolling statement aggregations. 
+We could easily have aggregates for current month with the month before and after by bounding 1 PRECEDING and 1 FOLLOWING. This is great for things like rolling statement aggregations. 
 
-Along with ROW_NUMER and the usual aggreagate operations like SUM,COUNT, MIN, MAX etc SQL Server also has a number of other window functions available these are...
+Along with ROW_NUMER and the usual aggregate operations like SUM,COUNT, MIN, MAX etc SQL Server also has a number of other window functions available these are...
 
 | SQL 2005+ | SQL 2012+ |
 | --- | --- |
