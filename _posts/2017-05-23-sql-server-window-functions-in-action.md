@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Window Functions In Action
+title: SQL Server Window Functions in Action
 date: '2017-05-23 07:20:38'
 ---
 SQL Server Window Functions were introduced in SQL Server 2005 with a basic set of operators and massively upgraded in SQL Server 2012 to include a lot more operators.
