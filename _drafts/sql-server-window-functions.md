@@ -51,17 +51,17 @@ Lets say we want 10 records per page and we want to get page 2, we can use a win
 
 {% highlight sql %}
 SELECT * FROM 
-	(
-	SELECT
-		ROW_NUMBER() OVER (ORDER BY [Username]) RowNumber,
-		[Username],
-		[Firstname],
-		[Lastname]
-	FROM 	
-		[dbo].[User]
-	) u
+    (
+    SELECT
+        ROW_NUMBER() OVER (ORDER BY [Username]) RowNumber,
+        [Username],
+        [Firstname],
+        [Lastname]
+    FROM 	
+        [dbo].[User]
+    ) u
 WHERE 
-	u.RowNumber BETWEEN 1 AND 10
+    u.RowNumber BETWEEN 1 AND 10
 {% endhighlight %}
 
 In this case our window function is ordering the data by Username and applying the ROWNUMBER() function to it which just gives each row an incrementing number. In our outter query we then filter by the row number returned.
@@ -70,15 +70,15 @@ We can use the PARTITION BY syntax to apply our Window Function on a set of data
 
 {% highlight sql %}
 SELECT * FROM 
-	(
-	SELECT
-		ROW_NUMBER() OVER (PARTITION BY Firstname ORDER BY Firstname) RowNumber,
-		[Id],
-		[Firstname],
-		[Lastname]
-	FROM 	
-		[dbo].[User]
-	) u
+    (
+    SELECT
+        ROW_NUMBER() OVER (PARTITION BY Firstname ORDER BY Firstname) RowNumber,
+        [Id],
+        [Firstname],
+        [Lastname]
+    FROM 	
+        [dbo].[User]
+    ) u
 {% endhighlight %}
 
 ![Row Number Partition By Result Set]({{site.url}}/content/images/2017-window-functions/rownumber-partition.JPG)
