@@ -35,13 +35,13 @@ VALUES
     ('mattmurdock','Matt','Murdock')
 
 DECLARE @LoopCount INT = 1
-WHILE @LoopCount < 5
+WHILE @LoopCount < 4
     BEGIN
     INSERT INTO [dbo].[User](Username,FirstName,LastName)
     SELECT 
         CAST(@LoopCount AS NVARCHAR(4)) + Username,
-        CAST(@LoopCount AS NVARCHAR(4)) + FirstName,
-        CAST(@LoopCount AS NVARCHAR(4)) + LastName 
+        FirstName,
+        LastName 
     FROM [dbo].[User]
     SET @LoopCount = @LoopCount +1
     END
@@ -58,7 +58,7 @@ SELECT * FROM
 		[Firstname],
 		[Lastname]
 	FROM 	
-		[User]
+		[dbo].[User]
 	) u
 WHERE 
 	u.RowNumber BETWEEN 1 AND 10
@@ -66,4 +66,19 @@ WHERE
 
 In this case our window function is ordering the data by Username and applying the ROWNUMBER() function to it which just gives each row an incrementing number. In our outter query we then filter by the row number returned.
 
+We can use the PARTITION BY syntax to apply our Window Function on a set of data, for example if we PARTITION BY and ORDER BY Firstname then as we have 10 users for user name we'll get a row number of 1-8 for each firstname that resets...
 
+{% highlight sql %}
+SELECT * FROM 
+	(
+	SELECT
+		ROW_NUMBER() OVER (PARTITION BY Firstname ORDER BY Firstname) RowNumber,
+		[Id],
+		[Firstname],
+		[Lastname]
+	FROM 	
+		[dbo].[User]
+	) u
+{% endhighlight %}
+
+![Row Number Partition By Result Set]({{site.url}}/content/images/2017-window-functions/rownumber-partition.JPG)
