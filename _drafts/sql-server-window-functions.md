@@ -122,3 +122,68 @@ FROM
 We're telling our window function to count each set of data with the same firstname .
 
 ![Partition By ResultSet]({{site.url}}/content/images/2017-window-functions/partitionby.JPG)
+
+### Bounding ###
+Window functions allow you to specify an upper and lower bounds for the function to run in, in combination with an order by this can be a really handy tool. Let's look at an example to see why...
+
+Imagine we have a sales aggregate table that stores quantity and value against a month.
+
+{% highlight sql %}
+CREATE TABLE SalesWarehouse
+(
+	ID INT IDENTITY PRIMARY KEY,
+	YearMonth INT,
+	Quantity INT,
+)
+INSERT INTO dbo.SalesWarehouse( YearMonth, Quantity)
+VALUES 
+    (201601, 10),
+    (201602, 5),
+    (201603, 13),
+    (201604, 6),
+    (201605, 51),
+    (201606, 0),
+    (201607, 3),
+    (201608, 6),
+    (201609, 77),
+    (201610, 65),
+    (201611, 55),
+    (201612, 60)
+{% endhighlight %}
+
+Let's imagine that we want to see the qunatity for each month along side the quantity for the month before and after it...
+
+{% highlight sql %}
+SELECT 
+    YearMonth,
+    Quantity,
+    SUM(Quantity) OVER (ORDER BY YearMonth ROWS BETWEEN 1 PRECEDING AND 1 PRECEDING) LastMonth,		
+    SUM(Quantity) OVER (ORDER BY YearMonth ROWS BETWEEN 1 FOLLOWING AND 1 FOLLOWING) NextMonth	
+FROM
+    [dbo].SalesWarehouse
+{% endhighlight %}
+
+![Bounding ResultSet]({{site.url}}/content/images/2017-window-functions/bounding.JPG)
+
+You can see in the above example we bounded last month to start and end on the previous record by doing this...
+
+{% highlight sql %} 
+ROWS BETWEEN 1 PRECEDING AND 1 PRECEDING
+{% endhighlight %}
+
+We could easily have aggregates the current month with the month before and after by bounding 1 PRECEDING and 1 FOLLOWING. This is great for things like rolling statement aggregations. 
+
+Along with ROW_NUMER and the usual aggreagate operations like SUM,COUNT, MIN, MAX etc SQL Server also has a number of other window functions available these are...
+
+| SQL 2005+ | SQL 2012+ |
+| --- | --- |
+| RANK | FIRST_VALUE |
+| DENSE_RANK | LAST_VALUE |
+| NTILE | CUME_DIST |
+| | PERCENT_RANK |
+| | PERCENTILE_DISC |
+| | PERCENTILE_CONT |
+| | LEAD |
+| | LAG |
+
+Descriptions of what each of these do with examples can be found on MSDN. 
