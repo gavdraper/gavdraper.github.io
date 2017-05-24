@@ -5,7 +5,7 @@ date: '2010-08-04 19:05:38'
 ---
 
 <p>
-Just a quick post to cover somthing that I've seen cropping up a lost recently. Thats
+Just a quick post to cover somthing that I've seen cropping up a lot recently. Thats
 copying the results of a stored procedure in to a table. 
 </p>
 <p>
