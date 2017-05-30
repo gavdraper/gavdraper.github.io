@@ -10,7 +10,7 @@ This post will make more sense if you already know what non filtered indexes are
 
 Filtered indexes are essentially an index with a predicate on them filtering the data that gets stored in the index. For example on a bug tracking system I could creatre a fitlered index that just indexed bugs with a status of open.
 
-## When To Use filtered Indexes ##
+## When To Use Filtered Indexes ##
 
 Filtered indexes make sense when you're constantly querying a small portion of the overall dataset and are less interested in the rest of it. They allow you to have a smaller index which means you can get to your data faster with less reads. If you get it right based on your data in query needs you'll reduce the writes required to maintain the index and the reads required for the query to complete. 
 
@@ -95,18 +95,14 @@ WHILE @InsertCount < 7
 
 This gives us a good distribution of Status to work with...
 
-![Group by Result Set]({{site.url}}/content/images/2017-filered-index/data-distribution.JPG)
+![Group by Result Set]({{site.url}}/content/images/2017-filtered-index/data-distribution.JPG)
 
 Lets now create a NonClustered index on BugStatus on the bugs table...
 
-{% highlight sql %}
-CREATE NONCLUSTERED INDEX ndx_bugs_bugstatus ON dbo.bugs(BugStatus)
-{% endhighlight %}
-
-Let's assume the home screen of our application lists all open bugs and this is the most used query in the system...
+Let's assume the home screen of our application lists the last 100 raised bugs that have a status of open...
 
 {% highlight sql %}
-SELECT
+SELECT TOP 100
 	Bugs.Id,
 	Bugs.Title,
 	Bugs.[Description]
@@ -114,28 +110,30 @@ FROM
 	dbo.Bugs
 WHERE
 	Bugs.BugStatus = 1
+ORDER BY id DESC
 {% endhighlight %}
 
 From this we'll get the following execution plan...
 
-![Execution Plan For Normal Index]({{site.url}}/content/images/2017-filered-index/execution-plan.JPG)
+![Execution Plan No Index]({{site.url}}/content/images/2017-filtered-index/execution-plan.JPG)
 
-We can see we're using our NonClustered index to filter just the open bugs as expected. Let's look at how many reads are being performed on that index...
+We can see we're doing a clusted index scan to order by id and filter just the open bugs as expected. Let's look at how many reads are being performed on that index...
 
 IMAGE HERE SHOWING IO
 
-Now let's create a filtered index on BugStatus for just open bugs.
+At this point we could create NonClustered index status for the whole table and that would work fine. However we will then be maintaining an index for 99.9% of the table that we're never going to use beause we're only interested in open bugs. This is where a filtered index is a good fit...
 
 {% highlight sql %}
-
-CREATE NONCLUSTERED INDEX ndx_bugs_bugstatus_open ON dbo.Bugs(BugStatus) 
-WHERE BugStatus = 1
+CREATE NONCLUSTERED INDEX ndx_bugs_bugstatus_open 
+    ON dbo.Bugs(id)  
+    INCLUDE(BugStatus, [Description], Title)
+    WHERE BugStatus = 1
 {% endhighlight %}
+
+So here we're creating an index on id, including all the fields our query uses to avoid and key lookups and then we're filtering by BugStatus = 1. This means when our query does BugStatus=1 SQL Server will know all the rows in that index satisfy our predicate. 
 
 If we run our select query again...
 
-EXECUTION PLAN HERE SHOWING NEW FILTERED INDEX
+![Execution Plan filtered Index]({{site.url}}/content/images/2017-filtered-index/filtered-index.JPG)
 
-IO COUNT HERE
-
-We can see from this we've reduced the amount of reads required to complete our query. Not only that but we've reduced the amount of writes required to maintain the index as any changes on data that does not have a status of open will not cause an index write. There is a bit of trial and error involved in getting fitlered index right as it really depends on the shape of your data and the queries that are using it.
+One thing to note filtered indexes will not be used if your predicate in your query is a parameter as SQL Server wont know up front when it creates the plan if the filtered index will cover any parameter you're going to pass it. 
