@@ -101,13 +101,13 @@ Let's assume the home screen of our application lists the last 100 raised bugs t
 
 {% highlight sql %}
 SELECT TOP 100
-	Bugs.Id,
-	Bugs.Title,
-	Bugs.[Description]
+    Bugs.Id,
+    Bugs.Title,
+    Bugs.[Description]
 FROM
     dbo.Bugs
 WHERE
-	Bugs.BugStatus = 1
+    Bugs.BugStatus = 1
 ORDER BY id DESC
 {% endhighlight %}
 
