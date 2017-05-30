@@ -21,24 +21,24 @@ Let's setup an example bugs table for our bug tracking software with some exampl
 {% highlight sql %}
 CREATE TABLE dbo.BugStatus
 (
-	Id INT IDENTITY PRIMARY KEY,
-	[Status] NVARCHAR(20)
+    Id INT IDENTITY PRIMARY KEY,
+    [Status] NVARCHAR(20)
 )
 
 INSERT INTO dbo.[BugStatus]([Status])
 VALUES
-	('Open'),
-	('Closed'),
-	('OnHold'),
-	('InTest'),
-	('InProgress')
+    ('Open'),
+    ('Closed'),
+    ('OnHold'),
+    ('InTest'),
+    ('InProgress')
 
 CREATE TABLE dbo.Bugs
 (
-	Id INT IDENTITY PRIMARY KEY,
-	Title NVARCHAR(100),
-	[Description] NVARCHAR(MAX),
-	BugStatus INT FOREIGN KEY REFERENCES dbo.BugStatus(Id)
+    Id INT IDENTITY PRIMARY KEY,
+    Title NVARCHAR(100),
+    [Description] NVARCHAR(MAX),
+    BugStatus INT FOREIGN KEY REFERENCES dbo.BugStatus(Id)
 )
 {% endhighlight %}
 
@@ -53,44 +53,44 @@ INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
 VALUES('Closed Title Blah','My Description',2)
 SELECT @InsertCount = 0
 WHILE @InsertCount < 20
-	BEGIN
-	INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
-	SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 2
-	SET @InsertCount = @InsertCount + 1
-	END
+    BEGIN
+    INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
+    SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 2
+    SET @InsertCount = @InsertCount + 1
+    END
 
 --Add InTest
 INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
 VALUES('In TestTitle Blah','My Description',4)
 SELECT @InsertCount = 0
 WHILE @InsertCount < 3
-	BEGIN
-	INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
-	SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 4
-	SET @InsertCount = @InsertCount + 1
-	END
+    BEGIN
+    INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
+    SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 4
+    SET @InsertCount = @InsertCount + 1
+    END
 
 --Add OnHold
 INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
 VALUES('On Hold Title Blah','My Description',3)
 SELECT @InsertCount = 0
 WHILE @InsertCount < 5
-	BEGIN
-	INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
-	SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 3
-	SET @InsertCount = @InsertCount + 1
-	END
+    BEGIN
+    INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
+    SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 3
+    SET @InsertCount = @InsertCount + 1
+    END
 
 --Add Open
 INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
 VALUES('Open Title Blah','My Description',1)
 SELECT @InsertCount = 0
 WHILE @InsertCount < 7
-	BEGIN
-	INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
-	SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 1
-	SET @InsertCount = @InsertCount + 1
-	END	
+    BEGIN
+    INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
+    SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 1
+    SET @InsertCount = @InsertCount + 1
+    END	
 {% endhighlight %}
 
 This gives us a good distribution of Status to work with...
@@ -107,13 +107,13 @@ Let's assume the home screen of our application lists all open bugs and this is 
 
 {% highlight sql %}
 SELECT
-	Bugs.Id,
-	Bugs.Title,
-	Bugs.[Description]
+    Bugs.Id,
+    Bugs.Title,
+    Bugs.[Description]
 FROM
-	dbo.Bugs
+    dbo.Bugs
 WHERE
-	Bugs.BugStatus = 1
+    Bugs.BugStatus = 1
 {% endhighlight %}
 
 From this we'll get the following execution plan...
@@ -127,7 +127,6 @@ IMAGE HERE SHOWING IO
 Now let's create a filtered index on BugStatus for just open bugs.
 
 {% highlight sql %}
-
 CREATE NONCLUSTERED INDEX ndx_bugs_bugstatus_open ON dbo.Bugs(BugStatus) 
 WHERE BugStatus = 1
 {% endhighlight %}
