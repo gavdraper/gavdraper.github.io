@@ -21,24 +21,24 @@ Let's setup an example bugs table for our bug tracking software with some exampl
 {% highlight sql %}
 CREATE TABLE dbo.BugStatus
 (
-	Id INT IDENTITY PRIMARY KEY,
-	[Status] NVARCHAR(20)
+    Id INT IDENTITY PRIMARY KEY,
+    [Status] NVARCHAR(20)
 )
 
 INSERT INTO dbo.[BugStatus]([Status])
 VALUES
-	('Open'),
-	('Closed'),
-	('OnHold'),
-	('InTest'),
-	('InProgress')
+    ('Open'),
+    ('Closed'),
+    ('OnHold'),
+    ('InTest'),
+    ('InProgress')
 
 CREATE TABLE dbo.Bugs
 (
-	Id INT IDENTITY PRIMARY KEY,
-	Title NVARCHAR(100),
-	[Description] NVARCHAR(MAX),
-	BugStatus INT FOREIGN KEY REFERENCES dbo.BugStatus(Id)
+    Id INT IDENTITY PRIMARY KEY,
+    Title NVARCHAR(100),
+    [Description] NVARCHAR(MAX),
+    BugStatus INT FOREIGN KEY REFERENCES dbo.BugStatus(Id)
 )
 {% endhighlight %}
 
@@ -53,51 +53,49 @@ INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
 VALUES('Closed Title Blah','My Description',2)
 SELECT @InsertCount = 0
 WHILE @InsertCount < 20
-	BEGIN
-	INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
-	SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 2
-	SET @InsertCount = @InsertCount + 1
-	END
+    BEGIN
+    INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
+    SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 2
+    SET @InsertCount = @InsertCount + 1
+    END
 
 --Add InTest
 INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
 VALUES('In TestTitle Blah','My Description',4)
 SELECT @InsertCount = 0
 WHILE @InsertCount < 3
-	BEGIN
-	INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
-	SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 4
-	SET @InsertCount = @InsertCount + 1
-	END
+    BEGIN
+    INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
+    SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 4
+    SET @InsertCount = @InsertCount + 1
+    END
 
 --Add OnHold
 INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
 VALUES('On Hold Title Blah','My Description',3)
 SELECT @InsertCount = 0
 WHILE @InsertCount < 5
-	BEGIN
-	INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
-	SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 3
-	SET @InsertCount = @InsertCount + 1
-	END
+    BEGIN
+    INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
+    SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 3
+    SET @InsertCount = @InsertCount + 1
+    END
 
 --Add Open
 INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
 VALUES('Open Title Blah','My Description',1)
 SELECT @InsertCount = 0
 WHILE @InsertCount < 7
-	BEGIN
-	INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
-	SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 1
-	SET @InsertCount = @InsertCount + 1
-	END	
+    BEGIN
+    INSERT INTO dbo.Bugs(Title,[Description],BugStatus)
+    SELECT Title,[Description],BugStatus FROM Bugs WHERE BugStatus = 1
+    SET @InsertCount = @InsertCount + 1
+    END	
 {% endhighlight %}
 
 This gives us a good distribution of Status to work with...
 
 ![Group by Result Set]({{site.url}}/content/images/2017-filtered-index/data-distribution.JPG)
-
-Lets now create a NonClustered index on BugStatus on the bugs table...
 
 Let's assume the home screen of our application lists the last 100 raised bugs that have a status of open...
 
@@ -107,7 +105,7 @@ SELECT TOP 100
 	Bugs.Title,
 	Bugs.[Description]
 FROM
-	dbo.Bugs
+    dbo.Bugs
 WHERE
 	Bugs.BugStatus = 1
 ORDER BY id DESC
@@ -118,8 +116,6 @@ From this we'll get the following execution plan...
 ![Execution Plan No Index]({{site.url}}/content/images/2017-filtered-index/execution-plan.JPG)
 
 We can see we're doing a clusted index scan to order by id and filter just the open bugs as expected. Let's look at how many reads are being performed on that index...
-
-IMAGE HERE SHOWING IO
 
 At this point we could create NonClustered index status for the whole table and that would work fine. However we will then be maintaining an index for 99.9% of the table that we're never going to use beause we're only interested in open bugs. This is where a filtered index is a good fit...
 
