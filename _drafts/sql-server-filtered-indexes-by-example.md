@@ -95,7 +95,7 @@ WHILE @InsertCount < 7
 
 This gives us a good distribution of Status to work with...
 
-![Group by Result Set]({{site.url}}/content/images/2017-filered-index/data-distribution.JPG)
+![Group by Result Set]({{site.url}}/content/images/2017-filtered-index/data-distribution.JPG)
 
 Lets now create a NonClustered index on BugStatus on the bugs table...
 
@@ -118,7 +118,7 @@ WHERE
 
 From this we'll get the following execution plan...
 
-![Execution Plan For Normal Index]({{site.url}}/content/images/2017-filered-index/execution-plan.JPG)
+![Execution Plan For Normal Index]({{site.url}}/content/images/2017-filtered-index/execution-plan.JPG)
 
 We can see we're using our NonClustered index to filter just the open bugs as expected. Let's look at how many reads are being performed on that index...
 
