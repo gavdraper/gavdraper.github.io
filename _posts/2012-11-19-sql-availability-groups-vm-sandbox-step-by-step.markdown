@@ -63,7 +63,7 @@ CREATE ENDPOINT dbm_endpoint
     AS TCP (LISTENER_PORT=7022) 
     FOR DATABASE_MIRRORING (ROLE=ALL)
 GO
-{% end highlight %}
+{% endhighlight %}
 <p>We then need an endpoint on SQL2 (Secondary), to do this run the following query on SQL2</p>
 
 {% highlight sql %}
