@@ -1,6 +1,6 @@
 ---
 layout: page
-title: SQL Articles
+title: SQL Server Articles
 permalink: /sql/
 ---
 ## Foundations ##
