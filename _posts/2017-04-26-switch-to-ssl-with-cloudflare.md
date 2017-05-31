@@ -18,30 +18,39 @@ So you've got an existing site on a host and you've got a domain name registered
 Sign up for a CloudFlare account and follow the below steps...
 
 1. Enter your domain name...
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-1.png)
 
 1. All being well all your DNS records will be picked up and imported into CloudFlare. If for some reason they're not then you can manually add them later
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-2.png)
 
 1. A business plan is selected by default, change that to the free plan. 
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-3.png)
 
 1. The next screen gives you the details or where you need to point your domains namesevers. 
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-4.png)
 
 1. In my case my domain is on Fasthosts so the change on the FastHosts control panel looks like this. It should be pretty similar no matter who the domain is with.
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/fasthosts-1.png)
 
 1. The overview page on CloudFlare will change to active once the nameserver change has reached cloudflare. 
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-5.png)
 
 1. SSL took a few hours to enable for me  but you can check this on the Crypto tab in CloudFlare. 
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-6.png)
 
 1. At the bottom of the screen if you want HTTP resources rewritten to HTTPS without having to change the site then switch this setting on... 
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-7.png)
 
 1. Lastly you can optionally create a page rule to divert al HTTP traffic to HTTPS 
+
     ![CloudFlareScreenshot]({{site.url}}/content/images/2017-cloudflare-ssl/cloudflare-8.png)
 
 And... We're done.
