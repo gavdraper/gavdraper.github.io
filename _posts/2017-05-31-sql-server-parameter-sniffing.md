@@ -120,7 +120,8 @@ Yay! We're now using an index seek. If we look at the estimated query cost for M
 ## Preventing Problems Caused By Parameter Sniffing ##
 There are several different things we can do when we find we have a parameter sniffing issue...
 
-1. Use the WITH RECOMPILE hint to force the procedure to always compile on run, generating a new plan each time
+### WITH RECOMPILE Hint ###
+Use the WITH RECOMPILE hint to force the procedure to always compile on run, generating a new plan each time
 
 {% highlight sql %}
 ALTER PROCEDURE GetUsersByPlaceOfBirth
@@ -142,8 +143,7 @@ WHERE
 
 This obviously has an overhead of constant recompilations which depending on the complexity of the query and the frequency it's run could cause other issues.
 
-2.  Use the OPTIMIZE FOR UNKNOWN query hint
-
+### OPTIMIZE FOR UNKNOWN Hint ###
 {% highlight sql %}
 ALTER PROCEDURE GetUsersByPlaceOfBirth
 (
@@ -164,8 +164,7 @@ OPTION (OPTIMIZE FOR (@PlaceOfBirth UNKNOWN))
 
 This tells SQL to generate a plan without looking at the parameter. This may or may not create a better generic plan, for the most part I find this generates non optimal plans. In the case of our example above it actually ends up generating the clustered index scan plan so doesn't change anything.
 
-3. Use the OPTIMIZE FOR x query hint
-
+### OPTIMIZE FOR x Hint ###
 {% highlight sql %}
 ALTER PROCEDURE GetUsersByPlaceOfBirth
 (
@@ -186,7 +185,8 @@ OPTION (OPTIMIZE FOR (@PlaceOfBirth = 'Mars'))
 
 This will force SQL Server  to use the plan that works best for the value Mars, in this case it will make our UK query very inefficient, which may be ok if that's a query that is very rarely used and we want to optimize for the value that gets executed the most.
 
-4.  Use separate queries for the data that falls outside the normal range. For example PlaceOfBirth Mars clearly differs in cardinality from most of the other data. In this case we could have 2 procedures GetUsersByPlaceOfBirthMars and keep our existing GetUsersByPlaceOfBirth. Any queries for Mars go through the new procedure. This way we get all the benefits of a cached optimized plan but take the hit by having to maintain multiple procedures.
+### Seperate Queries ###
+Use separate queries for the data that falls outside the normal range. For example PlaceOfBirth Mars clearly differs in cardinality from most of the other data. In this case we could have 2 procedures GetUsersByPlaceOfBirthMars and keep our existing GetUsersByPlaceOfBirth. Any queries for Mars go through the new procedure. This way we get all the benefits of a cached optimized plan but take the hit by having to maintain multiple procedures.
 
 ## Fixing A Parameter Sniffing Issue In Production ##
 Often these issues get reported by users saying queries are timing out, in this scenario we often need to just get the query running again before we start looking at the best plan of attack for preventing the issue. 
