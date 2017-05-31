@@ -228,5 +228,7 @@ If we then expand the Query Store node inside our Database in Management Studio 
 
 Just at a glance we can see this query has used 2 different plans, one of which seems to perform better. There is a chance this is caused by parameter sniffing. From here we can Shift and click each plan then click compare to see what the differenes are and what parameter values they were compiled for. We can also pick a plan and click the Force button to force that plan to be used, this is a good quick fix to get a query running again that is currently suffering from parameter sniffing. 
 
+For version before 2016 we can use views like sys.dm_exec_query_stats query_stats mentioned above and run them on an interval logging things like elapsed time and look for refressions that way. The query store just makes this process a lot easier.
+
 ## Summary ##
 To summarize for the most part parameter sniffing is an optimization and allows plans to be cached. When we do have issues due to parameter sniffing there are several options described above to fix and prevent the issue, all of which have various trade offs. It's all about choosing the best option for your usage. Good Luck! 
