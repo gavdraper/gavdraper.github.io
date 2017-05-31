@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Parameter Sniffing
-date: '2017-05-22 07:20:38'
+date: '2017-05-31 08:38'
 ---
 If you've ever search for SQL Server parameter sniffing you've probably read all sorts of bad things about it. In truth parameter sniffing is an optimization technique SQL uses when compiling query plans and for the most part it works well and significantly improves overall performance vs not using parameter sniffing. We are going to look at some examples here where parameter sniffing does cause a problem and how to solve it.
 
@@ -82,7 +82,7 @@ Let's then execute that procedure with actual query plan enabled and see what it
 EXEC dbo.GetUsersByPlaceOfBirth @PlaceOfBirth = 'UK'
 {% endhighlight %}
 
-![Execution Plan filtered Index]({{site.url}}/content/images/2017-parameter-sniffing/queryplan-tablescan.JPG)
+![Tablescan Query Plan]({{site.url}}/content/images/2017-parameter-sniffing/queryplan-tablescan.JPG)
 
 We can see here that even though we have a NonClustered index on PlaceOfBirth the query optimizer has choosen to do a full clustered index scan. This is because it will have looked at the statistics for the PlaceOfBirth column and seen that pretty much every row matches our parameter and decided a table scan is quicker than an index seek with 655,000 key lookups.
 
@@ -92,7 +92,7 @@ What do you think will happen if we run the same procedure with a parameter of M
 EXEC dbo.GetUsersByPlaceOfBirth @PlaceOfBirth = 'Mars'
 {% endhighlight %}
 
-![Execution Plan filtered Index]({{site.url}}/content/images/2017-parameter-sniffing/queryplan-tablescan.JPG)
+![Tablescan Query Plan]({{site.url}}/content/images/2017-parameter-sniffing/queryplan-tablescan.JPG)
 
 Not what you expected? Why would the optimizer choose to do a full clustered index scan of 655,000 records rather than seeking straight to the one matching row? If you havent guessed this is down to parameter sniffing.
 
@@ -113,14 +113,9 @@ No lets run our stored procedure again for Mars...
 EXEC dbo.GetUsersByPlaceOfBirth @PlaceOfBirth = 'Mars'
 {% endhighlight %}
 
-![Execution Plan filtered Index]({{site.url}}/content/images/2017-parameter-sniffing/queryplan-index-seek.JPG)
+![Index Seek Query Plan]({{site.url}}/content/images/2017-parameter-sniffing/queryplan-index-seek.JPG)
 
 If we look at the estimated query cost for Mars before we cleared the cache vs after we can see we've gone from 9.35973 to 0.0065704.
-
-## Spotting Parameter Sniffing At Work ##
-Normally these issues are spotted by a user reporting that a query has suddenly started going very slow, this is typically triggered by the first run of a given query on a clean cache using parameters that are outside the normal range for the shape of the data. 
-
-There are however some ways we can try to spot these issues before they get reported....
 
 ## Preventing Problems Caused By Parameter Sniffing ##
 There are several different things we can do when we find we have a parameter sniffing issue...
@@ -214,13 +209,24 @@ ORDER BY
 	query_stats.last_execution_time DESC
 {% endhighlight %}
 
-![Execution Plan filtered Index]({{site.url}}/content/images/2017-parameter-sniffing/plan_handle.JPG)
+![Plan Handle Query]({{site.url}}/content/images/2017-parameter-sniffing/plan_handle.JPG)
 
 From that we can run FREEPROCCACHE with our plan handle we want to remove...
 
 {% highlight sql %}
 DBCC FREEPROCCACHE(0x05000B00CDC1731290A264790400000001000000000000000000000000000000000000000000000000000000)
 {% endhighlight %}
+
+## Using The Query Store To Spot Bad Parameter Sniffing ##
+Normally these issues are spotted by a user reporting that a query has suddenly started going very slow, this is typically triggered by the first run of a given query on a clean cache using parameters that are outside the normal range for the shape of the data. 
+
+SQL Server 2016 Introduced the Query Store which gives us much more information into query plan usage. You need to enable the Query Store which can be done from Management Studio by going to the database properties then on the Query Store tab set the operation mode to Read/Write.
+
+If we then expand the Query Store node inside our Database in Management Studio we can look at the Regressed Queries report...
+
+![Regressed Query Report]({{site.url}}/content/images/2017-parameter-sniffing/regressed-queries.JPG)
+
+Just at a glance we can see this query has used 2 different plans, one of which seems to perform better. There is a chance this is caused by parameter sniffing. From here we can Shift and click each plan then click compare to see what the differenes are and what parameter values they were compiled for. We can also pick a plan and click the Force button to force that plan to be used, this is a good quick fix to get a query running again that is currently suffering from parameter sniffing. 
 
 ## Summary ##
 To summarize for the most part parameter sniffing is an optimization and allows plans to be cached. When we do have issues due to parameter sniffing there are several options described above to fix and prevent the issue, all of which have various trade offs. It's all about choosing the best option for your usage. Good Luck! 
