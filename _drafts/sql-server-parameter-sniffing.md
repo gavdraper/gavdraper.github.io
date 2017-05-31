@@ -117,4 +117,110 @@ EXEC dbo.GetUsersByPlaceOfBirth @PlaceOfBirth = 'Mars'
 
 If we look at the estimated query cost for Mars before we cleared the cache vs after we can see we've gone from 9.35973 to 0.0065704.
 
-## What Can You Do About It? ##
+## Spotting Parameter Sniffing At Work ##
+Normally these issues are spotted by a user reporting that a query has suddenly started going very slow, this is typically triggered by the first run of a given query on a clean cache using parameters that are outside the normal range for the shape of the data. 
+
+There are however some ways we can try to spot these issues before they get reported....
+
+## Preventing Problems Caused By Parameter Sniffing ##
+There are several different things we can do when we find we have a parameter sniffing issue...
+
+* Use the WITH RECOMPILE hint to force the procedure to always compile on run, generating a new plan each time
+
+{% highlight sql %}
+ALTER PROCEDURE GetUsersByPlaceOfBirth
+(
+	@PlaceOfBirth NVARCHAR(100)
+)
+WITH RECOMPILE
+AS
+SELECT 
+	Username,
+	FirstName,
+	LastName,
+	PlaceOfBirth
+FROM
+	[dbo].[User]
+WHERE
+	PlaceOfBirth = @PlaceOfBirth
+{% endhighlight %}
+
+This obviously has an overhead over constant recompilations which depending on the complexity of the query and the frequency it's run could cause other issues.
+
+* Use the OPTIMIZE FOR UNKNOWN query hint
+
+{% highlight sql %}
+ALTER PROCEDURE GetUsersByPlaceOfBirth
+(
+	@PlaceOfBirth NVARCHAR(100)
+)
+
+AS
+SELECT 
+	Username,
+	FirstName,
+	LastName,
+	PlaceOfBirth
+FROM
+	[dbo].[User]
+WHERE
+	PlaceOfBirth = @PlaceOfBirth
+OPTION (OPTIMIZE FOR (@PlaceOfBirth UNKNOWN))
+{% endhighlight %}
+
+This tells SQL to generate a plan without looking at the parameter. Although this will probably end up generating a non optimal plan. In the case of our example above it actually ends up generating the clustered index scan plan so doesnt change anything.
+
+* Use the OPTIMIZE FOR x query hint
+
+{% highlight sql %}
+ALTER PROCEDURE GetUsersByPlaceOfBirth
+(
+	@PlaceOfBirth NVARCHAR(100)
+)
+
+AS
+SELECT 
+	Username,
+	FirstName,
+	LastName,
+	PlaceOfBirth
+FROM
+	[dbo].[User]
+WHERE
+	PlaceOfBirth = @PlaceOfBirth
+OPTION (OPTIMIZE FOR (@PlaceOfBirth = 'Mars'))
+{% endhighlight %}
+
+This will force SQL to use the plan that works best for the value Mars, in this case it will make our UK query very inefficient, which may be ok if that's a query that is very rarely used and we want to optimize for the value that get executed the most.
+
+* Use seperate querys for the data that falls outside the normal range. For example PlaceOfBirth Mars clearly sits differs from most of the other data. In this case we could have 2 procedures GetUsersByPlaceOfBirthMars and keep our existing GetUsersByPlaceOfBirth. Any queries for Mars go through the new procedure. This way we get all the benefits of a cached optimized plan and take the hit by having to maintain multiple procedures.
+
+## Fixing A Parameter Sniffing Issue In Proction ##
+Often these issues a reporting by users as queries timing out, in this scenario we often need to just get the query running again before we start looking at the best plan of attack for preventing the issue. 
+
+In the demos above I used DBCC FREEPROCCACHE to clear the cache, in production this is almost never a good idea as it will clear all plans from the cache causing the server to take a sudden hit recompiling everything. It is however an option that will most likely fix the issue.
+
+You can also pass in a plan handle to FREEPROCCACHE to just clear a single plan from the cache, this is a must more lightweight option and if you have the plan handle this is probably the best option. You can find the plan handle by querying the sys.dm_exec_query_stats view...
+
+{% highlight sql %}
+SELECT 
+	query_stats.plan_handle, 
+	query_stats.last_execution_time, 
+	query_text.text
+FROM 
+   sys.dm_exec_query_stats query_stats
+   CROSS APPLY sys.dm_exec_sql_text (query_stats.[sql_handle]) AS query_text
+ORDER BY 
+	query_stats.last_execution_time DESC
+{% endhighlight %}
+
+![Execution Plan filtered Index]({{site.url}}/content/images/2017-parameter-sniffing/plan_handle.JPG)
+
+From that we can run FREEPROCCACHE with our plan handle we want to remove...
+
+{% highlight sql %}
+DBCC FREEPROCCACHE(0x05000B00CDC1731290A264790400000001000000000000000000000000000000000000000000000000000000)
+{% endhighlight %}
+
+## Summary ##
+To summarize for the most part parameter sniffing is an optimization and allows plans to be cached. When we do have issues due to parameter sniffing there are several options described above to fix and prevent the issue, all of which have various trade offs. It's all about choosing the best option for your usage. Good Luck! 
