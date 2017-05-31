@@ -21,7 +21,7 @@ permalink: /sql/
 * [Introduction To Indexes](https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/)
 * [Filtered Indexes](https://gavindraper.com/2017/05/30/sql-server-filtered-indexes-by-example/)
 * [Introduction To Statistics](https://gavindraper.com/2017/05/22/sql-server-into-to-statistics/)
-* [Parameter Sniffing In Depth](https://gavindraper.com/2017/05/22/sql-server-parameter-sniffing/)
+* [Parameter Sniffing In Depth](https://gavindraper.com/2017/05/31/sql-server-parameter-sniffing/)
 
 ## Administration ##
 * [Setting up Availability Groups](https://gavindraper.com/2012/11/19/sql-availability-groups-vm-sandbox-step-by-step/)
