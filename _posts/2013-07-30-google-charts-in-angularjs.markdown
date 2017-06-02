@@ -6,7 +6,7 @@ date: '2013-07-30 09:28:16'
 
 <p>I recently rewrote a small webpage in AngularJs and it was amazing how much lighter and cleaner it made the code. The conversion was mainly a case of me throwing away most of the code and adding a couple of lines of AngularJs. This was all very simple until I got to some Google Charts, at this point I had the option of leaving them as they were or converting them into AngularJs directives. I went with the directives option to keep everything in one place and work with the existing models I already have in my scope.</p> <p>The next decision was whether or not to have the charts&nbsp; automatically re-render when the model changes. In this case I chose not to do that as I decided flashing charts every time the model changes would be annoying to the user. If you did however choose to go this route it should be quite simple using $watch on your datatables to tell the graph when to redraw.</p> <p>Take this simple page as an example</p>
 
-```language-markup
+{% highlight html %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,11 +26,12 @@ date: '2013-07-30 09:28:16'
         <div google-chart="LineChart" ng-model="data3" class="smallGraph"></div>
     </body>
 </html>
-```
+{% endhighlight %}
+
 <p>Hopefully this looks fairly simple. If you’ve used AngularJs before you might notice the absence of ng-app, this reason for this is if Angular runs before the Google Charts have loaded nothing they wont render. So I’ve had to&nbsp; manually instantiate the Angular app later once Google Charts are ready. </p>
 <p>I put the main Angular module in main.js and it’s in here where I instantiate Angular and create some hard coded datatables for the charts to run on.</p>
 
-```language-javascript
+{% highlight javascript %}
  "use strict";
 
 /*We need to manually start angular as we need to
@@ -39,7 +40,6 @@ google.setOnLoadCallback(function () {
     angular.bootstrap(document.body, ['my-app']);
 });
 google.load('visualization', '1', {packages: ['corechart']});
-
 
 var myApp = myApp || angular.module("my-app",["google-chart"]);
 
@@ -70,10 +70,11 @@ myApp.controller("IndexCtrl",function($scope){
     $scope.data3.dataTable.addRow(["Test2",2]);
     $scope.data3.dataTable.addRow(["Test3",3]);
 });
-```
+{% endhighlight %}
+
 <p>The next step was to add the logic that knows what to do with the “google-chart” attributes on the charting divs in the view. This is where Angular directives come in. I created a directive that matches on this attribute and creates the chart. In this case I put the directive in its own Angular module in a file called ngGoogleCharts.js</p>
 
-```language-javascript
+{% highlight javascript %}
 "use strict";
 
 var googleChart = googleChart || angular.module("google-chart",[]);
@@ -93,5 +94,6 @@ googleChart.directive("googleChart",function(){
         }
     }
 });
-```
+{% endhighlight %}
+
 <p>It’s a very simple example but should serve as a good starting point for using AngularJs directives to render Google Charts. </p>
