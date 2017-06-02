@@ -13,9 +13,11 @@ For my starting point I’ve configured 2 VM’s both running Windows Server 201
 ## Installing AD FS ## 
 1. On the domain controller open the Server Manager  
 1. When you get to the screen listing the roles tick “Active Directory Federation Services”
+    
     <img title="Roles" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="Picture of Roles in Wizard" src="/content/images/WPImport/2013/01/image.png" width="358" height="207">  
 1. Make sure “Include Management Tools” is ticked and click “Add Features”  
 1. When you get here tick the following option
+    
     <img title="Role Services" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="Picture of role services" src="/content/images/WPImport/2013/01/image1.png" width="520" height="267">  
 1. Click next through the installer until it’s finished. 
 
@@ -26,6 +28,7 @@ efore we start the AD FS configuration wizard we need an SSL certificate. AD FS 
 1. Open IIS
 1. Select the server node on the left 
 1. Open “Server Certificates” in the features view 
+    
     <img title="IIS Server Features" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="Pictur eOf IIS Features View " src="/content/images/WPImport/2013/01/image2.png" width="379" height="306">  
 1. Click “Create Self Signed Certificate”  
 1. Choose a certificate name and click OK  
@@ -46,6 +49,7 @@ efore we start the AD FS configuration wizard we need an SSL certificate. AD FS 
 1. Select “Create a new Federation Service” and click next  
 1. Select “Stand-alone federation server” and click next  
 1. The certificate we just created should be automatically selected, click next
+    
     <img title="AD FS Certificate" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="Picture of AD FS wizard showing certificate" src="/content/images/WPImport/2013/01/image3.png" width="469" height="262">  
 1. Click next and wait for the install to finish then click close 
 
@@ -65,6 +69,7 @@ Still in AD FS Management do the following…
 1. Choose a rule name (MyClaims will do)  
 1. Set the attribute store to Active Directory  
 1. Add a couple of mapped claims, anything that has information in Active Directory will do
+    
     <img title="Claims" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="Image of AD FS claims set up" src="/content/images/WPImport/2013/01/image4.png" width="521" height="349">  <li>Click finish then OK 
 
 ## Installing The Client Certificates ##
