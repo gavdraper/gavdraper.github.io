@@ -53,7 +53,7 @@ efore we start the AD FS configuration wizard we need an SSL certificate. AD FS 
 1. Select “Stand-alone federation server” and click next  
 1. The certificate we just created should be automatically selected, click next
     
-    <img title="AD FS Certificate" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="Picture of AD FS wizard showing certificate" src="/content/images/WPImport/2013/01/image3.png" width="469" height="262">  
+    ![AD FS Certificate]({{site.url}}/content/images/WPImport/2013/01/image3.png)    
 1. Click next and wait for the install to finish then click close 
 
 <u>Relying Party Configuration</u>
@@ -74,7 +74,7 @@ Still in AD FS Management do the following…
 1. Set the attribute store to Active Directory  
 1. Add a couple of mapped claims, anything that has information in Active Directory will do
     
-    <img title="Claims" style="border-left-width: 0px; border-right-width: 0px; background-image: none; border-bottom-width: 0px; padding-top: 0px; padding-left: 0px; display: inline; padding-right: 0px; border-top-width: 0px" border="0" alt="Image of AD FS claims set up" src="/content/images/WPImport/2013/01/image4.png" width="521" height="349">  
+    ![Claims]({{site.url}}/content/images/WPImport/2013/01/image4.png)        
 1. Click finish then OK 
 
 ## Installing The Client Certificates ##
