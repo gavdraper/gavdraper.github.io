@@ -14,10 +14,12 @@ For my starting point I’ve configured 2 VM’s both running Windows Server 201
 1. On the domain controller open the Server Manager  
 1. When you get to the screen listing the roles tick “Active Directory Federation Services”
     
+
     ![Roles]({{site.url}}/content/images/WPImport/2013/01/image.png)
 1. Make sure “Include Management Tools” is ticked and click “Add Features”  
 1. When you get here tick the following option
     
+
     ![Role Services]({{site.url}}/content/images/WPImport/2013/01/image1.png)
 1. Click next through the installer until it’s finished. 
 
@@ -28,6 +30,7 @@ efore we start the AD FS configuration wizard we need an SSL certificate. AD FS 
 1. Open IIS
 1. Select the server node on the left 
 1. Open “Server Certificates” in the features view 
+    
     
     ![IIS Server Features]({{site.url}}/content/images/WPImport/2013/01/image2.png)    
 1. Click “Create Self Signed Certificate”  
