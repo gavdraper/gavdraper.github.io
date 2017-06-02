@@ -22,25 +22,11 @@ CREATE TABLE dbo.Employee
 )
 
 INSERT INTO dbo.Employee
-    (
-    FirstName,
-    LastName,
-    WorkPhone,
-    WorkEmail,
-    Salary, 
-    PersonalPhone, 
-    PersonalEmail
-    )
+    (FirstName, LastName, WorkPhone, WorkEmail, 
+    Salary, PersonalPhone, PersonalEmail)
 VALUES
-    (
-    'Joe',
-    'Bloggs',
-    '+44 0454 4543',
-    'joe@work.com',
-    44000,
-    '+44 284 4953',
-    'joe@home.com'
-    )
+    ('Joe', 'Bloggs', '+44 0454 4543', 'joe@work.com',
+    44000, '+44 284 4953', 'joe@home.com')
 {% endhighlight %}
 
 If we then run a select statement against the new table we get this...
