@@ -1,9 +1,9 @@
 ---
 layout: post
-title: SQL Server Excessive Bad Page Process Waits
-date: '2017-06-03 16:47:47'
+title: SQL Server Debugging BAD_PAGE_PROCESS Waits
+date: '2017-06-03 08:47:47'
 ---
-I was recently debugging a slow running SQL instance, when checking the wait stats I noticied a lot of BAD_PAGE_PROCESS waits...
+I was recently debugging a slow running SQL instance, when checking the wait stats I noticed a lot of BAD_PAGE_PROCESS waits...
 
 {% highlight sql %}
 SELECT * FROM sys.dm_os_wait_stats ORDER BY wait_type
@@ -11,29 +11,29 @@ SELECT * FROM sys.dm_os_wait_stats ORDER BY wait_type
 
 ![Wait Stats]({{site.url}}/content/images/2017-bad-page-process/waits.JPG)
 
-The MSDN decription of this wait type is 
+The MSDN description of this wait type is 
 
 > Occurs when the background suspect page logger is trying to avoid running more than every five seconds. Excessive suspect pages cause the logger to run frequently.
 
-One of the first things to check with this is which database is causing the wait, for this you can query the suspect_pages table in msdb.
+My initial reaction after seeing this was to track down which database had the bad pages using the suspect_pages table in msdb.
 
 {% highlight sql %}
 SELECT 
-	DB_NAME(database_id) Db,
-	file_id,
-	page_id,
-	event_type,
-	error_count,
-	last_update_date
+    DB_NAME(database_id) Db,
+    file_id,
+    page_id,
+    event_type,
+    error_count,
+    last_update_date
 FROM  
-	msdb.dbo.suspect_pages
+    msdb.dbo.suspect_pages
 {% endhighlight %}
 
-This will then list the database with suspect pages and how many there are.
+From here we get a list of database with bad pages and an indication of how spread the issue is.
 
 ![Suspect Pages]({{site.url}}/content/images/2017-bad-page-process/page-errors.JPG)
 
-In my case there was a single database with a number of suspect pages. From here if you want to know more you can run the following statement on the databae in question...
+In my case there was a single database with a number of suspect pages. From here if you want to know more you can run the following statement on the database in question...
 
 {% highlight sql %}
 DBCC CHECKDB
@@ -45,4 +45,4 @@ Looking at that error is suggests it may be possible to repair the database usin
 
 ![Good DBCC CheckDb]({{site.url}}/content/images/2017-bad-page-process/checkdb.JPG)
 
-One take away from this is if you have corrupt pages and don't realise then you could end up backing them up which makes rolling back a lot harder. Depending on your workload and backup schedule it may be worth running CheckDB before each backup. 
+One take away from this is if you have corrupt pages and don't realise then you could end up backing them up which makes rolling back a lot harder. Depending on your workload and backup schedule it's almost certainly worth running CheckDB before each backup. 
