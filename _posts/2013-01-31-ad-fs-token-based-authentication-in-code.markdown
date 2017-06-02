@@ -31,7 +31,7 @@ efore we start the AD FS configuration wizard we need an SSL certificate. AD FS 
 1. Select the server node on the left 
 1. Open “Server Certificates” in the features view 
     
-    
+
     ![IIS Server Features]({{site.url}}/content/images/WPImport/2013/01/image2.png)    
 1. Click “Create Self Signed Certificate”  
 1. Choose a certificate name and click OK  
@@ -57,6 +57,7 @@ efore we start the AD FS configuration wizard we need an SSL certificate. AD FS 
 1. Click next and wait for the install to finish then click close 
 
 <u>Relying Party Configuration</u>
+
 Still in AD FS Management do the following…
 1. Under AD FS/Trust Relationships/Relying Party Trusts click “Add Relying Party Trust…” 
 1. Select “Enter data manually” and click next  
