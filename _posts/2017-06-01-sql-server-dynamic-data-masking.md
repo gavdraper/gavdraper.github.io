@@ -3,11 +3,9 @@ layout: post
 title: SQL Server Dynamic Data Masking In Action
 date: '2017-06-01 21:05:38'
 ---
-
-## What Is Dynamic Data Masking ##
 One of the new features SQL Server 2016 introduced is Dynamic Data Masking. This feature allows sensitive data to be masked at the database layer with no changes to the application.
 
-## In Action ##
+## Demo Time ##
 Run the following script in a new database to setup a sample table.
 
 {% highlight sql %}
