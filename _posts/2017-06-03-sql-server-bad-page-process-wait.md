@@ -41,7 +41,7 @@ DBCC CHECKDB
 
 ![Bad DBCC CheckDb]({{site.url}}/content/images/2017-bad-page-process/dbcc-errors.JPG)
 
-Looking at that error is suggests it may be possible to repair the database using DBCC CHECKDB (dbNName, REPAIR_ALLOW_DATA_LOSS), doing this will involve an unknown amount of data being lost. In my case and I would guess in most cases in this situation the safest thing to do is to restore the most recent backup. After resotring  the most recent backup of the database from a couple of hours ago, I ran DBCC CHECKDB and all was good again.
+Looking at that error it suggests it may be possible to repair the database using DBCC CHECKDB (dbNName, REPAIR_ALLOW_DATA_LOSS), doing this will involve an unknown amount of data being lost. In my case and I would guess in most cases in this situation the safest thing to do is to restore the most recent backup. After resotring  the most recent backup of the database from a couple of hours ago, I ran DBCC CHECKDB and all was good again.
 
 ![Good DBCC CheckDb]({{site.url}}/content/images/2017-bad-page-process/checkdb.JPG)
 
