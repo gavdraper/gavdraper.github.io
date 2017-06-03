@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Debugging BAD_PAGE_PROCESS Waits
-date: '2017-06-03 08:47:47'
+date: '2017-06-03 06:47:47'
 ---
 I was recently debugging a slow running SQL instance, when checking the wait stats I noticed a lot of BAD_PAGE_PROCESS waits...
 
