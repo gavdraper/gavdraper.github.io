@@ -22,6 +22,7 @@ permalink: /sql/
 * [Filtered Indexes](https://gavindraper.com/2017/05/30/sql-server-filtered-indexes-by-example/)
 * [Introduction To Statistics](https://gavindraper.com/2017/05/22/sql-server-into-to-statistics/)
 * [Parameter Sniffing In Depth](https://gavindraper.com/2017/05/31/sql-server-parameter-sniffing/)
+* [SQL Server Debugging BAD_PAGE_PROCESS Waits](https://gavindraper.com/2017/06/03/sql-server-bad-page-process-wait/)
 
 ## Administration ##
 * [Setting up Availability Groups](https://gavindraper.com/2012/11/19/sql-availability-groups-vm-sandbox-step-by-step/)
