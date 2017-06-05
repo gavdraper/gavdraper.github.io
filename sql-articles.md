@@ -3,6 +3,17 @@ layout: page
 title: SQL Server Articles
 permalink: /sql/
 ---
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- responsive -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3340370932015278"
+     data-ad-slot="3710942441"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 ## Foundations ##
 * [Isolation Levels Explained With Examples](https://gavindraper.com/2012/02/18/sql-server-isolation-levels-by-example/)
 * [Data Warehousing Concepts](https://gavindraper.com/2017/05/14/sql-data-warehouse-explained/)
