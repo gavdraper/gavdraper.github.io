@@ -68,6 +68,16 @@ EXEC sp_setapprole 'AccountsAppRole', '(Acc123)'
 SELECT * FROM Accounts.AccountsTable
 {% endhighlight  %}
 
-The select will then work as we've now got permission through the application role. When you authenticate as an Application Role with sp_setapprole you will stay in that role until you either disconnect or you call sp_unsetapprole. 
+The select will then work as we've now got permission through the application role. When you authenticate as an Application Role with sp_setapprole you will stay in that role until you either disconnect or you call sp_unsetapprole. To use unsetapprole you need to store a cooke from when you set the role and use that cookie to unset it...
+
+{% highlight sql %}
+DECLARE @cookie VARBINARY(8000)
+EXEC sp_setapprole 'AccountsAppRole', '(Acc123)', @fCreateCookie = true,  @cookie = @cookie OUTPUT;
+SELECT * FROM Accounts.AccountsTable
+EXEC sp_unsetapprole @cookie; 
+SELECT * FROM Accounts.AccountsTable
+{% endhighlight %}
+
+In this case the first select will work as we're in the Accounts Application Role but the second will fail because we've left the role.
 
 Whilst not the most elegant solution it does provide another line of security for sensitive tables that you don't want all users to have access to. 
