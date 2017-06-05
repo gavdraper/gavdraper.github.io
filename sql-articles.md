@@ -39,7 +39,8 @@ permalink: /sql/
 * [Setting up Availability Groups](https://gavindraper.com/2012/11/19/sql-availability-groups-vm-sandbox-step-by-step/)
 
 ## Security ##
-* [SQL Server Dynamic Data Masking In Action](https://gavindraper.com/2017/06/01/sql-server-dynamic-data-masking/)
+* [Dynamic Data Masking In Action](https://gavindraper.com/2017/06/01/sql-server-dynamic-data-masking/)
+* [Application Roles](https://gavindraper.com/2017/06/05/sql-server-application-roles/)
 
 ## Scripts ##
 * [Cloning A Database](https://gavindraper.com/2014/03/01/cloning-a-sql-server-database/)
