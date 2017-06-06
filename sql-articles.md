@@ -27,7 +27,7 @@ permalink: /sql/
 * [Dynamic Pivot](https://gavindraper.com/2017/05/07/sql-server-dynamic-pivot/)
 * [Handling JSON](https://gavindraper.com/2017/05/06/sql-server-json/)
 * [CROSS APPLY](https://gavindraper.com/2017/05/03/cross-apply-is-awesome/)
-
+* [SQL Server 2016 What's New With TSQL](https://gavindraper.com/2017/06/06/sql-server-2016-tsql-whats-new/)
 ## Tuning ## 
 * [Introduction To Indexes](https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/)
 * [Filtered Indexes](https://gavindraper.com/2017/05/30/sql-server-filtered-indexes-by-example/)
