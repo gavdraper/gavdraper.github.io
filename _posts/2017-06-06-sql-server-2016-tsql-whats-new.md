@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server 2016 What's New With TSQL
-date: '2017-06-03 16:47:47'
+date: '2017-06-06 08:20:47'
 ---
 
 ## DROP IF EXISTS ##
@@ -48,7 +48,7 @@ Will produce
 > this\r\nis\r\na\r\ntest
 
 ## JSON Functions ##
-A number of functions for working JSON have been introducded including...
+A number of functions for working JSON have been introduced including...
 
 * JSON_VALUE
 * JSON_QUERY
