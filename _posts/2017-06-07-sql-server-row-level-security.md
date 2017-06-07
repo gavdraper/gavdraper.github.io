@@ -54,6 +54,8 @@ AS
 SELECT * FROM dbo.Staff --WHERE ClientId = @ClientId
 {% endhighlight %}
 
+What happens if we then run this procedure again?
+
 ![All Staff]({{site.url}}/content/images/2017-row-security/all-staff.JPG)
 
 Oops, Client A can  now see Client B's data. This is a fairly simple example but the more complex the system the easier it is for bugs like this to creep in. Row level security can help combat this by making sure the database user for Client A can never see Client B's data and vise versa.
