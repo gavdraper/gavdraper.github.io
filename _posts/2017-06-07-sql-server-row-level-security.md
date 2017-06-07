@@ -1,11 +1,11 @@
 ---
 layout: post
-title: SQL Server 2016 Row Level Security
-date: '2017-06-07 16:47:47'
+title: SQL Server 2016 Row Level Security In Action
+date: '2017-06-07 08:35:47'
 ---
-Row Level security was introduced with SQL Server 2016 and allows us to specify predicates for what rows can be accessed.
+Row Level security was introduced with SQL Server 2016 and allows us to specify predicates for what rows can be accessed in the context of for example the logged in user.
 
-For the example in this post imagine we have a multitenant database and currently the walls that stop Client A seeing Client B's data are all in the application code. This means any bug in that application code could mean a client gets shown another clients data. With Row Level security we can lock this down by saying all data in Table X with a client id of 1 can only be seen by the user Client A. Let's set this up...
+For the example in this post imagine we have a multi tenant database and currently the walls that stop Client A seeing Client B's data are all in the application layer. This means any bug in that application code could mean a client gets shown another clients data (Clients don't like this). With Row Level security we can add another line of defense against this by saying all data in Table X with a client id of 1 can only be seen by the database user ClientA. Let's set this up...
 
 {% highlight sql %}
 CREATE TABLE dbo.Staff
@@ -43,7 +43,7 @@ EXEC dbo.GetAllStaff @ClientId = 1
 
 ![Staff By Client]({{site.url}}/content/images/2017-row-security/staff-by-client.JPG)
 
-Let's then imagine that as part of a change the WHERE ClientId = @ClientId part of our procedure gets accidently commented out and released to production.
+Let's then imagine that as part of a change the WHERE ClientId = @ClientId part of our procedure gets accidentally commented out and released to production.
 
 {% highlight sql %}
 CREATE PROCEDURE dbo.GetAllStaff
@@ -56,9 +56,9 @@ SELECT * FROM dbo.Staff --WHERE ClientId = @ClientId
 
 ![All Staff]({{site.url}}/content/images/2017-row-security/all-staff.JPG)
 
-Oops, Client A and now see Client B's data. This is a fairly simple example but the more complex the system the easier it is for bugs like this to creep in. Row level security can help combat this by making sure the database user for Client A can never see Client B's data and vise versa.
+Oops, Client A can  now see Client B's data. This is a fairly simple example but the more complex the system the easier it is for bugs like this to creep in. Row level security can help combat this by making sure the database user for Client A can never see Client B's data and vise versa.
 
-Let's look at looking this down...
+Let's look at locking this down...
 
 For the sake of the demo I'm going to create 2 users without logins to represent Client A and Client B, in the real world you would create logins too and have your application use the relevant login depending on the client...
 
@@ -101,7 +101,7 @@ RETURN
         Staff.ClientId = @ClientId
 {% endhighlight %}
 
-Lastly we need to apply this predicate to our table so it get's run when data is requested...
+Lastly we need to apply this predicate to our table so it's run when data is requested...
 
 {% highlight sql %}
 CREATE SECURITY POLICY StaffByClient
@@ -110,7 +110,7 @@ CREATE SECURITY POLICY StaffByClient
 	WITH(STATE=ON)
 {% endhighlight %}
 
-If we now run our procedure again with the commented our client filter we get no results...
+If we now run our procedure again with the commented out client filter we get no results...
 
 {% highlight sql %}
 EXEC dbo.GetAllStaff @ClientId = 1
@@ -138,6 +138,6 @@ SELECT * FROM dbo.Staff
 
 Depending on the logged in user we will only ever see staff for the Client we are registered in.
 
-UPDATES and DELETES will also not occur on data that doesnt pass our predicate. One thing to note however is that inserts will still work, so Client A can insert a record into our staff table with Client B's client Id so that will still have to be safeguarded against in other ways.
+UPDATES and DELETES will also not occur on data that doesn't pass our predicate. One thing to note however is that inserts will still work, so Client A can insert a record into our staff table with Client B's client Id so that will still have to be safeguarded against in other ways.
 
 
