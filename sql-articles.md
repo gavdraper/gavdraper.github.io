@@ -41,6 +41,7 @@ permalink: /sql/
 ## Security ##
 * [Dynamic Data Masking In Action](https://gavindraper.com/2017/06/01/sql-server-dynamic-data-masking/)
 * [Application Roles](https://gavindraper.com/2017/06/05/sql-server-application-roles/)
+* [Row Level Security In Action](https://gavindraper.com/2017/06/07/sql-server-row-level-security/)
 
 ## Scripts ##
 * [Cloning A Database](https://gavindraper.com/2014/03/01/cloning-a-sql-server-database/)
