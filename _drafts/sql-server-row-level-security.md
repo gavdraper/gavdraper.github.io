@@ -89,15 +89,16 @@ Next we need a predicate function to check based on the user if they can access 
 
 {% highlight sql %}
 CREATE FUNCTION dbo.fn_StaffSecurityPredicate(@ClientId INT)
-	RETURNS TABLE
+    RETURNS TABLE
 WITH SCHEMABINDING
 AS
 RETURN
-	SELECT 1 AS fn_result
-	FROM dbo.Staff
-		INNER JOIN dbo.ClientLogin ON ClientLogin.ClientId = Staff.ClientId
-	WHERE 
-		ClientLogin.ClientUser = CURRENT_USER
+    SELECT 1 AS fn_result
+    FROM dbo.Staff
+        INNER JOIN dbo.ClientLogin ON ClientLogin.ClientId = Staff.ClientId
+    WHERE 
+        ClientLogin.ClientUser = CURRENT_USER AND
+        Staff.ClientId = @ClientId
 {% endhighlight %}
 
 Lastly we need to apply this predicate to our table so it get's run when data is requested...
@@ -126,3 +127,17 @@ REVERT;
 {% endhighlight %}
 
 As you can see even though our application still has a bug allowing Client A's data to be seen by Client B we've been protected by row level security.
+
+![Staff By Client]({{site.url}}/content/images/2017-row-security/staff-by-client.JPG)
+
+The same will also work if we do
+
+{% highlight sql %}
+SELECT * FROM dbo.Staff
+{% endhighlight %}
+
+Depending on the logged in user we will only ever see staff for the Client we are registered in.
+
+UPDATES and DELETES will also not occur on data that doesnt pass our predicate. One thing to note however is that inserts will still work, so Client A can insert a record into our staff table with Client B's client Id so that will still have to be safeguarded against in other ways.
+
+
