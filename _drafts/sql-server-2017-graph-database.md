@@ -92,7 +92,26 @@ WHERE
 
 AS you can see the new graph syntax make navigating through different levels of a graph a lot simpler than the many to many representation you;d have if you tried to implement this in a relational database.
 
-Just to flex the graph database features a bit more let's now imagine that we want to list all the friends two people have in common...
+Just to flex the graph database features a bit more let's now imagine that we want to list all the friends Clair and Luke have in common...
 
 {% highlight sql %}
+SELECT 
+	Person.FirstName,
+	Person2.FirstName,
+	FriendOfPErson.FirstName
+FROM 
+	Person Person, 
+	Person FriendOfPerson, 
+	Friend,
+	Person Person2, 
+	Friend Friend2
+WHERE 
+	MATCH
+	(
+	    Person-(Friend)->FriendOfPerson<-(Friend2)-Person2
+	)
+	AND person.FirstName='Claire'
+	AND person2.FirstName = 'Luke'
 {% endhighlight %}
+
+Notice in this match statement we have the flow going both way -> and <-. This is saying get me all of Clairs Friends and for each of them get me all their friends where their friends name is luke. The inserts above have no common friends between these two people, try adding a common thread using the insert syntax above and running this query again to see the matches.
