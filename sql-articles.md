@@ -54,7 +54,7 @@ permalink: /sql/
 * [Temporal Tables](https://gavindraper.com/2016/04/15/sql-2016-temporal-tables-by-example-2/)
 
 ## SQL Server 2017 New Features ##
-* [Graph Database Features](https://gavindraper.com/2016/04/15/sql-2017-graphDb2/)
+* [Graph Database Features](https://gavindraper.com/2017/06/12/sql-server-2017-graph-database/)
 
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- responsive -->
