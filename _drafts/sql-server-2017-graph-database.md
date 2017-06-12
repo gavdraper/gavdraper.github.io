@@ -1,9 +1,9 @@
 ---
 layout: post
-title: SQL Server 2017 Graph Database In Action
-date: '2017-06-13 08:23:18'
+title: SQL Server 2017 Graph Database Features In Action
+date: '2017-06-12 08:23:18'
 ---
-Let's imagine a system like facebook where friends and frinds of friends content can appear in your feed. Representing the friend of friend hierachy is quite difficult in a relational database, esecially when you consider you may then want to go down further levels to recomened friends of friends of friends.... Let's create a graph schema for this using the new graph features in SQL Server 2017
+Let's imagine a system like facebook where friends and friends of friends content can appear in your feed. Representing the friend of friend hierarchy is quite difficult in a relational database, especially when you consider you may then want to go down further levels to recommend friends of friends of friends.... Let's create a graph schema for this using the new graph features in SQL Server 2017
 
 {% highlight sql %}
 CREATE TABLE dbo.Person (
@@ -15,7 +15,7 @@ CREATE TABLE dbo.Person (
 CREATE TABLE dbo.Friend AS EDGE
 {% endhighlight %}
 
-Notice the AS NODE on the Person Table, that's the new syntax that makes this table as a node in our graph. Then note the AS EDGE on the FriendTable, this Edge Table is used to create linkes between Nodes.
+Notice the AS NODE on the Person Table, that's the new syntax that makes this table as a node in our graph. Then note the AS EDGE on the FriendTable, this Edge Table is used to create links between Nodes.
 Let's then create our list of people who at this point have no relationship between them...
 
 {% highlight sql %}
@@ -33,36 +33,35 @@ If we then want to define Friend links between our tables we insert node id's in
 {% highlight sql %}
 INSERT INTO dbo.Friend 
 VALUES 
-    (
-        (SELECT $node_id FROM Person WHERE id = 1), 
-        (SELECT $node_id FROM Person WHERE id = 2)
-    );
+(
+    (SELECT $node_id FROM Person WHERE id = 1), 
+    (SELECT $node_id FROM Person WHERE id = 2)
+);
 {% endhighlight %}
 
 To get the node id we have to look it up in the Person edge table with the inner select. Let's then also make Claire a friend of Jessie and make Luke a friend of Matt.
 
 {% highlight sql %}
-INSERT INTO dbo.Friend VALUES ((SELECT $node_id FROM Person WHERE id = 1), 
-       (SELECT $node_id FROM Person WHERE id = 3));
-
-INSERT INTO dbo.Friend VALUES ((SELECT $node_id FROM Person WHERE id = 2), 
-       (SELECT $node_id FROM Person WHERE id = 5));
+INSERT INTO dbo.Friend 
+VALUES 
+((SELECT $node_id FROM Person WHERE id = 1), (SELECT $node_id FROM Person WHERE id = 3)),
+((SELECT $node_id FROM Person WHERE id = 2), (SELECT $node_id FROM Person WHERE id = 5));
 {% endhighlight %}
 
 In this case we have direct friend links from Claire to Luke and Jessie, then through the link with Luke we have a friend of friend relationship to Matt.
 
-If we want to see all of Claires friends we can do this...
+If we want to see all of Claire's friends we can do this...
 
 {% highlight sql %}
 SELECT 
-	FriendOfPerson.FirstName + ' ' + FriendOfPerson.LastName Friend
+    FriendOfPerson.FirstName + ' ' + FriendOfPerson.LastName Friend
 FROM 
-	Person Person, 
-	Person FriendOfPerson, 
-	Friend
+    Person Person, 
+    Person FriendOfPerson, 
+    Friend
 WHERE 
-	MATCH(Person-(Friend)->FriendOfPerson)
-	AND person.FirstName='Claire'
+    MATCH(Person-(Friend)->FriendOfPerson)
+    AND person.FirstName='Claire'
 {% endhighlight %}
 
 Notice the match syntax here 
@@ -91,4 +90,9 @@ WHERE
 
 ![Friends Of Results]({{site.url}}/content/images/2017-graph/friend-of-friend.PNG)
 
-AS you can see the new graph syntax make navigating through different levels of a heirachy a lot simpler than the many to many representation you;d have if you tried to implement this in a relational database.
+AS you can see the new graph syntax make navigating through different levels of a graph a lot simpler than the many to many representation you;d have if you tried to implement this in a relational database.
+
+Just to flex the graph database features a bit more let's now imagine that we want to list all the friends two people have in common...
+
+{% highlight sql %}
+{% endhighlight %}
