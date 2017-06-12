@@ -46,6 +46,16 @@ permalink: /sql/
 ## Scripts ##
 * [Cloning A Database](https://gavindraper.com/2014/03/01/cloning-a-sql-server-database/)
 
+## SQL Server 2016 New Features ##
+* [Dynamic Data Masking In Action](https://gavindraper.com/2017/06/01/sql-server-dynamic-data-masking/)
+* [Application Roles](https://gavindraper.com/2017/06/05/sql-server-application-roles/)
+* [Row Level Security In Action](https://gavindraper.com/2017/06/07/sql-server-row-level-security/)
+* [SQL Server 2016 What's New With TSQL](https://gavindraper.com/2017/06/06/sql-server-2016-tsql-whats-new/)
+* [Temporal Tables](https://gavindraper.com/2016/04/15/sql-2016-temporal-tables-by-example-2/)
+
+## SQL Server 2017 New Features ##
+* [Graph Database Features](https://gavindraper.com/2016/04/15/sql-2017-graphDb2/)
+
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- responsive -->
 <ins class="adsbygoogle"

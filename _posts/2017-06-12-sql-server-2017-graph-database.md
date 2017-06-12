@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server 2017 Graph Database Features In Action
-date: '2017-06-12 08:23:18'
+date: '2017-06-12 20:23:18'
 ---
 Let's imagine a system like facebook where friends and friends of friends content can appear in your feed. Representing the friend of friend hierarchy is quite difficult in a relational database, especially when you consider you may then want to go down further levels to recommend friends of friends of friends.... Let's create a graph schema for this using the new graph features in SQL Server 2017
 
@@ -15,7 +15,8 @@ CREATE TABLE dbo.Person (
 CREATE TABLE dbo.Friend AS EDGE
 {% endhighlight %}
 
-Notice the AS NODE on the Person Table, that's the new syntax that makes this table as a node in our graph. Then note the AS EDGE on the FriendTable, this Edge Table is used to create links between Nodes.
+Notice the AS NODE on the Person Table, that's the new syntax that marks this table as a node in our graph. Then note the AS EDGE on the FriendTable, Edge Tables are used to create links between Nodes.
+
 Let's then create our list of people who at this point have no relationship between them...
 
 {% highlight sql %}
@@ -28,7 +29,7 @@ VALUES
     (5,'Matt','Murdock')
 {% endhighlight %}
 
-If we then want to define Friend links between our tables we insert node id's into the friend table. Let's imagine we want to link Claire Template (Id : 1) and Luke Cage (Id : 2) as friends...
+If we then want to define Friend links between our person entries  we insert node id's into the friend table. Let's imagine we want to link Claire Temple (Id : 1) and Luke Cage (Id : 2) as friends...
 
 {% highlight sql %}
 INSERT INTO dbo.Friend 
@@ -39,7 +40,7 @@ VALUES
 );
 {% endhighlight %}
 
-To get the node id we have to look it up in the Person edge table with the inner select. Let's then also make Claire a friend of Jessie and make Luke a friend of Matt.
+To get the node id we have to look it up in the Person node table with the inner select. Let's then also make Claire a friend of Jessie and make Luke a friend of Matt.
 
 {% highlight sql %}
 INSERT INTO dbo.Friend 
@@ -68,7 +69,7 @@ Notice the match syntax here
 
 ''' Match(Person-(Friend)->FriendOfPerson)
 
-Here we're saying for the Person Node follow the Friend Edge to all other Person Nodes connected via an edge.
+We're saying for the Person Node follow al Friend edge links to person entires.
 
 ![Friends Results]({{site.url}}/content/images/2017-graph/friends.PNG)
 
@@ -90,28 +91,28 @@ WHERE
 
 ![Friends Of Results]({{site.url}}/content/images/2017-graph/friend-of-friend.PNG)
 
-AS you can see the new graph syntax make navigating through different levels of a graph a lot simpler than the many to many representation you;d have if you tried to implement this in a relational database.
+AS you can see the new graph syntax make navigating through different levels of a graph a lot simpler than the many to many representation you'd have if you tried to implement this in a relational database.
 
-Just to flex the graph database features a bit more let's now imagine that we want to list all the friends Clair and Luke have in common...
+Just to flex the graph database features a bit more let's now imagine that we want to list all the friends Claire and Luke have in common...
 
 {% highlight sql %}
 SELECT 
-	Person.FirstName,
-	Person2.FirstName,
-	FriendOfPErson.FirstName
+    Person.FirstName,
+    Person2.FirstName,
+    FriendOfPerson.FirstName
 FROM 
-	Person Person, 
-	Person FriendOfPerson, 
-	Friend,
-	Person Person2, 
-	Friend Friend2
+    Person Person, 
+    Person FriendOfPerson, 
+    Friend,
+    Person Person2, 
+    Friend Friend2
 WHERE 
-	MATCH
-	(
-	    Person-(Friend)->FriendOfPerson<-(Friend2)-Person2
-	)
-	AND person.FirstName='Claire'
-	AND person2.FirstName = 'Luke'
+    MATCH
+    (
+        Person-(Friend)->FriendOfPerson<-(Friend2)-Person2
+    )
+    AND person.FirstName='Claire'
+    AND person2.FirstName = 'Luke'
 {% endhighlight %}
 
-Notice in this match statement we have the flow going both way -> and <-. This is saying get me all of Clairs Friends and for each of them get me all their friends where their friends name is luke. The inserts above have no common friends between these two people, try adding a common thread using the insert syntax above and running this query again to see the matches.
+Notice in this match statement we have the flow going both ways -> and <-. This is saying get me all of Claire's Friends and for each of them get me all their friends where their friends name is luke. The inserts we ran when we created our friend edge records above have no common friends between these two people, try adding a common friend using the insert syntax above and running this query again to see the matches.
