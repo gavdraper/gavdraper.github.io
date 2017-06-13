@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server 2017 Graph Database Features In Action
+title: SQL Server 2017 Graph Data Features In Action
 date: '2017-06-12 20:23:18'
 ---
 Let's imagine a system like facebook where friends and friends of friends content can appear in your feed. Representing the friend of friend hierarchy is quite difficult in a relational database, especially when you consider you may then want to go down further levels to recommend friends of friends of friends.... Let's create a graph schema for this using the new graph features in SQL Server 2017
