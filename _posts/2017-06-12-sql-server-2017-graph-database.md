@@ -3,7 +3,14 @@ layout: post
 title: SQL Server 2017 Graph Data Features In Action
 date: '2017-06-12 20:23:18'
 ---
-Let's imagine a system like facebook where friends and friends of friends content can appear in your feed. Representing the friend of friend hierarchy is quite difficult in a relational database, especially when you consider you may then want to go down further levels to recommend friends of friends of friends.... Let's create a graph schema for this using the new graph features in SQL Server 2017
+
+The [Wikipedia Graph Database](https://en.wikipedia.org/wiki/Graph_database) page has the following definition...
+
+> In computing, a graph database is a database that uses graph structures for semantic queries with nodes, edges and properties to represent and store data. A key concept of the system is the graph (or edge or relationship), which directly relates data items in the store. The relationships allow data in the store to be linked together directly, and in many cases retrieved with one operation.
+
+Let's take a look at a sample use case for a Graph Database to learn wha this means and where it's useful...
+
+Imagine a system like facebook where friends and friends of friends content can appear in your feed. Representing the friend of friend hierarchy is quite difficult in a relational database, especially when you consider you may then want to go down further levels to recommend friends of friends of friends.... Let's create a graph schema for this using the new graph features in SQL Server 2017
 
 {% highlight sql %}
 CREATE TABLE dbo.Person (
