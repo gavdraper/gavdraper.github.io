@@ -60,6 +60,8 @@ In this case we have direct friend links from Claire to Luke and Jessie, then th
 
 ![Friend Graph]({{site.url}}/content/images/2017-graph/graph.JPG)
 
+In this image the circles represent our Node table and the lines the Edge table.
+
 If we want to see all of Claire's friends we can do this...
 
 {% highlight sql %}
@@ -125,3 +127,5 @@ WHERE
 {% endhighlight %}
 
 Notice in this match statement we have the flow going both ways -> and <-. This is saying get me all of Claire's Friends and for each of them get me all their friends where their friends name is luke. The inserts we ran when we created our friend edge records above have no common friends between these two people, try adding a common friend using the insert syntax above and running this query again to see the matches.
+
+In our case we didnt define any fields in our edge table and it exists purely as an edge. You can however add additional fields to these tables to give more information, for example we could store DateOfFriendship in the Friend Edge table to store the date the edge was created. That would allow us to find all Friend connections made in a specific period. 
