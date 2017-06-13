@@ -51,6 +51,8 @@ VALUES
 
 In this case we have direct friend links from Claire to Luke and Jessie, then through the link with Luke we have a friend of friend relationship to Matt.
 
+![Friend Graph]({{site.url}}/content/images/2017-graph/graph.JPG)
+
 If we want to see all of Claire's friends we can do this...
 
 {% highlight sql %}
@@ -67,7 +69,7 @@ WHERE
 
 Notice the match syntax here 
 
-''' Match(Person-(Friend)->FriendOfPerson)
+> Match(Person-(Friend)->FriendOfPerson)
 
 We're saying for the Person Node follow al Friend edge links to person entires.
 
