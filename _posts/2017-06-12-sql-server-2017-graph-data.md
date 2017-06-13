@@ -128,4 +128,37 @@ WHERE
 
 Notice in this match statement we have the flow going both ways -> and <-. This is saying get me all of Claire's Friends and for each of them get me all their friends where their friends name is luke. The inserts we ran when we created our friend edge records above have no common friends between these two people, try adding a common friend using the insert syntax above and running this query again to see the matches.
 
-In our case we didn't define any fields in our edge table and it exists purely as an edge. You can however add additional fields to these tables to give more information, for example we could store DateOfFriendship in the Friend Edge table to store the date the edge was created. That would allow us to find all Friend connections made in a specific period. 
+In our case we didn't define any fields in our edge table and it exists purely as an edge. You can however add additional fields to these tables to give more information, for example we could store DateOfFriendship in the Friend Edge table to store the date the edge was created. That would allow us to find all Friend connections made in a specific period. Let's clear out our Friend table and reinitialize it with this new field and data...
+
+{% highlight sql %}
+TRUNCATE TABLE Friend
+
+ALTER TABLE Friend ADD DateOfFriendShip DATETIME
+
+INSERT INTO dbo.Friend 
+VALUES 
+    ((SELECT $node_id FROM Person WHERE id = 1), (SELECT $node_id FROM Person WHERE id = 2),'20160101'),
+    ((SELECT $node_id FROM Person WHERE id = 1), (SELECT $node_id FROM Person WHERE id = 3),'20140705'),
+    ((SELECT $node_id FROM Person WHERE id = 2), (SELECT $node_id FROM Person WHERE id = 5),'20100605');
+{% endhighlight %}
+
+So our graph now looks a bit like this...
+
+![Graph with edge data]({{site.url}}/content/images/2017-graph/graph-edge-dates.PNG)
+
+We can then query all Claire's friends made before 2016 by just adding a where filter on that date column like a normal SQL query..
+
+{% highlight sql %}
+SELECT 
+    FriendOfPerson.FirstName + ' ' + FriendOfPerson.LastName Friend
+FROM 
+    Person Person, 
+    Person FriendOfPerson, 
+    Friend
+WHERE 
+    MATCH(Person-(Friend)->FriendOfPerson)
+    AND person.FirstName='Claire'
+    AND Friend.DateOfFriendship < '20160101'
+{% endhighlight %}
+
+As expected we get one result as Jessie is Claire's only friend made before 2016. 
