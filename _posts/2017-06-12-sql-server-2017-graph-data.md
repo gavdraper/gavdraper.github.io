@@ -58,7 +58,7 @@ VALUES
 
 In this case we have direct friend links from Claire to Luke and Jessie, then through the link with Luke we have a friend of friend relationship to Matt.
 
-![Friend Graph]({{site.url}}/content/images/2017-graph/graph.JPG)
+![Friend Graph]({{site.url}}/content/images/2017-graph/graph.PNG)
 
 In this image the circles represent our Node table and the lines the Edge table.
 
@@ -144,7 +144,7 @@ VALUES
 
 So our graph now looks a bit like this...
 
-![Graph with edge data]({{site.url}}/content/images/2017-graph/graph-edge-dates.JPG)
+![Graph with edge data]({{site.url}}/content/images/2017-graph/graph-edge-dates.PNG)
 
 We can then query all Claire's friends made before 2016 by just adding a where filter on that date column like a normal SQL query..
 
