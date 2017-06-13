@@ -144,7 +144,7 @@ VALUES
 
 So our graph now looks a bit like this...
 
-![Graph with edge data]({{site.url}}/content/images/2017-graph/graph-edge-dates.PNG)
+![Graph with edge data]({{site.url}}/content/images/2017-graph/graph-edge-dates.JPG)
 
 We can then query all Claire's friends made before 2016 by just adding a where filter on that date column like a normal SQL query..
 
