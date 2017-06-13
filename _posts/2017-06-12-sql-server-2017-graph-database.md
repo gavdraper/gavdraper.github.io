@@ -128,4 +128,4 @@ WHERE
 
 Notice in this match statement we have the flow going both ways -> and <-. This is saying get me all of Claire's Friends and for each of them get me all their friends where their friends name is luke. The inserts we ran when we created our friend edge records above have no common friends between these two people, try adding a common friend using the insert syntax above and running this query again to see the matches.
 
-In our case we didnt define any fields in our edge table and it exists purely as an edge. You can however add additional fields to these tables to give more information, for example we could store DateOfFriendship in the Friend Edge table to store the date the edge was created. That would allow us to find all Friend connections made in a specific period. 
+In our case we didn't define any fields in our edge table and it exists purely as an edge. You can however add additional fields to these tables to give more information, for example we could store DateOfFriendship in the Friend Edge table to store the date the edge was created. That would allow us to find all Friend connections made in a specific period. 
