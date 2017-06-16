@@ -11,7 +11,6 @@ Before we get too in depth on how parameter sniffing works let's setup a databas
 Create a new database and execute the following script to create a table  and fill it with seed data.
 
 {% highlight sql %}
-DROP TABLE [User]
 CREATE TABLE [User]
 (
     Id INT IDENTITY PRIMARY KEY,
