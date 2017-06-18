@@ -1,12 +1,16 @@
 ---
 layout: post
 title: Up and Running With SQL Server 2017 on macOS In Less Than 5 Minutes
-date: '2017-06-18 09:35:34'
+date: '2017-06-18 08:35:34'
 ---
 SQL Server 2017 is the first version of SQL Server that will also run natively on Linux and on macOS via Docker. There has neer been a quicker way to get SQL Server installed and running than using this new Docker image.
 
 Let's run through the steps involved, you'll need to have Docker installed to follow along.
 
+1. Change Docker settings to use 4gb of RAM as this is q requirement for SQL Server. To do this right click the Docker icon in the menu bar, click preferences and on the advanced tab change RAM to 4gb. Once set click the apply & restart button.
+    
+    ![Docker Settings]({{site.url}}/content/images/2017-sql-on-macos/docker-settings.png)
+ 
 1. Run the following command to pull down the SQL Server Docker image
 
     > docker pull microsoft/mssql-server-linux
