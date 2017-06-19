@@ -1,11 +1,11 @@
 ---
 layout: post
-title: SQL Server 2017 Installed and Running on macOS In Less Than 5 Minutes (With Video)
+title: SQL Server Installed and Running on macOS In Less Than 5 Minutes (With Video)
 date: '2017-06-19 06:35:34'
 ---
 SQL Server 2017 is the first version of SQL Server that will also run natively on Linux and on macOS via Docker. There has never been a quicker way to get SQL Server installed and running in a development environment than using this new Docker image.
 
-This is a video of the whole process which on a slow connection and an old macbook air takes 4 minutes and 7 seconds (This is amazing!)
+This is a video of the whole process which on a slow connection and an old MacBook air takes 4 minutes and 7 seconds (This is amazing!)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qMTTeTm7-jM" frameborder="0" allowfullscreen></iframe>
 
