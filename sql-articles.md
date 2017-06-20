@@ -55,7 +55,9 @@ permalink: /sql/
 
 ## SQL Server 2017 New Features ##
 * [Graph Data Features](https://gavindraper.com/2017/06/12/sql-server-2017-graph-data/)
+* [String Expression Concatination With STRING_AGG](https://gavindraper.com/2017/06/20/sql-server-concatination-with-string-agg/)
 * [Installed and Running on macOS IN Less Then 5 Minutes](https://gavindraper.com/2017/06/19/sql-server-on-macos/)
+
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- responsive -->
 <ins class="adsbygoogle"
