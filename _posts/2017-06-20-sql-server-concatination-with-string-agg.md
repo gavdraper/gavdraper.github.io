@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server 2017 Concatination With STRING_AGG
+title: SQL Server 2017 Concatenation With STRING_AGG
 date: '2017-06-20 07:54:01'
 ---
 One of the new less publicized features in SQL Server 2017 is STRING_AGG. This new feature can take an expression of string values and concatenate them with a specified separator.
