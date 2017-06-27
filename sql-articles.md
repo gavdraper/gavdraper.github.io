@@ -28,12 +28,16 @@ permalink: /sql/
 * [Handling JSON](https://gavindraper.com/2017/05/06/sql-server-json/)
 * [CROSS APPLY](https://gavindraper.com/2017/05/03/cross-apply-is-awesome/)
 * [SQL Server 2016 What's New With TSQL](https://gavindraper.com/2017/06/06/sql-server-2016-tsql-whats-new/)
+
 ## Tuning ## 
 * [Introduction To Indexes](https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/)
 * [Filtered Indexes](https://gavindraper.com/2017/05/30/sql-server-filtered-indexes-by-example/)
 * [Introduction To Statistics](https://gavindraper.com/2017/05/22/sql-server-into-to-statistics/)
 * [Parameter Sniffing In Depth](https://gavindraper.com/2017/05/31/sql-server-parameter-sniffing/)
 * [SQL Server Debugging BAD_PAGE_PROCESS Waits](https://gavindraper.com/2017/06/03/sql-server-bad-page-process-wait/)
+
+## Tools ##
+* [mssql-scripter](https://gavindraper.com/2017/06/27/sql-server-level-up-with-mssql-scripter/)
 
 ## Administration ##
 * [Setting up Availability Groups](https://gavindraper.com/2012/11/19/sql-availability-groups-vm-sandbox-step-by-step/)
