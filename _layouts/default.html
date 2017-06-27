@@ -17,7 +17,7 @@
         <ul>
           <li/><a href="https://gavindraper.com/2012/02/18/sql-server-isolation-levels-by-example/">SQL Server Isolation Levels Explained</a>
         </ul>
-        {% include adsense.html %}
+        {% include adsense-vertical.html %}
         <h2>Recent Posts</h2>
         {%for post in site.posts limit:5 %} {% unless post.next %}
         <ul class="this">
@@ -31,8 +31,7 @@
             <a href="{{ post.url }}">{{ post.title }}</a></li>
           {% endfor %}
         </ul>
-
-         {% include adsense.html %}
+        {% include adsense-vertical.html %}
       </div>
     </div>
   </div>
