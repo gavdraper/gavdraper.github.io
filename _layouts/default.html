@@ -7,11 +7,35 @@
 
   {% include header.html %}
 
-  <main class="page-content" aria-label="Content">
-    <div class="wrapper">
-      {{ content }}
+  <div id="wrap" class="container-fluid">
+    <div class="row">
+      <div class="content col-md-8 col-md-offset-2">
+        {{ content }}
+      </div>
+      <div class="content col-md-2 hidden-md-down sidebar">
+        <h2>Top Posts</h2>
+        <ul>
+          <li/><a href="https://gavindraper.com/2012/02/18/sql-server-isolation-levels-by-example/">SQL Server Isolation Levels Explained</a>
+        </ul>
+        {% include adsense.html %}
+        <h2>Recent Posts</h2>
+        {%for post in site.posts limit:5 %} {% unless post.next %}
+        <ul class="this">
+          {% else %} {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %} {% capture nyear %}{{ post.next.date | date: '%Y'
+          }}{% endcapture %} {% if year != nyear %}
+        </ul>
+        <h3>{{ post.date | date: '%Y' }}</h3>
+        <ul class="past">
+          {% endif %} {% endunless %}
+          <li>
+            <a href="{{ post.url }}">{{ post.title }}</a></li>
+          {% endfor %}
+        </ul>
+
+         {% include adsense.html %}
+      </div>
     </div>
-  </main>
+  </div>
 
   {% include footer.html %} {% include analytics.html %}
 </body>
