@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Scripting a SQL Server Database In Your Favorite Terminal Using mssql-scripter
-date: '2017-06-27 19:05:38'
+title: Level Up Your SQL Server Cross Platform Skills With mssql-scripter
+date: '2017-06-27 08:05:38'
 ---
-The ability to export a script of database objects has for a long time been a feature of SQL Server Management Studio. With the new OSS cross platform tooling from Microsoft we can now have ths feature everywhere.
+The ability to export a script of database objects has for a long time been a feature of SQL Server Management Studio. With the new OSS cross platform tooling from Microsoft we can now have ths feature everywhere. mssql-scripter allows you to export schema and or data from SQL Server from pretty much any terminal
 
 I do a lot of my SQL Server sandbox stuff on macOS using a Docker image of SQL Server 2017 with VS Code and the mssql plugin as my editor. With the new mssql-scripter tool I can now export SQL scripts of my database objects and data directly from the VS Code terminal.
 
