@@ -22,11 +22,13 @@ twitter_username: gavdraper
 github_username:  gavdraper
 permalink: /:year/:month/:day/:title/
 highlighter: rouge
+paginate: 3
 # Build settings
 markdown: kramdown
 gems:
   - jekyll-feed
   - jekyll-redirect-from
+  - jekyll-paginate
 exclude:
   - Gemfile
   - Gemfile.lock
