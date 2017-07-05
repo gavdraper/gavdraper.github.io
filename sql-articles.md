@@ -23,26 +23,28 @@ permalink: /sql/
                 
                 <li><a href="https://gavindraper.com/2016/04/15/sql-2016-temporal-tables-by-example-2/">Temporal Tables</a></li>
                 
-                <li>[Service Broker Introduction With Examples](https://gavindraper.com/2012/06/03/sql-server-service-broker-explained/)</li>
+                <li><a href="https://gavindraper.com/2012/06/03/sql-server-service-broker-explained/">Service Broker Introduction With Examples</a></li>
             </ul>
 
             <h2>T-SQL</h2>
             <ul>
-                <li>[Window Functions](https://gavindraper.com/2017/05/23/sql-server-window-functions-in-action/)</li>
-                <li>[Merge Statement](https://gavindraper.com/2017/05/08/usgin-sql-server-merge/)</li>
-                <li>[Pivot and Unpivot](https://gavindraper.com/2017/05/04/sql-server-pivot-unpivot-explained/)</li>
-                <li>[Dynamic Pivot](https://gavindraper.com/2017/05/07/sql-server-dynamic-pivot/)</li>
-                <li>[Handling JSON](https://gavindraper.com/2017/05/06/sql-server-json/)</li>
-                <li>[CROSS APPLY](https://gavindraper.com/2017/05/03/cross-apply-is-awesome/)</li>
-                <li>[SQL Server 2016 What's New With TSQL](https://gavindraper.com/2017/06/06/sql-server-2016-tsql-whats-new/)</li>
+                <li><a href="https://gavindraper.com/2017/05/23/sql-server-window-functions-in-action/">Window Functions</a></li>
+                <li><a href="https://gavindraper.com/2017/05/08/usgin-sql-server-merge/">Merge Statement</a></li>
+                <li><a href="https://gavindraper.com/2017/05/04/sql-server-pivot-unpivot-explained/">Pivot and Unpivot</a></li>
+                <li><a href="https://gavindraper.com/2017/05/07/sql-server-dynamic-pivot/">Dynamic Pivot</a></li>
+                <li><a href="https://gavindraper.com/2017/05/06/sql-server-json/">Handling JSON</a></li>
+                <li><a href="https://gavindraper.com/2017/05/03/cross-apply-is-awesome/">CROSS APPLY</a></li>
+                <li><a href="https://gavindraper.com/2017/06/06/sql-server-2016-tsql-whats-new/">SQL Server 2016 What's New With TSQL</a></li>
             </ul>
 
             <h2>Tuning</h2>
-            * [Introduction To Indexes](https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/)
-            * [Filtered Indexes](https://gavindraper.com/2017/05/30/sql-server-filtered-indexes-by-example/)
-            * [Introduction To Statistics](https://gavindraper.com/2017/05/22/sql-server-into-to-statistics/)
-            * [Parameter Sniffing In Depth](https://gavindraper.com/2017/05/31/sql-server-parameter-sniffing/)
-            * [SQL Server Debugging BAD_PAGE_PROCESS Waits](https://gavindraper.com/2017/06/03/sql-server-bad-page-process-wait/)
+            <ul>
+                <li>a href="https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/">Introduction To Indexes</a></li>
+                <li>a href="https://gavindraper.com/2017/05/30/sql-server-filtered-indexes-by-example/">Filtered Indexes</a></li>
+                <li>a href="https://gavindraper.com/2017/05/22/sql-server-into-to-statistics/">Introduction To Statistics</a></li>
+                <li>a href="https://gavindraper.com/2017/05/31/sql-server-parameter-sniffing/">Parameter Sniffing In Depth</a></li>
+                <li>a href="https://gavindraper.com/2017/06/03/sql-server-bad-page-process-wait/">SQL Server Debugging BAD_PAGE_PROCESS Waits</a></li>
+            </li>                
 
             <h2>Tools</h2>
             <ul><li><a href="https://gavindraper.com/2017/06/27/sql-server-level-up-with-mssql-scripter/">mssql-scripter</a></li></ul>
