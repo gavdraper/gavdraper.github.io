@@ -1,4 +1,9 @@
---- layout: page title: SQL Server Articles permalink: /sql/ ---
+--- 
+layout: page 
+title: SQL Server Articles 
+permalink: /sql/ 
+---
+
 <div id="wrap" class="container-fluid">
     <div class="row">
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
