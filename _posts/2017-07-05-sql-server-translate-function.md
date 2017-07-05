@@ -31,4 +31,4 @@ Using replace for this gets pretty ugly as we have to chain replace methods. I'v
 SELECT TRANSLATE('testing, 123.','.,','  ')
 {% endhighlight %}
 
-Much neater, each character or the match expression is matched with a space on the replace side and swapped out.
+Much neater, each character in the match expression is matched with a space on the replace side and swapped out.
