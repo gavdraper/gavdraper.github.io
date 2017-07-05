@@ -14,7 +14,10 @@ permalink: /sql/
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-## Foundations ##
+<div id="wrap" class="container-fluid">
+    <div class="row">
+        <div class="content col-md-6">
+            ## Foundations ##
 * [Isolation Levels Explained With Examples](https://gavindraper.com/2012/02/18/sql-server-isolation-levels-by-example/)
 * [Data Warehousing Concepts](https://gavindraper.com/2017/05/14/sql-data-warehouse-explained/)
 * [Temporal Tables](https://gavindraper.com/2016/04/15/sql-2016-temporal-tables-by-example-2/)
@@ -50,7 +53,9 @@ permalink: /sql/
 ## Scripts ##
 * [Cloning A Database](https://gavindraper.com/2014/03/01/cloning-a-sql-server-database/)
 
-## SQL Server 2016 New Features ##
+        </div>
+        <div class="content col-md-6">
+        ## SQL Server 2016 New Features ##
 * [Dynamic Data Masking In Action](https://gavindraper.com/2017/06/01/sql-server-dynamic-data-masking/)
 * [Application Roles](https://gavindraper.com/2017/06/05/sql-server-application-roles/)
 * [Row Level Security In Action](https://gavindraper.com/2017/06/07/sql-server-row-level-security/)
@@ -62,6 +67,12 @@ permalink: /sql/
 * [String Expression Concatenation With STRING_AGG](https://gavindraper.com/2017/06/20/sql-server-concatenation-with-string-agg/)
 * [Installed and Running on macOS IN Less Then 5 Minutes](https://gavindraper.com/2017/06/19/sql-server-on-macos/)
 * [Replace Characters With Translate](https://gavindraper.com/2017/07/05/sql-server-translate-function/)
+        </div>
+    </div>
+</div>
+
+
+
 
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- responsive -->
