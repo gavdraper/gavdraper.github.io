@@ -17,33 +17,38 @@ permalink: /sql/
         <div class="content col-md-6">
             <h2>Foundations</h2>
             <ul>
-                <li>[Isolation Levels Explained With Examples]</li>(https://gavindraper.com/2012/02/18/sql-server-isolation-levels-by-example/)/li>
-                <li>[Data Warehousing Concepts](https://gavindraper.com/2017/05/14/sql-data-warehouse-explained/)/li>
-                <li>[Temporal Tables](https://gavindraper.com/2016/04/15/sql-2016-temporal-tables-by-example-2/)/li>
-                <li>[Service Broker Introduction With Examples](https://gavindraper.com/2012/06/03/sql-server-service-broker-explained/)/li>
+                <li><a href="https://gavindraper.com/2012/02/18/sql-server-isolation-levels-by-example/">Isolation Levels Explained With Examples<a/></li>
+                
+                <li><a href="https://gavindraper.com/2017/05/14/sql-data-warehouse-explained/">Data Warehousing Concepts<a/></li>
+                
+                <li><a href="https://gavindraper.com/2016/04/15/sql-2016-temporal-tables-by-example-2/">Temporal Tables</a></li>
+                
+                <li>[Service Broker Introduction With Examples](https://gavindraper.com/2012/06/03/sql-server-service-broker-explained/)</li>
             </ul>
 
-<h2>T-SQL</h2>
-* [Window Functions](https://gavindraper.com/2017/05/23/sql-server-window-functions-in-action/)
-* [Merge Statement](https://gavindraper.com/2017/05/08/usgin-sql-server-merge/)
-* [Pivot and Unpivot](https://gavindraper.com/2017/05/04/sql-server-pivot-unpivot-explained/)
-* [Dynamic Pivot](https://gavindraper.com/2017/05/07/sql-server-dynamic-pivot/)
-* [Handling JSON](https://gavindraper.com/2017/05/06/sql-server-json/)
-* [CROSS APPLY](https://gavindraper.com/2017/05/03/cross-apply-is-awesome/)
-* [SQL Server 2016 What's New With TSQL](https://gavindraper.com/2017/06/06/sql-server-2016-tsql-whats-new/)
+            <h2>T-SQL</h2>
+            <ul>
+                <li>[Window Functions](https://gavindraper.com/2017/05/23/sql-server-window-functions-in-action/)</li>
+                <li>[Merge Statement](https://gavindraper.com/2017/05/08/usgin-sql-server-merge/)</li>
+                <li>[Pivot and Unpivot](https://gavindraper.com/2017/05/04/sql-server-pivot-unpivot-explained/)</li>
+                <li>[Dynamic Pivot](https://gavindraper.com/2017/05/07/sql-server-dynamic-pivot/)</li>
+                <li>[Handling JSON](https://gavindraper.com/2017/05/06/sql-server-json/)</li>
+                <li>[CROSS APPLY](https://gavindraper.com/2017/05/03/cross-apply-is-awesome/)</li>
+                <li>[SQL Server 2016 What's New With TSQL](https://gavindraper.com/2017/06/06/sql-server-2016-tsql-whats-new/)</li>
+            </ul>
 
-<h2>Tuning</h2>
-* [Introduction To Indexes](https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/)
-* [Filtered Indexes](https://gavindraper.com/2017/05/30/sql-server-filtered-indexes-by-example/)
-* [Introduction To Statistics](https://gavindraper.com/2017/05/22/sql-server-into-to-statistics/)
-* [Parameter Sniffing In Depth](https://gavindraper.com/2017/05/31/sql-server-parameter-sniffing/)
-* [SQL Server Debugging BAD_PAGE_PROCESS Waits](https://gavindraper.com/2017/06/03/sql-server-bad-page-process-wait/)
+            <h2>Tuning</h2>
+            * [Introduction To Indexes](https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/)
+            * [Filtered Indexes](https://gavindraper.com/2017/05/30/sql-server-filtered-indexes-by-example/)
+            * [Introduction To Statistics](https://gavindraper.com/2017/05/22/sql-server-into-to-statistics/)
+            * [Parameter Sniffing In Depth](https://gavindraper.com/2017/05/31/sql-server-parameter-sniffing/)
+            * [SQL Server Debugging BAD_PAGE_PROCESS Waits](https://gavindraper.com/2017/06/03/sql-server-bad-page-process-wait/)
 
-## Tools ##
-* [mssql-scripter](https://gavindraper.com/2017/06/27/sql-server-level-up-with-mssql-scripter/)
+            <h2>Tools</h2>
+            <ul><li><a href="https://gavindraper.com/2017/06/27/sql-server-level-up-with-mssql-scripter/">mssql-scripter</a></li></ul>
 
-## Administration ##
-* [Setting up Availability Groups](https://gavindraper.com/2012/11/19/sql-availability-groups-vm-sandbox-step-by-step/)
+            ## Administration ##
+            <ul><li><a href="https://gavindraper.com/2012/11/19/sql-availability-groups-vm-sandbox-step-by-step/">Setting up Availability Groups</a></li></ul>
 
 ## Security ##
 * [Dynamic Data Masking In Action](https://gavindraper.com/2017/06/01/sql-server-dynamic-data-masking/)
