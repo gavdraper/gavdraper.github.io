@@ -1,7 +1,7 @@
 ---
 layout: post
 title: IIF and CHOOSE Instead of CASE
-date: '2017-07-05 08:54:01'
+date: '2017-07-06 08:54:01'
 ---
 SQL Server 2012 introduced IIF and CHOOSE functions and I completely missed they even existed until recently. They make some quite messy CASE statements go away. Lets have a look...
 
@@ -10,7 +10,7 @@ Let's imagine we have a need to display something different in our select depend
 {% highlight sql %}
 DECLARE @Testing NVARCHAR(4) = 'Test'
 SELECT CASE WHEN @Testing = 'Test' THEN 'Woop' ELSE 'Oh No' END
-{% end highlight %}
+{% endhighlight %}
 
 This is fine but lets see if we can reduce some of the clutter with IIF. IIF takes an expression and true/false values, If the expression evaluates to true then the true value is returned else it's the false value...
 
