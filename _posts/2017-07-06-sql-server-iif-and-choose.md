@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Upgrade Your CASE Statements With IIF and CHOOSE
+title: Upgrade Your SQL Server CASE Statements With IIF and CHOOSE
 date: '2017-07-06 08:54:01'
 ---
 SQL Server 2012 introduced IIF and CHOOSE functions and I completely missed they even existed until recently. They make some quite messy CASE statements go away. Lets have a look...
