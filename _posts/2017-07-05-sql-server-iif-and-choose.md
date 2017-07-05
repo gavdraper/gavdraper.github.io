@@ -1,7 +1,7 @@
 ---
 layout: post
 title: IIF and CHOOSE Instead of CASE
-date: '2017-07-06 19:54:01'
+date: '2017-07-05 08:54:01'
 ---
 SQL Server 2012 introduced IIF and CHOOSE functions and I completely missed they even existed until recently. They make some quite messy CASE statements go away. Lets have a look...
 
