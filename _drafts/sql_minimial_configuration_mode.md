@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Fixing a SQL Server That Wont Start Due To Max Memory Being Set To 0mb
-date: '2017-07-07 19:05:38'
+date: '2017-07-27 19:05:38'
 ---
 
 I recently came up against a SQL Server instance that wouldnt start, after going through the event log the reason it was having problems was that it had been set to a max memory of 0mb. 
