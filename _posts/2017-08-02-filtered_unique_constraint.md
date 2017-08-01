@@ -20,7 +20,7 @@ Then imagine we want Username to be unique for non deleted users. Normally we wo
 ALTER TABLE dbo.Users ADD CONSTRAINT uq_username UNIQUE(Username)
 {% endhighlight %}
 
-This will fail as multiple deleted users can have the same username in our system. To make a constraint that only constrains a subset of data we need to user a filtered index and make that unique, in the example above that looks like this
+This will fail as multiple deleted users can have the same username in our system. To make a constraint that only constrains a subset of data we need to use a filtered index and make that unique, in the example above that looks like this
 
 {% highlight sql %}
 CREATE UNIQUE INDEX ndx_non_deleted_username ON dbo.Users(username) WHERE Deleted = 0
