@@ -6,7 +6,8 @@ date: '2017-08-02 19:05:38'
 
 Imagine we have the following table
 
-Users
+### Users ###
+
 | Field | Type |
 | --- | --- |
 | Id | INT |
