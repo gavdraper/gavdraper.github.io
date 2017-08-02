@@ -35,7 +35,7 @@ VALUES('gavin',1),
         ('gavin',0)
         {% endhighlight %}
 
-Ir will also successfully error if we try to create a second non deleted user with the same name
+It will also successfully error if we try to create a second non deleted user with the same name
 
 {% highlight sql %}
 INSERT INTO dbo.users(username,deleted)
