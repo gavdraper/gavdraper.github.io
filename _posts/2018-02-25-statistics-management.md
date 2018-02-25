@@ -3,7 +3,7 @@ layout: post
 title: Stop Worrying About Index Fragmentation and Manage Your Statistics
 date: '2018-02-25 19:05:38'
 ---
-I see a lot of posts online about rebuilding indexes in a scheduled maintenance task, this is a pretty intensive task with some potentially large gotchas in replication scenarios. I've never seen an index rebuild magically fix an issue that just rebuilding the stats wouldn't have sorted with way less risk and time. The example below demonstrates what can happen when the statistics don't represent the shape of the data that you are querying on.
+I see a lot of posts online about rebuilding indexes in a scheduled maintenance task, this is a pretty intensive task with some potentially large gotchas with things like online/offline, replication etc... I've never seen an index rebuild magically fix an issue that just rebuilding the stats wouldn't have sorted with way less risk and time. The example below demonstrates what can happen when the statistics don't represent the shape of the data that you are querying on.
 
 Let's setup a table and populate it with about 2 million records...
 
