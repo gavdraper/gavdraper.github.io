@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How Many VLFs Is Too Many
+title: SQL Server Tune Your Transaction Log
 date: '2018-02-26 07:45:18'
 ---
 Whenever a transaction log file grows the space it is allocated is divided up into virtual log files (VLFs). Depending on the amount the log file is set to grow by the amount of VLFs that are added varies, on instances < SQL Server 2014
