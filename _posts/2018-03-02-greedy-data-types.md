@@ -15,11 +15,11 @@ GO
 
 CREATE TABLE Users
 (
-	Id INT IDENTITY,
-	Username CHAR(100) NOT NULL,
-	IsAdmin INT,
-	IsReporter INT,
-	IsManager INT 
+   Id INT IDENTITY,
+   Username CHAR(100) NOT NULL,
+   IsAdmin INT,
+   IsReporter INT,
+   IsManager INT 
 )
 ALTER TABLE Users ADD  CONSTRAINT [pk_users] PRIMARY KEY CLUSTERED(Id ASC)
 {% endhighlight %}
