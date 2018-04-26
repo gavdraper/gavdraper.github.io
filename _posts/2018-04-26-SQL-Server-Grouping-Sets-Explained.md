@@ -44,15 +44,15 @@ Whilst this works it quickly becomes as mass of code as you add more groups you 
 
 {% highlight sql %}
 SELECT
-    MONTH(SaleDate) Month,
-	YEAR(SaleDate) Year, 
-	 COUNT(*) AS Sales
+   MONTH(SaleDate) Month,
+   YEAR(SaleDate) Year, 
+   COUNT(*) AS Sales
 FROM 
-    Sales
+   Sales
 GROUP BY GROUPING SETS
 (
-	(MONTH(SaleDate)),
-	(YEAR(SaleDate))
+   (MONTH(SaleDate)),
+   (YEAR(SaleDate))
 )
 {% endhighlight %}
 
