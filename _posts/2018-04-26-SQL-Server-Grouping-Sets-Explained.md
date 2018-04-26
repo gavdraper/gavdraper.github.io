@@ -29,7 +29,9 @@ SELECT
 FROM    
     Sales
 GROUP BY MONTH(SaleDate)
+
 UNION ALL
+
 SELECT 
     NULL AS Month,
     YEAR(SaleDate) AS Year,    
