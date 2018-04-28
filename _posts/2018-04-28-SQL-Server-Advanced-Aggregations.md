@@ -101,7 +101,7 @@ WITH ROLLUP
 
 This will aggregate at each level of the group, below is an extract of the results showing the 2017 data...
 
-SalesYear |  SalesMonth |  ShipYear |  ShipMonth |  DeliveryYear |  DeliveryMonth |  Amount
+SalesYear&nbsp |  SalesMonth |  ShipYear |  ShipMonth |  DeliveryYear |  DeliveryMonth |  Amount
 --- | ---| ---| ---| ---| ---| ---
 2017 | 1 | 2017 | 1 | 2017 | 1 | 1
 2017 | 1 | 2017 | 1 | 2017 | NULL | 1
