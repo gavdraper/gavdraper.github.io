@@ -10,9 +10,9 @@ Lets take another look at the GROUPING SETS code I showed in my previous post...
 {% highlight sql %}
 CREATE TABLE Sales
 (
-    Id INT IDENTITY PRIMARY KEY,
-    ProductName NVARCHAR(100),
-    SaleDate DATE,
+   Id INT IDENTITY PRIMARY KEY,
+   ProductName NVARCHAR(100),
+   SaleDate DATE,
 )
 
 INSERT INTO Sales VALUES('Bike','20170101')
@@ -40,11 +40,11 @@ In the above example we defined two separate groups to aggregate on. Now lets im
 {% highlight sql %}
 CREATE TABLE SalesReporting
 (
-    Id INT IDENTITY PRIMARY KEY,
-    ProductName NVARCHAR(100),
-    SaleDate DATE,
-    ShipDate DATE,
-    DeliveryDate DATE
+   Id INT IDENTITY PRIMARY KEY,
+   ProductName NVARCHAR(100),
+   SaleDate DATE,
+   ShipDate DATE,
+   DeliveryDate DATE
 )
 
 INSERT INTO SalesReporting VALUES('Bike','20170101','20170102','20170103')
@@ -101,7 +101,7 @@ WITH ROLLUP
 
 This will aggregate at each level of the group, below is an extract of the results showing the 2017 data...
 
-SalesYear | SalesMonth | ShipYear | ShipMonth | DeliveryYear | DeliveryMonth | Amount
+SalesYear |  SalesMonth |  ShipYear |  ShipMonth |  DeliveryYear |  DeliveryMonth |  Amount
 --- | ---| ---| ---| ---| ---| ---
 2017 | 1 | 2017 | 1 | 2017 | 1 | 1
 2017 | 1 | 2017 | 1 | 2017 | NULL | 1
@@ -115,12 +115,12 @@ SalesYear | SalesMonth | ShipYear | ShipMonth | DeliveryYear | DeliveryMonth | A
 
 Reading from the bottom we can see that aggregating by SalesYear we had 2 sales in 2017, above that we can see we have 2 sales in 2017, January. As we move up the list you'll see different aggregations for every level of group...
 
-SalesYear
-SalesYear, SalesMonth
-SalesYear, SalesMonth, ShipYear
-SalesYear, SalesMonth, ShipYear, Ship Month
-SalesYear, SalesMonth, ShipYear, Ship Month, Delivery Year
-SalesYear, SalesMonth, ShipYear, Ship Month, Delivery Year, Delivery Month
+SalesYear<br/>
+SalesYear, SalesMonth<br/>
+SalesYear, SalesMonth, ShipYear<br/>
+SalesYear, SalesMonth, ShipYear, Ship Month<br/>
+SalesYear, SalesMonth, ShipYear, Ship Month, Delivery Year<br/>
+SalesYear, SalesMonth, ShipYear, Ship Month, Delivery Year, Delivery Month<br/>
 
 There is actually a 7th aggregation in the results missing from my grid above and that is the overall total which is null for all fields with a value of 4 showing there were 4 overall sales. 
 
