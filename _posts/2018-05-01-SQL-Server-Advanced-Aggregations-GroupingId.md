@@ -66,7 +66,7 @@ WITH ROLLUP
 
 GROUPING_ID takes the name of any fields included in the GROUP BY and will return a bit flag value that can be used to work out what fields are in the group. For example given the above sample the following values can be evaluated to work out what groups are in play...
 
-| Value&nbsp;&nbsp; | YEAR Sale&nbsp;&nbsp; | Month Sale&nbsp;&nbsp; | Year Ship&nbsp;&nbsp; | Month Ship&nbsp;&nbsp; | Year Delivery&nbsp;&nbsp; | Month Delivery&nbsp;&nbsp; |
+| Value&nbsp;&nbsp; | Year Sale&nbsp;&nbsp; | Month Sale&nbsp;&nbsp; | Year Ship&nbsp;&nbsp; | Month Ship&nbsp;&nbsp; | Year Delivery&nbsp;&nbsp; | Month Delivery&nbsp;&nbsp; |
 | --- | --- | --- | --- | --- | --- | --- |
 | 0 | Yes | Yes | Yes | Yes | Yes | Yes |
 | 1 | No | Yes | Yes | Yes | Yes | Yes |
