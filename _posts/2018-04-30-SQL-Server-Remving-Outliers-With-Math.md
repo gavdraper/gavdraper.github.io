@@ -27,7 +27,7 @@ The mean average of these numbers is 96. If we were removing outliers here just 
 
 SQL Server has functions built in for calculating standard deviation but lets take a look at how to do this manually to understand what's going on when you use it. 
 
-The formula for calculating standard deviation is quite simple it's just &radic;Variance where variance is the mean of the squared differences from the mean. Sound confusing? It's really not lets break it down and apply it to our sample above.
+The formula for calculating standard deviation is quite simple it's just &radic;Variance where variance is the mean of the squared differences from the mean. Sound confusing? It's really not, lets break it down and apply it to our sample above.
 
 So our mean is 96
 
@@ -42,7 +42,7 @@ Value&nbsp;&nbsp; | Diff From Mean&nbsp;&nbsp; | Diff Squared&nbsp;&nbsp;
 120 | 24 | 576
 231 | 135 | 18225
 
-If we then calculate the mean of those squares we get our variance which is 5619. If we then square route this we get our standard deviation of 74.959. From here we can remove outliers outside of a normal range by filtering out anything outside of the (average - deviation) and (average + deviation) which leaves our sample dataset with these results...
+If we then calculate the mean of those squares we get our variance which is 5619. If we then square root this we get our standard deviation of 74.959. From here we can remove outliers outside of a normal range by filtering out anything outside of the (average - deviation) and (average + deviation) which leaves our sample dataset with these results...
 
 20, 36, 40, 47 
 
