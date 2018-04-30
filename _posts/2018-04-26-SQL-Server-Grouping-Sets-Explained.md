@@ -1,8 +1,15 @@
 ---
 layout: post
-title: SQL Server Advanced Grouping Part 1 Grouping Sets
+title: SQL Server Advanced Aggregations Part 1 Grouping Sets
 date: '2018-04-26 21:21:01'
 ---
+
+This post is part 1 of a 3 part series...
+
+1)  [](Part 1 Grouping Sets)
+1)  [](Part 2 ROLLUP and CUBE)
+1)  [](Part 3 GROUPING and GROUPING_ID)
+
 Grouping Sets can be a powerful tool for reporting aggregations. Let's imagine we have a sales table with a SaleDate and want a count of sales by month and also by year....
 
 {% highlight sql %}

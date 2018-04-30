@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Advanced Aggregations Part 3 GROUPING/GROUPING_ID
-date: '2018-04-28 19:47:24'
+date: '2018-04-31 20:11:34'
 ---
 For the final post in this series I'm going to cover GROUPING AND GROUPING_ID. If you've not gone through the previous posts in the series then it's worth giving them a look first as this post will follow straight on and examples below will build on previous ones. 
 
