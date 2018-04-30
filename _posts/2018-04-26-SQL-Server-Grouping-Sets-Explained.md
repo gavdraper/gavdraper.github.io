@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Grouping Sets Explained
+title: SQL Server Advanced Grouping Part 1 Grouping Sets
 date: '2018-04-26 21:21:01'
 ---
 Grouping Sets can be a powerful tool for reporting aggregations. Let's imagine we have a sales table with a SaleDate and want a count of sales by month and also by year....
