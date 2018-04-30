@@ -42,9 +42,15 @@ Value&nbsp;&nbsp; | Diff From Mean&nbsp;&nbsp; | Diff Squared&nbsp;&nbsp;
 190 | 96 | 9216
 231 | 137 | 18796
 
-If we then calculate the mean of those squares we get our variance which is 6965.5. If we then square root this we get our standard deviation of 83.459. From here we can remove outliers outside of a normal range by filtering out anything outside of the (average - deviation) and (average + deviation) which leaves our sample dataset with these results...
+If we then calculate the mean of those squares we get our variance which is 6965.5. If we then square root this we get our standard deviation of 83.459. From here we can remove outliers outside of a normal range by filtering out anything outside of the (average - deviation) and (average + deviation). 
+
+Mean + deviation = 177.459 and mean - deviation = 10.541 which leaves our sample dataset with these results...
 
 20, 36, 40, 47 
+
+As seen on this chart...
+
+![DeviationChart]({{site.url}}/content/images/2018-Deviation\deviation.png)
 
 Now that we've covered the math that goes into calculating this lets look at how we'd write this as a SQL Query...
 
