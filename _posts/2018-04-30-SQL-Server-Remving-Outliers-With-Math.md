@@ -66,4 +66,8 @@ WHERE
    Qty < @Avg + @StdDev
 {% endhighlight %}
 
-As you can see SQL makes this pretty easy to do. This seems like a great time to throw in a cheesy quote just because... "With great power comes great responsibility", be very careful when filtering out outliers  as you're potentially ignoring valid data and throwing out your aggregations. This technique should only be used when you have a genuine reason to ignore the outliers and are well aware of what causes them.
+As you can see SQL makes this pretty easy to do. This seems like a great time to throw in a cheesy quote just because... 
+
+> With great power comes great responsibility
+
+Be very careful when filtering out outliers  as you're potentially ignoring valid data and throwing out your aggregations. This technique should only be used when you have a genuine reason to ignore the outliers and are well aware of what causes them.
