@@ -3,7 +3,6 @@ layout: post
 title: SQL Server Advanced Aggregations Part 1 Grouping Sets
 date: '2018-04-26 21:21:01'
 ---
-
 This post is part 1 of a 3 part series...
 
 1.  Part 1 Grouping Sets

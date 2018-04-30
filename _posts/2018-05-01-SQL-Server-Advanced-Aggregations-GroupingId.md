@@ -3,6 +3,12 @@ layout: post
 title: SQL Server Advanced Aggregations Part 3 GROUPING/GROUPING_ID
 date: '2018-05-01 20:11:34'
 ---
+This post is part 3 of a 3 part series...
+
+1.  [Part 1 Grouping Sets](https://gavindraper.com/2018/04/26/SQL-Server-Grouping-Sets-Explained/)
+1.  [Part 2 ROLLUP and CUBE](https://gavindraper.com/2018/04/28/SQL-Server-Advanced-Aggregations/)
+1.  Part 3 GROUPING and GROUPING_ID
+
 For the final post in this series I'm going to cover GROUPING AND GROUPING_ID. If you've not gone through the previous posts in the series then it's worth giving them a look first as this post will follow straight on and examples below will build on previous ones. 
 
 Following on from our CUBE and ROLLUP examples we ended up with a resultset full of aggregations at different levels/permutations of groups with no easy way to see at what level/permutation each row is grouped at. We can add GROUPING/GROUPING_ID to these queries to get group level information for each row describing what the row is grouped by. Lets modify the previous ROLLUP example to use the GROUPING clause....

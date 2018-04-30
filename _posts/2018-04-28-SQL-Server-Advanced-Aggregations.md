@@ -3,6 +3,12 @@ layout: post
 title: SQL Server Advanced Aggregations Part 2 ROLLUP and CUBE
 date: '2018-04-28 19:47:24'
 ---
+This post is part 2 of a 3 part series...
+
+1.  [Part 1 Grouping Sets](https://gavindraper.com/2018/04/26/SQL-Server-Grouping-Sets-Explained/)
+1.  Part 2 ROLLUP and CUBE
+1.  [Part 3 GROUPING and GROUPING_ID](https://gavindraper.com/2018/05/01/SQL-Server-Advanced-Aggregations-GroupingId/)
+
 Following on from my previous post on [GROUPING SETS](https://gavindraper.com/2018/04/26/SQL-Server-Grouping-Sets-Explained/) I thought I'd cover a couple of other more advanced aggregation options that are often missed, namely ROLLUP and CUBE.
 
 Lets take another look at the GROUPING SETS code I showed in my previous post...
