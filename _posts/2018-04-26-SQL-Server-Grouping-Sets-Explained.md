@@ -6,9 +6,9 @@ date: '2018-04-26 21:21:01'
 
 This post is part 1 of a 3 part series...
 
-1)  Part 1 Grouping Sets
-1)  [Part 2 ROLLUP and CUBE](https://gavindraper.com/2018/04/28/SQL-Server-Advanced-Aggregations/)
-1)  [Part 3 GROUPING and GROUPING_ID](https://gavindraper.com/2018/05/01/SQL-Server-Advanced-Aggregations-GroupingId/)
+1.  Part 1 Grouping Sets
+1.  [Part 2 ROLLUP and CUBE](https://gavindraper.com/2018/04/28/SQL-Server-Advanced-Aggregations/)
+1.  [Part 3 GROUPING and GROUPING_ID](https://gavindraper.com/2018/05/01/SQL-Server-Advanced-Aggregations-GroupingId/)
 
 Grouping Sets can be a powerful tool for reporting aggregations. Let's imagine we have a sales table with a SaleDate and want a count of sales by month and also by year....
 
