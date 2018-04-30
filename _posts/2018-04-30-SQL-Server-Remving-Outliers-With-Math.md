@@ -48,8 +48,6 @@ Mean + deviation = 177.459 and mean - deviation = 10.541 which leaves our sample
 
 20, 36, 40, 47 
 
-As seen on this chart...
-
 ![DeviationChart]({{site.url}}/content/images/2018-Deviation\deviation.png)
 
 Now that we've covered the math that goes into calculating this lets look at how we'd write this as a SQL Query...
