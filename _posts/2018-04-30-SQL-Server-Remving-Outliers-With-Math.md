@@ -29,20 +29,20 @@ SQL Server has functions built in for calculating standard deviation but lets ta
 
 The formula for calculating standard deviation is quite simple it's just &radic;Variance where variance is the mean of the squared differences from the mean. Sound confusing? It's really not, lets break it down and apply it to our sample above.
 
-So our mean is 96
+So our mean is 94
 
 Then we take the difference of each number from the mean and square it 
 
 Value&nbsp;&nbsp; | Diff From Mean&nbsp;&nbsp; | Diff Squared&nbsp;&nbsp; 
 --- | --- | --- 
-20 | 76 | 5776
-36 | 60 | 3600
-40 | 56 | 3136
-47 | 49 | 2401
-120 | 24 | 576
-231 | 135 | 18225
+20 | 74 | 5476
+36 | 58 | 3364
+40 | 54 | 2916
+47 | 45 | 2025
+190 | 96 | 9216
+231 | 137 | 18796
 
-If we then calculate the mean of those squares we get our variance which is 5619. If we then square root this we get our standard deviation of 74.959. From here we can remove outliers outside of a normal range by filtering out anything outside of the (average - deviation) and (average + deviation) which leaves our sample dataset with these results...
+If we then calculate the mean of those squares we get our variance which is 6965.5. If we then square root this we get our standard deviation of 83.459. From here we can remove outliers outside of a normal range by filtering out anything outside of the (average - deviation) and (average + deviation) which leaves our sample dataset with these results...
 
 20, 36, 40, 47 
 
