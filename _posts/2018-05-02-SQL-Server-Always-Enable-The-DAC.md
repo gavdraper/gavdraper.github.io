@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Always Enable The DAC (Dedicated Admin Connection)
+title: SQL Server Dedicated Admin Connection and Why You NEED It!
 date: '2018-05-02 22:13:42'
 ---
 DAC or Dedicated Admin Connection is one of those things you don't know you need until it's too late.
