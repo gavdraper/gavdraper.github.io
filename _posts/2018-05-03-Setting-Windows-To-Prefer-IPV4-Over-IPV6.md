@@ -12,18 +12,18 @@ However after some experimentation I found that using netsh you can actually set
 
 From an admin console run this to get a list of the currently set preferences...
 
-{% highlight %}
+{% highlight bash %}
 netsh int ipv6 show prefixpolicies
 {% endhighlight %}
 
 Take a screenshot or note down the results as we're going to make a change to this ordering and you may want to at some point move back to how it was before and make IPV6 the default again. In order to prefer IPV4 we need to give ::ffff:0:0/96  the highest priority, we can do this by running this...
 
-{% highlight %}
+{% highlight bash %}
 netsh int ipv6 set prefixpolicy ::ffff:0:0/96 51
 {% endhighlight %}
 
 If you then ping this machine you should see it now resolves to an IPV4 address rather than the previous IPV6 address. If you ever want to undo this change run the following...
 
-{% highlight %}
+{% highlight bash %}
 netsh int ipv6 set prefixpolicy ::ffff:0:0/96 4
 {% endhighlight %}
