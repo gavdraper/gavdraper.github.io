@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Dedicated Admin Connection and Why You NEED It!
+title: Setting Windows To Prefer IPv4 Over IPv6
 date: '2018-05-03 08:17:12'
 ---
 
