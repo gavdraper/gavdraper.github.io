@@ -51,6 +51,6 @@ To list enabled trace flags you'll  want to use DBCC TRACESTATUS, as with the ab
 {% highlight sql %}
 /*List session flags*/
 DBCC TRACESTATUS() 
-DBCC TRACESTATUS(-1)
 /*List global flags*/
+DBCC TRACESTATUS(-1)
 {% endhighlight %}
