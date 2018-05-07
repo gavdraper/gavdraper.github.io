@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Why Is My Transaction Log Getting So Large
-date: '2018-05-07 23:09:11'
+date: '2018-05-06 23:09:11'
 ---
 The Transaction log growing is completely normal however there are situations where a transaction log can get to a state where it wont stop growing which if left unmonitored can fill drives and bring down servers.
 
@@ -13,6 +13,10 @@ As changes are made in SQL Server they are written to the log buffer where the l
 The changes to the actual data files however are written to the buffer pool in memory and not written to disk until a checkpoint occurs, the checkpoint will then write all dirty pages to disk and update the database boot page to store the last LSN from the log file that the data file is consistent with. This means any log records before this one will no longer be needed if the database crashes as everything before that point is now hardened to disk. 
 
 If a server crashes before a checkpoint when it next starts it will run the recovery process where it will replay any log records after the last LSN stored in the database boot page. This will ensure no completed transactions are lost if the buffer pool contained data pages that had not yet been written to disk.
+
+A simplified version of the worflow for a checkpoint looks a bit like this...
+
+![Log Waits]({{site.url}}/content/images/2018-log-growth/checkpoint.gif)
 
 ## Causes Of Constant Growth ##
 Normally when a transaction log grows out of control it's down to 1 of a couple of reasons...
