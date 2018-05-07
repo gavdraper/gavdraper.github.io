@@ -116,3 +116,25 @@ COMMIT
 You'll see at this point transaction 2 errors because it attempted to change data that has already been changed. If there had have been other operations in Tab 2 before the offending update they would have all have been rolled back.
 
 If you then change this test to use READ COMMITTED there will be no error and the only tab that actually makes any changes will be that last one that commits with no risk of rolling a whole batch back and had there have been other modifications in the batch they would have gone through providing they haven't been changed elsewhere in which case they would also get ignored.
+
+## Conclusion ##
+Both Snapshot and RCSI have their pros and cons and you need to do when to use one over the other or even when to avoid both of them.
+
+Reading above is may sound like RCSI is a golden ticket but there are times that snapshot fits better. For example a procedure that runs lots of statements that all need to be consistent with each other, snapshot will use the same snapshots for the life of batch making this a better fit.
+
+Also beware that applications can rely on blocking and that changing an existing database to RCSI can really screw this up. For example if an application depends on a writer blocking a reader then RCSI can cause big problems...
+
+Tab 1
+{% highlight sql %}
+BEGIN TRAN
+  UPDATE AvailableTickets SET TotalTickets = TotalTickets -1
+{% endhighlight %}
+
+Tab 2
+{% highlight sql %}
+BEGIN TRAN
+  SELECT TotalTickets FROM AvailableTickets
+{% endhighlight %}
+
+In normal read committed tab 2 will wait for tab 1 to complete and return the committed value. In RCSI however we will return the old value without waiting for the update to commit possibly leading to tickets being booked twice. Applications using RCSI need to be aware of this and legacy applications should be switched to RCSI with caution/lots of testing. For legacy apps sprinkling snapshot onto queries that are safe to do so may be a better option than going all in with RCSI.
+
