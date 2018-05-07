@@ -6,7 +6,13 @@ date: '2018-05-07 23:09:11'
 The Transaction log growing is completely normal however there are situations where a transaction log can get to a state where it wont stop growing which if left unmonitored can fill drives and bring down servers.
 
 ## Checkpoints ##
-To understand how this works you first need to know what a checkpoint is. As changes are made in SQL Server they are written to the log file sequentially but the actual changes to the data pages are held in memory until a check point occurs. A checkpoint is the process that flushes all the changes in memory to disk then writes LSN of the last log record to the database boot page essentially marking everything up to that point as written to the data files on disk. If a server crashes before a checkpoint it is recovered back to a consistent state on startup by replaying the transactions in the transaction log that occurred after the last checkpoint.
+To understand how this works you first need to know what a checkpoint is...
+
+As changes are made in SQL Server they are written to the log buffer where the log writer continuously flushes them to the log file on disk, then when the transaction is committed any unflushed log records are written to the log file on disk. 
+
+The changes to the actual data files however are written to the buffer pool in memory and not written to disk until a checkpoint occurs, the checkpoint will then write all dirty pages to disk and update the database boot page to store the last LSN from the log file that the data file is consistent with. This means any log records before this one will no longer be needed if the database crashes as everything before that point is now hardened to disk. 
+
+If a server crashes before a checkpoint when it next starts it will run the recovery process where it will replay any log records after the last LSN stored in the database boot page. This will ensure no completed transactions are lost if the buffer pool contained data pages that had not yet been written to disk.
 
 ## Causes Of Constant Growth ##
 Normally when a transaction log grows out of control it's down to 1 of a couple of reasons...
