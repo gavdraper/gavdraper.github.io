@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Why Is My Transaction Log Getting So Large
-date: '2018-05-06 23:09:11'
+date: '2018-05-07 23:09:11'
 ---
 The Transaction log growing is completely normal however there are situations where a transaction log can get to a state where it wont stop growing which if left unmonitored can fill drives and bring down servers.
 
