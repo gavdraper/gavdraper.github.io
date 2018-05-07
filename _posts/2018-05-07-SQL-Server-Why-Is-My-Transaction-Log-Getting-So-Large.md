@@ -6,7 +6,7 @@ date: '2018-05-07 23:09:11'
 The Transaction log growing is completely normal however there are situations where a transaction log can get to a state where it wont stop growing which if left unmonitored can fill drives and bring down servers.
 
 ## Checkpoints ##
-To understand how this works you first need to know what a checkpoint is. As changes are made in SQL Server they are written to the log file sequentially but the actual changes to the data pages are held in memory until a check point occurs. A checkpoint is the process that flushes all the changes in memory to disk then writes the checkpoint to the end of the transaction log marking everything up to that point as written to the data files on disk. If a server crashes before a checkpoint it is recovered back to a consistent state on startup by replaying the transactions in the transaction log that occurred after the last checkpoint.
+To understand how this works you first need to know what a checkpoint is. As changes are made in SQL Server they are written to the log file sequentially but the actual changes to the data pages are held in memory until a check point occurs. A checkpoint is the process that flushes all the changes in memory to disk then writes LSN of the last log record to the database boot page essentially marking everything up to that point as written to the data files on disk. If a server crashes before a checkpoint it is recovered back to a consistent state on startup by replaying the transactions in the transaction log that occurred after the last checkpoint.
 
 ## Causes Of Constant Growth ##
 Normally when a transaction log grows out of control it's down to 1 of a couple of reasons...
