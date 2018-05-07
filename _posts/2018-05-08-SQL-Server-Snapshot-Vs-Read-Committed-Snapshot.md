@@ -91,7 +91,7 @@ Tab 1
 
 You'll see the second select in Tab 1 isn't seeing the changes that tab 2 committed. This is because tab 1 took a snapshot of that table the first time we ran a select against it and will keep that snapshot until the transaction ends. Commit Tab 1 then drop and recreate the DB with the above script and run the test again as READ COMMITTED. You'll see that RCSI will see committed changes as they happen as it renews it's snapshots on every statement.
 
-## Concurrent Updates Causes Rollbacks ##
+## Concurrent Updates Cause Rollbacks ##
 
 Tab 1
 {% highlight sql %}
