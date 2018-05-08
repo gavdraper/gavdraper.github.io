@@ -1,11 +1,11 @@
 ---
 layout: post
 title: SQL Server Partition Swapping
-date: '2018-05-11 20:56:51'
+date: '2018-05-08 07:56:51'
 ---
-When working with large amounts of data in ETL jobs it can often take a long time and become unmanagable to remove old data and add new data. 
+When working with large amounts of data in ETL jobs it can often take a long time and become unmanageable to remove old data and add new data. 
 
-For example imagine we have a reporting table in our data warehouse that stores the last 12 completed months of sales and each month we remove the oldest month from the table and add the latest complete month to it. the delete operation alone can take hours to run when data gets too large for the engine to handle it also causes a lot of blocking during this process. If we were to partition the data on Month SQL Server will let us remove a whole partition from the table pretty much instantly and swap a new one in again pretty much instantly. Now this does have it's drawbacks and is not apropriate if you're querying accross partitions and needing indexes that span partitions but for our example let's pretend we only report on a choosen month and don't need any indexing to cross partition bounderies. 
+For example imagine we have a reporting table in our data warehouse that stores the last 12 completed months of sales and each month we remove the oldest month from the table and add the latest complete month to it. the delete operation alone can take hours to run when data gets too large for the engine to handle it also causes a lot of blocking during this process. If we were to partition the data on Month SQL Server will let us remove a whole partition from the table pretty much instantly and swap a new one in again pretty much instantly. Now this does have it's drawbacks and is not appropriate if you're querying across partitions and needing indexes that span partitions but for our example let's pretend we only report on a chosen month and don't need any indexing to cross partition boundaries. 
 
 To hook this up we first need a new database that has 12 partitions one for each month...
 
@@ -29,7 +29,7 @@ ALTER DATABASE PartitionSwapTest ADD FILE (NAME = N'PartitionSwap_Sep',FILENAME 
 ALTER DATABASE PartitionSwapTest ADD FILE (NAME = N'PartitionSwap_Oct',FILENAME = N'e:\PartitionTest\PartitionSwapOct.ndf', SIZE = 30MB, MAXSIZE = 10000MB, FILEGROWTH = 30MB) TO FILEGROUP [FS_MONTHS]  
 ALTER DATABASE PartitionSwapTest ADD FILE (NAME = N'PartitionSwap_Nov',FILENAME = N'e:\PartitionTest\PartitionSwapNov.ndf', SIZE = 30MB, MAXSIZE = 10000MB, FILEGROWTH = 30MB) TO FILEGROUP [FS_MONTHS]  
 ALTER DATABASE PartitionSwapTest ADD FILE (NAME = N'PartitionSwap_Dec',FILENAME = N'e:\PartitionTest\PartitionSwapDec.ndf', SIZE = 30MB, MAXSIZE = 10000MB, FILEGROWTH = 30MB) TO FILEGROUP [FS_MONTHS]  
-{% end highlight %}
+{% endhighlight %}
 
 We then need a partition function that will put our data into the correct partition depending on it's month...
 
@@ -54,9 +54,9 @@ I'll keep the sales table simple by just putting a date and quantity on it, I'll
 {% highlight sql %}
 CREATE TABLE DaySales
 (
-	[Date] DATETIME NOT NULL,
-	Qty INT,
-	[Month] AS MONTH([Date]) PERSISTED  CHECK([Month] >= 1 AND [Month] <= 12 AND [Month] IS NOT NULL)
+   [Date] DATETIME NOT NULL,
+   Qty INT,
+   [Month] AS MONTH([Date]) PERSISTED  CHECK([Month] >= 1 AND [Month] <= 12 AND [Month] IS NOT NULL)
 ) ON ps_MonthRange([Month])
 {% endhighlight %}
 
@@ -65,11 +65,11 @@ For examples sake let's just insert a record per day in 2018 with a random quant
 {% highlight sql %}
 DECLARE @day INT = 1
 WHILE @day <= 365
-	BEGIN
-	INSERT INTO DaySales([Date],qty) 
-	SELECT DISTINCT DATEADD(DAY,@Day,'20171231'), RAND()*100
-	SELECT @Day = @Day +1
-	END
+   BEGIN
+   INSERT INTO DaySales([Date],qty) 
+   SELECT DISTINCT DATEADD(DAY,@Day,'20171231'), RAND()*100
+   SELECT @Day = @Day +1
+   END
 {% endhighlight %}
 
 You can then view the partitions we've created and how many rows they have in them by querying sys.partitions...
