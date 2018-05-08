@@ -1,13 +1,15 @@
 ---
 layout: post
 title: SQL Server Partition Swapping
-date: '2018-05-08 07:56:51'
+date: '2018-05-11 07:56:51'
 ---
-When working with large amounts of data in ETL jobs it can often take a long time and become unmanageable to remove old data and add new data. 
+When working with large amounts of data in ETL jobs it can often can sink a lot of time inserting new data into a table and archiving old data out.
 
-For example imagine we have a reporting table in our data warehouse that stores the last 12 completed months of sales and each month we remove the oldest month from the table and add the latest complete month to it. the delete operation alone can take hours to run when data gets too large for the engine to handle it also causes a lot of blocking during this process. If we were to partition the data on Month SQL Server will let us remove a whole partition from the table pretty much instantly and swap a new one in again pretty much instantly. Now this does have it's drawbacks and is not appropriate if you're querying across partitions and needing indexes that span partitions but for our example let's pretend we only report on a chosen month and don't need any indexing to cross partition boundaries. 
+For example imagine we have a reporting table in our data warehouse that stores the last 12 completed months of sales, each month we remove or archive the oldest month from the table and add the latest complete month to it. The delete operation alone can take hours to run when data gets to a large enough size, it often also causes a large level of locks/blocking potentially making the whole table inaccessible to other queries. If we were to partition the data on month SQL Server will let us remove a whole partition from the table pretty much instantly and swap a new one in again pretty much instantly from a source table where we've pre-loaded the table, all this and no blocking!
 
-To hook this up we first need a new database that has 12 partitions one for each month...
+Now Partitioning does have it's drawbacks and it needs to be a good fit for your scenario before you think about using it. Some potentially blockers are it's Enterprise only until SQL Server 2016 and if you're querying across partitions where SQL Server can't use partition elimination to limit the partitions it reads things can get a lot slower.
+
+Let's take a look at getting a working example that uses partitioning to swap in and out data from our partitioned table. To hook this up we first need a new database that has 12 partitions one for each month...
 
 {% highlight sql %}
 CREATE DATABASE PartitionSwapTest
@@ -34,12 +36,12 @@ ALTER DATABASE PartitionSwapTest ADD FILE (NAME = N'PartitionSwap_Dec',FILENAME 
 We then need a partition function that will put our data into the correct partition depending on it's month...
 
 {% highlight sql %}
-CREATE PARTITION FUNCTION pf_DaySalesMonth(INT) 
+CREATE PARTITION FUNCTION pf_DaySalesMonth(INT)
 AS RANGE LEFT FOR VALUES(1,2,3,4,5,6,7,8,9,10,11,12)
 GO
 {% endhighlight sql %}
 
-We now need a partition scheme this is what maps a partition function to one or more file groups, in our case we'll put all our partitions in the same filegroup to keep things simple...
+We now need a partition scheme to map a partition function to one or more file groups, in our case we'll put all our partitions in the same filegroup to keep things simple...
 
 {% highlight sql %}
 CREATE PARTITION SCHEME ps_MonthRange
@@ -49,7 +51,7 @@ ALL TO ([FS_Months])
 GO
 {% endhighlight %}
 
-I'll keep the sales table simple by just putting a date and quantity on it, I'll also add a computed field for month as that's what we need to pass into the partition function...
+I'll keep the sales table small by just putting a date and quantity on it, I'll also add a computed field for month as that's what we need to pass into the partition function...
 
 {% highlight sql %}
 CREATE TABLE DaySales
@@ -76,44 +78,49 @@ You can then view the partitions we've created and how many rows they have in th
 
 {% highlight sql %}
 SELECT * FROM sys.partitions
-WHERE object_id = OBJECT_ID('dbo.DaySales');  
+WHERE object_id = OBJECT_ID('dbo.DaySales');
 {% endhighlight %}
 
+Let's pretend we're loading in data for January 2019 and as part of this process want to first remove or archive the data from January 2018. As I mentioned before large deletes can take time and cause a lot of blocking but because were using partition tables we can either truncate a partition or swap one out almost instantly. On SQL Server 2016+ we have support for truncating a partition like this...
 
 {% highlight sql %}
---Must be on same filegroup
-CREATE TABLE NewData
-(	
-	[Date] DATETIME NOT NULL,
-	Qty INT,
-	[Month] AS MONTH([Date]) PERSISTED CHECK([Month] =1  AND [Month] IS NOT NULL) 	
+TRUNCATE TABLE DaySales WITH (PARTITIONS(1))
+{% endhighlight %}
+
+With 1 being the ID of the partition we want to truncate. If you're running an earlier version of SQL Server or want to archive rather than delete then instead you can move the partition out into a new table...
+
+{% highlight sql %}
+CREATE TABLE Archive
+()
+   [Date] DATETIME NOT NULL,
+   [Qty] INT,
+   [Month] AS MONTH([Date]) PERSISTED
 ) ON [FS_Months]
 
+ALTER TABLE DaySales SWITCH PARTITION 1 TO Archive
+{% endhighlight %}
 
---Load In New Data For January
+At this point the data for January has been removed or archived so we're ready to now swap in January 2019. To do that we need our source table to be on the same filegroup and have constraints that prevent any data being in it that is not appropriate for the partition we're swapping in to. Without the constraint the swap will error as SQL Sever Will not allow the possibility of swapping in data that does not fit the partition based on the partition function.
+
+{% highlight sql %}
+CREATE TABLE NewData
+(
+   [Date] DATETIME NOT NULL,
+   [Qty] INT,
+   [Month] AS MONTH([Date]) PERSISTED CHECK([Month] =1  AND [Month] IS NOT NULL)
+) ON [FS_Months]
+
+/*Load In New Data For January*/
 SELECT @Day =  1
 WHILE @day <= 31
-	BEGIN
-	INSERT INTO NewData([Date],qty) 
-	SELECT DISTINCT DATEADD(DAY,@Day,'20171231'), RAND()*100
-	SELECT @Day = @Day +1
-	END
+   BEGIN
+   INSERT INTO NewData([Date],qty)
+   SELECT DISTINCT DATEADD(DAY,@Day,'20181231'), RAND()*100
+   SELECT @Day = @Day +1
+   END
 
---Remove old partition
---And Swap new one on
-SELECT * FROM dbo.DaySales WHERE MONTH([Date]) = 1
---2016+ allows truncation of a partition
---TRUNCATE TABLE DaySales WITH (PARTITIONS(1))
---Previous versions you can swap them out
-CREATE TABLE Archive
-(	
-	[Date] DATETIME NOT NULL,
-	Qty INT,
-	[Month] AS MONTH([Date]) PERSISTED
-) ON [FS_Months]
-ALTER TABLE DaySales SWITCH PARTITION 1 TO Archive ; 
-
-SELECT * FROM dbo.DaySales WHERE MONTH([Date]) = 1
-ALTER TABLE NewData SWITCH TO DaySales PARTITION 1; 
-SELECT * FROM dbo.DaySales WHERE MONTH([Date]) = 1
+/*swap in the new data*/
+ALTER TABLE NewData SWITCH TO DaySales PARTITION 1;
 {% endhighlight %}
+
+All the data from NewData is now in the first partition for our DaySales table. For large warehouse tables this process can MASSIVELY speed up load and archiving processes and prevent excessive blocking/locking.
