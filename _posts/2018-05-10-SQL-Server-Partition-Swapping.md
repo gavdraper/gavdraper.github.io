@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Partition Swapping
-date: '2018-05-11 07:56:51'
+date: '2018-05-10 07:56:51'
 ---
 When working with large amounts of data in ETL jobs it can often can sink a lot of time inserting new data into a table and archiving old data out.
 
