@@ -91,7 +91,7 @@ With 1 being the ID of the partition we want to truncate. If you're running an e
 
 {% highlight sql %}
 CREATE TABLE Archive
-()
+(
    [Date] DATETIME NOT NULL,
    [Qty] INT,
    [Month] AS MONTH([Date]) PERSISTED
