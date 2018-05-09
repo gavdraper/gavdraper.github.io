@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Why Is My Transaction Log Not Truncating
+title: SQL Server Why Isn't My Transaction Log Truncating
 date: '2018-05-07 23:09:11'
 ---
 The Transaction log growing is completely normal however there are situations where a transaction log can get to a state where it wont stop growing which if left unmonitored can fill drives and bring down servers.
