@@ -15,6 +15,8 @@ Database snapshots work in a different way to normal databases. When you read fr
 1. Our snapshot file now contains that record before the change.
 1. If we then query that record in our snapshot it will read it from the snapshot. If we query any other record it will still come from the source database as nothing else has changed.
 
+![diagram of snapshot workflow]({{site.url}}/content/images/2018-database-snapshot/snapshot-workflow.PNG)
+
 As you can probably tell the longer a snapshot is around the larger it will get as changes are made to the source database. However short lived snapshots or snapshots on databases with relatively few updates can be very fast to create and delete.
 
 ## Using Them ##
