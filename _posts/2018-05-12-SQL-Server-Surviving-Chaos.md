@@ -32,7 +32,7 @@ FROM
 WHERE
    is_allocated = 1
    AND page_free_space_percent IS NOT NULL
-   ALD allocation_unit_type = 1
+   AND allocation_unit_type = 1
    AND ISNULL(OBJECT_NAME(object_id),'')  NOT LIKE 'sysfiles%'
 ORDER BY
    a.allocated_page_page_id
@@ -102,7 +102,7 @@ FROM
 WHERE
    is_allocated = 1
    AND page_free_space_percent IS NOT NULL
-   ALD allocation_unit_type = 1
+   AND allocation_unit_type = 1
    AND ISNULL(OBJECT_NAME(object_id),'')  NOT LIKE 'sysfiles%'
 ORDER BY
    a.allocated_page_page_id
