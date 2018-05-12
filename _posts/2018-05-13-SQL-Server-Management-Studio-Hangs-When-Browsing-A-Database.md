@@ -3,7 +3,7 @@ layout: post
 title: SQL Server Management Studio Intermittently Hangs Browsing a Database
 date: '2018-05-13 20:09:21'
 ---
-If you're seeing SSMS hang/lock timeouts when expanding nodes in the object explorer for a database it's almost definitely caused by schema modification locks. Normally schema modification locks don't cause a problem as they are so short lived but if you're making schema changes inside long running transactions you can make the database un-browsable in the SSMS object explorer.
+If you're seeing SSMS hang/lock timeouts when expanding nodes in the object explorer for a database it's almost definitely caused by schema modification (SCH-M) locks. Normally SCH-M locks don't cause a problem as they are so short lived but if you're making schema changes inside long running transactions you can make the database un-browsable in the SSMS object explorer.
 
 Below I'm going to go over some different examples that can cause this to happen, to run them first run the following script to setup a test database...
 
@@ -25,7 +25,7 @@ BEGIN TRAN
     DROP INDEX ndx_blah ON Blah
 {% endhighlight %}
 
-At this point we have an open transaction that has dropped an index. Imagine it's now running a long query to load new data in keeping the schema modification lock open. If you now try to expand the tables node in SSMS...
+At this point we have an open transaction that has dropped an index. Imagine it's now running a long query to load new data in keeping the SCH-M lock open. If you now try to expand the tables node in SSMS...
 
 ![lock timeout error]({{site.url}}/content/images/2018-schema-locks/timeout.PNG)
 
@@ -58,9 +58,9 @@ Yep that works because the schema modifications were not made in our database, t
 
 ![tempdb lock timeout error]({{site.url}}/content/images/2018-schema-locks/tempdb-error.PNG)
 
-So temp tables will place their schema modification locks on TempDB, I've never found any reason to be browsing TempDB in the SSMS object explorer so temporary objects in long running queries have never really caused me issues in SSMS.
+So temp tables will place their SCH-M locks on TempDB, I've never found any reason to be browsing TempDB in the SSMS object explorer so temporary objects in long running queries have never really caused me issues in SSMS.
 
 ## Other Causes ##
 The above 2 scenarios are the most common causes I've seen as they are both commonly run in long running data load jobs however pretty much any schema modification can cause this e.g ALTER TABLE, ALTER INDEX, CREATE INDEX....
 
-This post is centered around SSMS failing but schema modification locks cause all sorts of problems with user queries too. Most queries you'll run take schema stability locks which will block and wait on schema modification locks, this is another massive reason you want to keep your schema modification locks open for the shorted amount of time possible.
+This post is centered around SSMS failing but SCH-M locks cause all sorts of problems with user queries too. Most queries you'll run take schema stability locks (SCH-S) which will block and wait on SCH-M locks, this is another massive reason you want to keep your SCH-M locks open for the shorted amount of time possible.
