@@ -1,10 +1,18 @@
 <header class="site-header" role="banner">
 
   <div class="wrapper">
+ <div>
+    {% if site.twitter_username %}
+    {% include icon-twitter.html username=site.twitter_username %}
+  {% endif %}  
+  {% if site.github_username %}
+    {% include icon-github.html username=site.github_username %}
+  {% endif %}
+ </div>
     {% assign default_paths = site.pages | map: "path" %}
     {% assign page_paths = site.header_pages | default: default_paths %}
     <a class="site-title" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
-  
+
     {% if page_paths %}
       <nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
