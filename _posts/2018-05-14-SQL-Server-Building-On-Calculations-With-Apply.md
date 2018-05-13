@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Building On Calculations With Apply
+title: SQL Server Building On Calculations With APPLY
 date: '2018-05-14 22:12:24'
 ---
 I find myself using Apply more and more in my queries, aside from the usual reasons I've been finding I can write much clearer queries that reuse calculations and build on them rather than constantly repeating code.
