@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Using Central Management Servers
+title: SQL Server Save Time Managing Multiple Servers With Central Management Servers
 date: '2018-05-15 06:12:24'
 ---
 
