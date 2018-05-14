@@ -76,4 +76,6 @@ FROM
       AS ValueWithDiscount(Value)
 {% endhighlight %}
 
+If you're worried about performance insert a few sample rows and run look at the execution plan for the query with and the query without the APPLY, you'll see both queries are using the exact same plan.
+
 So in reality in this case it's probably more code this way with lengthier syntax but I think this is far more readable,  each calculation is defined only once and builds on the previous steps making code changes easier to make. You possibly wouldnt use this approach for examples as simple as the one above but it can be very useful for more complex queries.
