@@ -49,4 +49,46 @@ Using this process you can have a good deal of your morning checks run before yo
 ## Check Full Recovery Databases Have Done Log Backups Within X Minutes ##
 
 ## On Demand/On Demand Prevent ##
-Only some facets are available to be used with the On Change trigger as this works using DDL Triggers facets that can't be triggered in this way can't be used with the On Change option.
+Only some facets are available to be used with the On Change evaluation mode as this works using DDL Triggers, facets that can't be triggered in this way can't be used with the On Change option.
+
+The facets available are all stored in msdb..syspolicy_management_facets which has an execution_mode field that defines what modes you can use (Demand, Schedule, On Change Log, On Change Prevent). This field is a bitwise flag and can be checked with this script
+
+{% highlight sql %}
+select 
+	facets.management_facet_id Id,
+	facets.name Name,
+	CASE WHEN execution_mode & 1 = 1 THEN 1 ELSE 0 END AS OnChangePrevent,
+	CASE WHEN execution_mode & 2 = 2 THEN 1 ELSE 0 END AS OnChangeLogOnly,
+	CASE WHEN execution_mode & 4 = 4 THEN 1 ELSE 0 END AS OnSchedule
+FROM
+	msdb..syspolicy_management_facets facets
+{% endhighlight %}
+
+You can also query what events a facet can use by looking in msdb.dbo.syspolicy_facet_events. 
+
+Armed with this information let's create a new policy that uses a condiation that supports On Change Prevent. Let's look at the StoredProcedure facet as in the above script it shows as supporting On Change Prevent, we can then look at what events this facet supports by querying the events table on it's ID...
+
+{% highlight sql %}
+SELECT * FROM msdb.dbo.syspolicy_facet_events WHERE management_facet_id = 61
+{% endhighlight%}
+
+![Facet Event List]({{site.url}}/content/images/2018-policy-based-management/facet-events.PNG)
+
+We can see here using this facet our policy will be called for all those events. Based on this lets create a new policy that will prevent anyone prefixing stored procedure name with "sproc". As before we need to create a new condition...
+
+![SP Condition]({{site.url}}/content/images/2018-policy-based-management/sp-condition.PNG)
+
+Now create a new policy that uses our new check condition against all databases condition with the evaulation mode set to On Change Prevent...
+
+![SP Policy]({{site.url}}/content/images/2018-policy-based-management/sp-policy.PNG)
+
+If you then try to create a stored procedure that violated this rule it will fail...
+
+{% highlight sql %}
+
+CREATE PROCEDURE sproc_MyProcedure
+AS
+SELECT 1 
+{% endhighlight %}
+
+![SP Policy Prevent Error]({{site.url}}/content/images/2018-policy-based-management/error.PNG)
