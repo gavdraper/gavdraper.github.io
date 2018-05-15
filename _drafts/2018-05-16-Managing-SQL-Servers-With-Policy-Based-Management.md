@@ -36,7 +36,7 @@ With these 2 conditions created we can now define a policy that runs on all data
 
 Once this is created if you look under SQL Agent\Jobs in SSMS you'll see a new job has been created to run our policy at the scheduled time that is named something like
 
-' syspolicy_check_schedule_FC8D54AD-2B54-4AF7-A349-5F87CC7B1EE2
+    syspolicy_check_schedule_FC8D54AD-2B54-4AF7-A349-5F87CC7B1EE2
 
 If you now execute the job you'll then be able to view failures by looking at the history under Policy Management...
 
