@@ -47,8 +47,21 @@ If you now execute the job you'll then be able to view failures by looking at th
 Using this process you can have a good deal of your morning checks run before you come in to work then review the results under the policy management history.
 
 ## Check Full Recovery Databases Have Done Log Backups Within X Minutes ##
+Let's create another policy to check all Full and Bulk recover model databases have done a log backup within the last 5 minutes. 
 
-## On Demand/On Demand Prevent ##
+First we need a condition to filter the databases to just ones in full or bulk recovery.
+
+![Full Recovery Condition]({{site.url}}/content/images/2018-policy-based-management/is-full-or-bulk-condition.PNG)
+
+Then we need a condition to check the last log backup is within 5 minutes. 
+
+![Log Backup In Last 5 Minutes Condition]({{site.url}}/content/images/2018-policy-based-management/log-backup-condition.PNG)
+
+Lastly we need to create the policy and add it to our MorningDba Schedule.
+
+![Log Backup Policy]({{site.url}}/content/images/2018-policy-based-management/log-backup-policy.PNG)
+
+## On Change/Prevent ##
 Only some facets are available to be used with the On Change evaluation mode as this works using DDL Triggers, facets that can't be triggered in this way can't be used with the On Change option.
 
 The facets available are all stored in msdb..syspolicy_management_facets which has an execution_mode field that defines what modes you can use (Demand, Schedule, On Change Log, On Change Prevent). This field is a bitwise flag and can be checked with this script
