@@ -67,12 +67,12 @@ Only some facets are available to be used with the On Change evaluation mode as 
 The facets available are all stored in msdb..syspolicy_management_facets which has an execution_mode field that defines what modes you can use (Demand, Schedule, On Change Log, On Change Prevent). This field is a bitwise flag and can be checked with this script
 
 {% highlight sql %}
-select 
-	facets.management_facet_id Id,
-	facets.name Name,
-	CASE WHEN execution_mode & 1 = 1 THEN 1 ELSE 0 END AS OnChangePrevent,
-	CASE WHEN execution_mode & 2 = 2 THEN 1 ELSE 0 END AS OnChangeLogOnly,
-	CASE WHEN execution_mode & 4 = 4 THEN 1 ELSE 0 END AS OnSchedule
+SELECT 
+   facets.management_facet_id Id,
+   facets.name Name,
+   CASE WHEN execution_mode & 1 = 1 THEN 1 ELSE 0 END AS OnChangePrevent,
+   CASE WHEN execution_mode & 2 = 2 THEN 1 ELSE 0 END AS OnChangeLogOnly,
+   CASE WHEN execution_mode & 4 = 4 THEN 1 ELSE 0 END AS OnSchedule
 FROM
 	msdb..syspolicy_management_facets facets
 {% endhighlight %}
