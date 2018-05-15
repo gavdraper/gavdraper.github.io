@@ -46,7 +46,7 @@ If you now execute the job you'll then be able to view failures by looking at th
 
 Using this process you can have a good deal of your morning checks run before you come in to work then review the results under the policy management history.
 
-
-
-
 ## Check Full Recovery Databases Have Done Log Backups Within X Minutes ##
+
+## On Demand/On Demand Prevent ##
+Only some facets are available to be used with the On Change trigger as this works using DDL Triggers facets that can't be triggered in this way can't be used with the On Change option.
