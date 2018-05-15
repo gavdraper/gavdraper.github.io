@@ -1,20 +1,20 @@
 ---
 layout: post
 title: Managing SQL Servers With Policy Based Management
-date: '2018-05-15 06:12:24'
+date: '2018-05-16 19:12:23'
 ---
-Policy Based Management has been in SQL Server since 2008 and allows you to define policies that can report issues when certain conditions are violated. It can do this in a couple of ways...
+Policy Based Management has been in SQL Server since 2008 and allows you to define policies that can report issues when certain conditions are violated, it can also prevent changes that would violate a policy. It does this in a couple of ways...
 
 - On Demand : You execute the policy manually
 - On Schedule : A SQL Agent job executes the policy on a schedule
-- On Change : Depending on the policy you may be able to use on demand which uses DDL triggers to trigger the policy to run when a change is made that meets the policy condition. For On Change policies you have the option to prevent the change if it violates the policy or let the change go through but log the issue. 
+- On Change : Depending on the facets you use you may be able to use on demand which uses DDL triggers to trigger the policy to run when a change is made that meets the policy condition. For on Change policies you have the option to prevent the change if it violates the policy or let the change go through but log the issue. 
 
-Policy based management comes with hundreds of facets which are basically objects and proprties on those objects that you can evaluate and fail the poilcy if it doesnt match an expect result. You can also define custom conditions using TSQL if none of the existing facets meet your requirements.
+Policy based management comes with a large number facets which are objects and properties that you can evaluate and fail the policy if it doesn't match an expected result.
 
-I'm going to run through a couple of examples of policies that you could create both using built in facets and custom TSQL...
+I'm going to run through a couple of examples of policies that you could create to demo their usefulness... 
 
 ## Deny Create Index If Index Name Contains Missing Index ##
-Firstly lets create a rule that will fail if anyone creates an index with missing_index in the name and schedule this to run every morning.
+Lets create a rule that will fail if anyone creates an index with missing_index in the name, and lets also schedule this to run every morning.
 
 First up we need to define the conditions for this policy. Let's create a new condition that will ignore system databases from our check...
 
@@ -38,18 +38,18 @@ Once this is created if you look under SQL Agent\Jobs in SSMS you'll see a new j
 
     syspolicy_check_schedule_FC8D54AD-2B54-4AF7-A349-5F87CC7B1EE2
 
-If you now execute the job you'll then be able to view failures by looking at the history under Policy Management...
+If you now execute the job you'll then be able to view the policy results by looking at the history under Policy Management...
 
 ![View History]({{site.url}}/content/images/2018-policy-based-management/view-history.png)
 
 ![View Failures]({{site.url}}/content/images/2018-policy-based-management/failures.PNG)
 
-Using this process you can have a good deal of your morning checks run before you come in to work then review the results under the policy management history.
+Using this process, you can have a good deal of your morning checks run before you come in to work then review the results under the policy management history.
 
 ## Check Full Recovery Databases Have Done Log Backups Within X Minutes ##
-Let's create another policy to check all Full and Bulk recover model databases have done a log backup within the last 5 minutes. 
+Let's create another policy to check all Full and Bulk recovery model databases have done a log backup within the last 5 minutes. 
 
-First we need a condition to filter the databases to just ones in full or bulk recovery.
+We need a new condition to filter the databases to just ones in full or bulk recovery.
 
 ![Full Recovery Condition]({{site.url}}/content/images/2018-policy-based-management/is-full-or-bulk-condition.PNG)
 
@@ -57,7 +57,7 @@ Then we need a condition to check the last log backup is within 5 minutes.
 
 ![Log Backup In Last 5 Minutes Condition]({{site.url}}/content/images/2018-policy-based-management/log-backup-condition.PNG)
 
-Lastly we need to create the policy and add it to our MorningDba Schedule.
+Lastly we need to create the policy and add it to our MorningDBAChecks Schedule.
 
 ![Log Backup Policy]({{site.url}}/content/images/2018-policy-based-management/log-backup-policy.PNG)
 
@@ -79,7 +79,7 @@ FROM
 
 You can also query what events a facet can use by looking in msdb.dbo.syspolicy_facet_events. 
 
-Armed with this information let's create a new policy that uses a condiation that supports On Change Prevent. Let's look at the StoredProcedure facet as in the above script it shows as supporting On Change Prevent, we can then look at what events this facet supports by querying the events table on it's ID...
+Armed with this information let's create a new policy that uses a condition that supports On Change Prevent. Let's look at the StoredProcedure facet as in the above script it shows as supporting On Change Prevent, we can then look at what events this facet supports by querying the events table on its ID...
 
 {% highlight sql %}
 SELECT * FROM msdb.dbo.syspolicy_facet_events WHERE management_facet_id = 61
@@ -87,11 +87,11 @@ SELECT * FROM msdb.dbo.syspolicy_facet_events WHERE management_facet_id = 61
 
 ![Facet Event List]({{site.url}}/content/images/2018-policy-based-management/facet-events.PNG)
 
-We can see here using this facet our policy will be called for all those events. Based on this lets create a new policy that will prevent anyone prefixing stored procedure name with "sproc". As before we need to create a new condition...
+We can see here using this facet our policy will be called for all those events. Based on this create a new policy that will prevent anyone prefixing stored procedure names with "sproc". As before we need to create a new condition...
 
 ![SP Condition]({{site.url}}/content/images/2018-policy-based-management/sp-condition.PNG)
 
-Now create a new policy that uses our new check condition against all databases condition with the evaulation mode set to On Change Prevent...
+Now create a new policy that uses our new stored procedure condition...
 
 ![SP Policy]({{site.url}}/content/images/2018-policy-based-management/sp-policy.PNG)
 
@@ -105,3 +105,4 @@ SELECT 1
 {% endhighlight %}
 
 ![SP Policy Prevent Error]({{site.url}}/content/images/2018-policy-based-management/error.PNG)
+
