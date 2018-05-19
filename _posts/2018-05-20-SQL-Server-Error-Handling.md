@@ -110,7 +110,7 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
    IF @@TRANCOUNT > 0
-   COMMIT
+      COMMIT
 END CATCH
 {% endhighlight %}
 
