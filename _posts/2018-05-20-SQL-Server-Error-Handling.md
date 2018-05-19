@@ -62,6 +62,16 @@ The second parameter is the severity level, more info on these can be found [her
 
 The last parameter is state, if we're raising the same error in multiple places we would give each one a different state to show where it came from.
 
+One thing to beware of with RAISERROR is if it's not in a try block the execution will continue after your RAISERROR line...
+
+{% highlight sql %}
+PRINT 'Before Error'
+RAISERROR('No Users',16,1)
+PRINT 'After Error'
+{% endhighlight %}
+
+If you run this you'll see both prints are run. If this was inside a try block only the first print would run and then control would switch to the catch block.
+
 ## TRY/CATCH THROW Post SQL Server 2012 ##
 Life got a whole load easier with the THROW statement. All the code we wrote with raise error to bubble the correct errors up is no longer needed. Instead we can just call THROW from inside our catch statement and the error will be re-thrown.
 
@@ -86,6 +96,26 @@ END CATCH
 {% endhighlight %}
 
 You'll notice this approach as well as being cleaner also displays the correct line number in the error message.
+
+Like RAISERROR you can also use throw to throw custom errors. For example...
+
+{% highlight sql %}
+THROW 50000, 'Error Message', 1
+{% endhighlight %}
+
+- The first argument is the error number and must be between 50000  and 2147483647
+- The second argument is the error message
+- The third is the state
+
+Where as RAISERROR will continue executing the batch when outside of a try block THROW will not...
+
+{% highlight sql %}
+PRINT 'Before Error';
+THROW 50000, 'Error Message', 1
+PRINT 'After Error'
+{% endhighlight %}
+
+The second print wont run as throw will end the batch unless you catch it.
 
 ## Check State Of Transaction In Catch ##
 
