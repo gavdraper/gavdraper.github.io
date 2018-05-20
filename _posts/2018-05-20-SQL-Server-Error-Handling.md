@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Error Handling
+title: SQL Server Error Handling In Depth
 date: '2018-05-20 20:34:01'
 ---
 ## TRY/CATCH RAISERROR Pre SQL Server 2012 ##
