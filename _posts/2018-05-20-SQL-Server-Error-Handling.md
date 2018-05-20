@@ -173,3 +173,14 @@ END CATCH
 {% endhighlight %}
 
 Here we're using XACT_ABORT ON for force any error to put the transaction in a readonly state. If you run this code it will fall into the rollback in the catch block because of this.
+
+Another thing to note here is as in the example above where we showed RAISERRORR continues execution of the batch if there is no TRY/CATCH this same behavior occurs with XACT_ABORT ON. RAISERROR does not use XACT_ABORT where as THROW does...
+
+{% highlight sql %}
+ SET XACT_ABORT ON
+ PRINT 'Before Error';
+ RAISERROR('Error',16,1);
+ PRINT 'After Error'
+ {% endhighlight %}
+
+ Both prints here will run even with SET XACT_ABORT ON. If you want a batch to fail on error then use THROW. In fact you should pretty much always use THROW unless you have a good reason to want the RAISERROR behavior.
