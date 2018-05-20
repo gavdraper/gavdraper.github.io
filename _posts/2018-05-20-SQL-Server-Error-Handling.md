@@ -130,7 +130,7 @@ IF @@TRANCOUNT > 0
 {% endhighlight %}
 
 ### XACT_ABORT/XACT_STATE  ###
-If you set XACT_ABORT to on then things behave slightly differently, normally non fatal errors will fail the statement but with it on the whole batch will fail and the transaction will be changed to a state where it can't be committed. In this case you'll have a transaction count of greater than one but if you call commit on it then it will fail...
+If you set XACT_ABORT to on then things behave slightly differently, normally non fatal errors will fail the statement but if you turn this on the whole batch will fail and the transaction will be changed to a state where it can't be committed. In this case you'll have a transaction count of greater than one but if you call commit on it then it will fail...
 
 {% highlight sql %}
 SET XACT_ABORT OFF
@@ -150,7 +150,7 @@ I know we're not actually changing any data here but it will allow us to finish 
 
 You can see by turning this on we can enforce no data be saved in transactions where any single statement has an error.
 
-When using XACT_ABORT ON if you want to commit anything in the catch then you'll need to use XACT_STATE to check if the transaction is in a committable state, XACT_STATE returns 1 of 3 values...
+If you ever want to perform a commit in a catch (An odd scenario) then it's not enough to just check @@TRANCOUNT, you need to instead check XACT_STATE to make sure the transaction is in a state that is allowed to be committed. Some severity errors will put the transaction in a state where it's marked as readonly and no commits can be performed. XACT_STATE returns 1 of 3 values...
 
 - 1 - There is an active transaction that can be committed.
 - 0 - There are no transactions
@@ -171,3 +171,5 @@ BEGIN CATCH
       ROLLBACK
 END CATCH
 {% endhighlight %}
+
+Here we're using XACT_ABORT ON for force any error to put the transaction in a readonly state. If you run this code it will fall into the rollback in the catch block because of this.
