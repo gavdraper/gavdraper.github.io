@@ -177,45 +177,45 @@ Here we're using XACT_ABORT ON for force any error to put the transaction in a r
 Another thing to note here is as in the example above where we showed RAISERRORR continues execution of the batch if there is no TRY/CATCH this same behavior occurs with XACT_ABORT ON. RAISERROR does not use XACT_ABORT where as THROW does...
 
 {% highlight sql %}
- SET XACT_ABORT ON
- PRINT 'Before Error';
- RAISERROR('Error',16,1);
- PRINT 'After Error'
- {% endhighlight %}
+SET XACT_ABORT ON
+PRINT 'Before Error';
+RAISERROR('Error',16,1);
+PRINT 'After Error'
+{% endhighlight %}
 
- Both prints here will run even with SET XACT_ABORT ON. If you want a batch to fail on error then use THROW. In fact you should pretty much always use THROW unless you have a good reason to want the RAISERROR behavior.
+Both prints here will run even with SET XACT_ABORT ON. If you want a batch to fail on error then use THROW. In fact you should pretty much always use THROW unless you have a good reason to want the RAISERROR behavior.
 
- I mentioned above that with XACT_ABORT OFF (The default) some levels of error will not fail the batch but instead just fail the statement. To see this run the following..
+I mentioned above that with XACT_ABORT OFF (The default) some levels of error will not fail the batch but instead just fail the statement. To see this run the following..
 
- {% highlight sql %}
+{% highlight sql %}
 SET XACT_ABORT OFF
 
- DROP TABLE Test
- CREATE TABLE Test(Blah NVARCHAR(100) NOT NULL)
+DROP TABLE Test
+CREATE TABLE Test(Blah NVARCHAR(100) NOT NULL)
 
- INSERT INTO Test VALUES(NULL)
- INSERT INTO Test VALUES('Test')
- SELECT * FROM Test
- {% endhighlight %}
+INSERT INTO Test VALUES(NULL)
+INSERT INTO Test VALUES('Test')
+SELECT * FROM Test
+{% endhighlight %}
 
 The first insert will fail as it violates the NOT NULL constraint however the second oen will still run and succeed as can be seen if you run the select runs we have a single row. If you run it again with XACT_ABORT ON you'll see that it fails at the batch level and everything gets rolled back. However outside of an explicit transaction everything before the line that errors will still commit fine...
 
 {% highlight sql %}
- SET XACT_ABORT ON
- INSERT INTO Test VALUES('One')
- INSERT INTO Test VALUES(NULL)
- INSERT INTO Test VALUES('Two')
- {% endhighlight %}
+SET XACT_ABORT ON
+INSERT INTO Test VALUES('One')
+INSERT INTO Test VALUES(NULL)
+INSERT INTO Test VALUES('Two')
+{% endhighlight %}
 
- This will insert a single record of value 'One'. If you want the batch to ROLLBACK before the error as well then you need to wrap it all in a transaction...
+This will insert a single record of value 'One'. If you want the batch to ROLLBACK before the error as well then you need to wrap it all in a transaction...
 
- {% highlight sql %}
-  SET XACT_ABORT ON
- BEGIN TRAN
- INSERT INTO Test VALUES('One')
- INSERT INTO Test VALUES(NULL)
- INSERT INTO Test VALUES('Two')
- COMMIT
- {% endhighlight %}
+{% highlight sql %}
+SET XACT_ABORT ON
+BEGIN TRAN
+INSERT INTO Test VALUES('One')
+INSERT INTO Test VALUES(NULL)
+INSERT INTO Test VALUES('Two')
+COMMIT
+{% endhighlight %}
 
- This will insert zero records because one of the statements in the batch had an error.
+This will insert zero records because one of the statements in the batch had an error.
