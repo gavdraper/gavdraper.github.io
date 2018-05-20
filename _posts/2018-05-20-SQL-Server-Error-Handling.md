@@ -154,7 +154,7 @@ If you ever want to perform a commit in a catch (An odd scenario) then it's not 
 
 - 1 - There is an active transaction that can be committed.
 - 0 - There are no transactions
-- -1 There is an active transaction that is in a state that can't be committed
+- -1 There is an active transaction that is in a state that can't be committed. This will automatically be rolled back when the batch finishes.
 
 Let's change the above query to use XACT_STATE...
 
@@ -184,3 +184,38 @@ Another thing to note here is as in the example above where we showed RAISERRORR
  {% endhighlight %}
 
  Both prints here will run even with SET XACT_ABORT ON. If you want a batch to fail on error then use THROW. In fact you should pretty much always use THROW unless you have a good reason to want the RAISERROR behavior.
+
+ I mentioned above that with XACT_ABORT OFF (The default) some levels of error will not fail the batch but instead just fail the statement. To see this run the following..
+
+ {% highlight sql %}
+SET XACT_ABORT OFF
+
+ DROP TABLE Test
+ CREATE TABLE Test(Blah NVARCHAR(100) NOT NULL)
+
+ INSERT INTO Test VALUES(NULL)
+ INSERT INTO Test VALUES('Test')
+ SELECT * FROM Test
+ {% endhighlight %}
+
+The first insert will fail as it violates the NOT NULL constraint however the second oen will still run and succeed as can be seen if you run the select runs we have a single row. If you run it again with XACT_ABORT ON you'll see that it fails at the batch level and everything gets rolled back. However outside of an explicit transaction everything before the line that errors will still commit fine...
+
+{% highlight sql %}
+ SET XACT_ABORT ON
+ INSERT INTO Test VALUES('One')
+ INSERT INTO Test VALUES(NULL)
+ INSERT INTO Test VALUES('Two')
+ {% endhighlight %}
+
+ This will insert a single record of value 'One'. If you want the batch to ROLLBACK before the error as well then you need to wrap it all in a transaction...
+
+ {% highlight sql %}
+  SET XACT_ABORT ON
+ BEGIN TRAN
+ INSERT INTO Test VALUES('One')
+ INSERT INTO Test VALUES(NULL)
+ INSERT INTO Test VALUES('Two')
+ COMMIT
+ {% endhighlight %}
+
+ This will insert zero records because one of the statements in the batch had an error.
