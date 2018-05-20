@@ -32,6 +32,6 @@ BEGIN TRY
    RAISERROR ('Here', 0, 1) WITH NOWAIT
 END TRY
 BEGIN CATCH
-   PRINT 'Won't Ever Get Here'
+   PRINT 'Wont Ever Get Here'
 END CATCH
 {% endhighlight %}
