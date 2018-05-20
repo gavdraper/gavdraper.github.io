@@ -189,10 +189,7 @@ I mentioned above that with XACT_ABORT OFF (The default) some levels of error wi
 
 {% highlight sql %}
 SET XACT_ABORT OFF
-
-DROP TABLE Test
 CREATE TABLE Test(Blah NVARCHAR(100) NOT NULL)
-
 INSERT INTO Test VALUES(NULL)
 INSERT INTO Test VALUES('Test')
 SELECT * FROM Test
