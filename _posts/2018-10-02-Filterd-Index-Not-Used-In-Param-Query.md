@@ -32,7 +32,7 @@ FROM [Users]
 WHERE CreationDate >= '20180101'
 {% endhighlight %}
 
-![Execution Plan]({{site.url}}/content/images/2018-Filtered-Indexes/1.PNG)
+![Execution Plan]({{site.url}}/content/images/2018-Filtered-Indexes/2.PNG)
 
 ## Gotchas ##
 If you use any kind of BETWEEN, Case Statement, SQL Function or UDF in your predicate then the filtered index will not be used, for example...
