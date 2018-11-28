@@ -42,7 +42,7 @@ FROM
    sys.dm_exec_query_profiles p
    LEFT JOIN sys.objects obj ON p.object_id = obj.object_id
    LEFT JOIN sys.indexes ix ON p.index_id = ix.index_id AND p.object_id = ix.object_id
-   OUTER APPLY(
+   CROSS APPLY(
       SELECT node_id 
       FROM sys.dm_exec_query_profiles thisDb 
       WHERE 
