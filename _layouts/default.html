@@ -23,7 +23,7 @@
           <li/><a href="https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/">Clustered & NonClustered Indexes Explained</a>
         </ul>
         <h2>Recent Posts</h2>
-        {%for post in site.posts limit:5 %} {% unless post.next %}
+        {%for post in site.posts limit:10 %} {% unless post.next %}
         <ul class="this">
           {% else %} {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %} {% capture nyear %}{{ post.next.date | date: '%Y'
           }}{% endcapture %} {% if year != nyear %}
