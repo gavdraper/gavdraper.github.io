@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server, What? Wait... Thing Can Do Optimistic Concurrency?
+title: SQL Server, In Memory OLTP
 date: '2018-11-30 09:34:01'
 ---
 SQL Server uses the Pessimistic Concurrency, this means transactions acquire locks upfront to stop future transactions changing data under them, for example an update statement will lock that rows in question to prevent another query also changing them. Locks in SQL Server are not free and at certain thresholds SQL will escalate lock levels as taking thousands of row locks gets expensive quick so at some point it will switch to page locks and then table locks. This is why queries are often blocked in SQL server waiting for another query to finish.
@@ -59,7 +59,7 @@ CREATE TABLE Optimist
 WITH (MEMORY_OPTIMIZED = ON, DURABILITY = SCHEMA_AND_DATA)
 
 INSERT INTO Pessimist (Title) VALUES ('Gavin')
-{% highlight sql %}
+{% endhighlight %}
 
 Lets now try our blocking test from earlier, a new tab run this...
 
@@ -67,3 +67,20 @@ Lets now try our blocking test from earlier, a new tab run this...
 BEGIN TRAN
 UPDATE Optimist WITH(SNAPSHOT) SET Title = 'Gavin Draper' 
 {% endhighlight %}
+
+Then in a second tab run this...
+
+{% highlight sql %}
+BEGIN TRAN
+UPDATE Optimist WITH(SNAPSHOT) SET Title = 'Gavin D'
+{% endhighlight %}
+
+The second query will error instantly with...
+
+   The current transaction attempted to update a record that has been updated since this transaction started. The transaction was aborted.
+
+Rather than taking locks to track what transactions are touching what data In Memory OLTP Tables maintain rowversions in the rows, this means transactions can check if a row is currently being changed by looking at it's rowversion and fail instantly. If you're using In Memory OLTP tables then you need to handle retries for these kind of errors in your app.
+
+So far this probably seems like Optimistic Concurrency doesn't have many benefits ie Error vs Waiting for a lock. The big benefits come outside of 2 transactions trying to write the same data, the whole point of optimistic concurrency is that it's optimistic that most of the time 2 or more transactions will not be trying to write to the same data. Optimistic concurrency will happily let you read and write data in separate transactions without taking out any locks.
+
+As I mentioned above I'm just touching on a very small part of In Memory OLTP here and I plan to do more posts around the other features but it's worth also mentioning here that only a limited set of isolation levels are available on these tables Snapshot, Repeatable Read and Serializable.
