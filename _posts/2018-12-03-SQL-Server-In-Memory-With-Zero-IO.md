@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Turbo Charge Your Caching and ETL Staging Tables By Removing The IO
-date: '2018-12-02 09:34:01'
+date: '2018-12-03 01:23:01'
 tags: in-memory-oltp performance-tuning etl
 ---
 Since SQL 2012 some really awesome new technologies have been introduced into the engine that are massively underused. Everyone is familiar with the traditional row store tables that SQL Server uses and people either don't know about or are scared off by Column Store and In Memory OLTP. In this post I'm going to demo a particular use case suited to In Memory OLTP and show the benefits versus the traditional on disk Row Store.
