@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Turbo Charged Staging and Caching Tables With In Memory OLTP
+title: Turbo Charged Staging\Caching Tables With In Memory OLTP
 date: '2018-12-03 01:23:01'
 tags: in-memory-oltp performance-tuning etl
 ---
