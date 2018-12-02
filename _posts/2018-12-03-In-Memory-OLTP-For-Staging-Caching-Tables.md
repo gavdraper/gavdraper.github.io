@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server Turbo Charge Your Caching and ETL Staging Tables By Removing The IO
+title: Turbo Charged Staging and Caching Tables With In Memory OLTP
 date: '2018-12-03 01:23:01'
 tags: in-memory-oltp performance-tuning etl
 ---
