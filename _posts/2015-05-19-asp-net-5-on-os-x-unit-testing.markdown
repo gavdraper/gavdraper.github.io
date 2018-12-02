@@ -2,10 +2,6 @@
 layout: post
 title: ASP.NET 5 Unit Testing With xUnit.net
 date: '2015-05-19 10:08:30'
-tags:
-- aspnet5
-- dnx
-- xunit-net
 ---
 
 This post is part of a series on ASP.NET 5, the index for this can be found here [ASP.NET 5 Up and Running](https://gavindraper.com/2015/05/20/asp-net-5-up-and-running-series/). We're continuing from [ASP.NET 5 on OS X](https://gavindraper.com/2015/05/13/asp-net-5-vs-code-and-osx-getting-started/). As with the previous post everything here will also work on Windows with or without Visual Studio. I'm using OS X as my focus as for me one of the best new features of ASP.NET 5 is being able to develop/deploy cross platform without the need for Visual Studio, I like having the extra choice.

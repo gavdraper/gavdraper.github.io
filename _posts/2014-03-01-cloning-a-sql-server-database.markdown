@@ -2,8 +2,6 @@
 layout: post
 title: Cloning a SQL Server Database
 date: '2014-03-01 07:35:11'
-tags:
-- sql
 ---
 
 The following script will backup and restore a database to the same server with a different name. Tested on SQL 2012/2008. You just need to set the 4 variables at the top of the script to specify source and destination along with directories to store the backup and restored database files.

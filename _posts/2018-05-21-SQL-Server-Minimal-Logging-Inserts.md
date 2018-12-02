@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Minimally Logged Inserts (Assume Nothing!)
 date: '2018-05-29 20:07:45'
+tags: performance-tuning 
 ---
 > **Side note** :
 > I originally started this post to show with examples all the scenarios where you can get minimal logging copying data from one table to another in SQL Server. I'm running SQL Server 2017 CU7 and it quickly turned out that I couldn't get minimal logging to happen in all the scenarios the docs say it should work. Rather than not showing these scenarios, I'm still going to list the examples for them and just note where it didn't behave as expected.

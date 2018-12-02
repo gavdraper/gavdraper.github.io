@@ -2,8 +2,6 @@
 layout: post
 title: Browser Based Web Notifications
 date: '2014-03-01 21:49:10'
-tags:
-- javascript
 ---
 
 3 of the 4 major browsers now support web notifications (Safari, Firefox, Chrome) and no where near enough sites are making use of this killer feature. One web app that does make good use of this is Gmail, if you've enabled it then it will show notifications when you get new emails. These notifications appear in some sort of notification window in a corner of the screen and are visible even if the browser is minimized or not the active window. 

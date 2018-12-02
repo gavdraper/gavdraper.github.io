@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Database Snapshots
 date: '2018-05-11 08:23:01'
+tags: snapshots
 ---
 ## What Are They ##
 Database snapshots are a readonly point in time version of a database. You can use them for things like readonly queries that don't need to be on live data or even as an addition to part of your backup process. For example you could create a snapshot once an hour allowing you to recover objects someone might accidentally drop, you can even restore a DB from a snapshot (Under certain conditions) if you really needed to.

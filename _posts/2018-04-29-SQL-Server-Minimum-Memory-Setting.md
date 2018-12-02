@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Minimum Memory Setting
 date: '2018-04-29 19:06:57'
+tags: maintenance
 ---
 There is almost never a reason to set this setting unless you're running other apps on the same server as your SQL Instance and are trying to stop them taking the memory you want the SQL Server to have. It's always preferable to have your SQL Server be the only thing running on the server but in the real world there are always reasons why this can't be the case.
 

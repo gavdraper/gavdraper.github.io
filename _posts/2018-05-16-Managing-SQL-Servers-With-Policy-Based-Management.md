@@ -2,6 +2,7 @@
 layout: post
 title: Managing SQL Servers With Policy Based Management
 date: '2018-05-16 19:12:23'
+tags: policy-based-management
 ---
 Policy Based Management has been in SQL Server since 2008 and allows you to define policies that can report issues when certain conditions are violated, it can also prevent changes that would violate a policy. It does this in a couple of ways...
 

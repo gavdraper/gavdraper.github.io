@@ -2,6 +2,7 @@
 layout: post
 title: Creating Custom Conditions In SQL Server Policy Based Management
 date: '2018-05-17 13:34:01'
+tags: policy-based-management
 ---
 In my last [post](https://gavindraper.com/2018/05/16/Managing-SQL-Servers-With-Policy-Based-Management/) I covered some basic policy based management examples, in this post I want to cover writing custom conditions in TSQL.
 

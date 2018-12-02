@@ -2,6 +2,7 @@
 layout: post
 title: Why Wont SQL Server Use My Filtered Index?
 date: '2018-10-02 20:48:01'
+tags: performance-tuning indexing
 ---
 As with most of my posts of late all examples here are using the StackOverflow SQL Server database that can be downloaded from [Brent Ozar Unlimited](https://www.brentozar.com/archive/2015/10/how-to-download-the-stack-overflow-database-via-bittorrent/).
 

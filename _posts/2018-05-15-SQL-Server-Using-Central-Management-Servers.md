@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Save Time Managing Multiple Servers With Central Management Servers
 date: '2018-05-15 06:12:24'
+tags: central-management-server
 ---
 
 Central Management Servers give us a way to manage a collection of SQL Servers as one, a query executed against a Central Management Server will run against every server in the group.

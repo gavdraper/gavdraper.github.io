@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Nested Transactions Probably Don't Work How You Think
 date: '2018-04-25 21:03:23'
+tags: transactions
 ---
 SQL Server allows you to nest multiple transactions but the results of doing so are completely not obvious.
 

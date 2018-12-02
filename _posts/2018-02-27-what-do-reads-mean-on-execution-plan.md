@@ -1,7 +1,8 @@
 ---
 layout: post
-title: What Do Read Counts On Your SQL Server Exection Plans Even Mean?
+title: What Do Read Counts On Your SQL Server Execution Plans Even Mean?
 date: '2018-02-27 06:05:38'
+tags: profiling performance-tuning
 ---
 
 If you've ever spent any time looking at execution plans you will have almost definitely noticed all the read counts on the different operators, you've probably already realised lower reads is best as that equates to less time reading disks. Have you ever wondered what the number actually means though? What does 10 reads mean? Time? Operations? Volume?

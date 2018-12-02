@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Management Studio Intermittently Hangs Browsing a Database
 date: '2018-05-13 20:09:21'
+tags: performance-tuning profiling
 ---
 If you're seeing SSMS hang/lock timeouts when expanding nodes in the object explorer for a database it's almost definitely caused by schema modification (SCH-M) locks. Normally SCH-M locks don't cause a problem as they are so short lived but if you're making schema changes inside long running transactions you can make the database un-browsable in the SSMS object explorer.
 

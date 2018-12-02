@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server 2016 What's New With TSQL
 date: '2017-06-06 08:20:47'
+tags: tsql
 ---
 
 ## DROP IF EXISTS ##

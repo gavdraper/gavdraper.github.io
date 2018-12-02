@@ -23,6 +23,7 @@ twitter_username: gavdraper
 github_username:  gavdraper
 permalink: /:year/:month/:day/:title/
 highlighter: rouge
+include: ['tags']
 paginate: 3
 # Build settings
 markdown: kramdown

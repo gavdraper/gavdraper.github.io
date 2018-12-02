@@ -2,6 +2,7 @@
 layout: post
 title: Fixing a SQL Server That Wont Start Due To Max Memory Being Set Too Low
 date: '2017-08-09 06:05:38'
+tags: maintenance
 ---
 
 I recently came up against a SQL Server instance that wouldnt start, after going through the event log the reason it was having problems was that it had been set to a max memory of 10mb. 

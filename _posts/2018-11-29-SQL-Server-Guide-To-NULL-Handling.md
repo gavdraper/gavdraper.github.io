@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Guide To NULL Handling
 date: '2018-11-29 09:09:33'
+tags: tsql
 ---
 Every language handles null equality differently and understanding this is crucial as a misunderstanding here can lead to some quite nasty unexpected results.
 

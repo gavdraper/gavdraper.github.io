@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Error Handling In Depth
 date: '2018-05-20 20:34:01'
+tags: error-handling tsql
 ---
 ## TRY/CATCH RAISERROR Pre SQL Server 2012 ##
 Since SQL Server 2005 we've had TRY CATCH syntax in SQL Server handle errors. If an error occurs inside a try block execution will leave the try block and enter the catch statement It's inside the catch statement that you can do any error handling ROLLBACKs, Logging, Data fixes etc and then either rethrow the error or swallow it so nothing higher up knows anything went wrong. Until SQL Server 2012 throwing an error involved the use of the RAISERROR command. See below for a simple example of this...

@@ -2,6 +2,7 @@
 layout: post
 title: Live Query Stats of Running Queries
 date: '2018-11-24 09:34:01'
+tags: performance-tuning profiling
 ---
 Since SQL Server 2014 SP1 we've had DMV's that can support Live Query Statistics (Basically a query plan that gives you feedback as it runs). If you've not seen this before then you can give it a go by...
 

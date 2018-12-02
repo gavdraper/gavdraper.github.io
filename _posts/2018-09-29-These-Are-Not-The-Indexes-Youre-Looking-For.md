@@ -2,6 +2,7 @@
 layout: post
 title: Missing Index Recommendations, These Are Not The Indexes You're Looking For
 date: '2018-09-29 05:34:01'
+tags: indexing
 ---
 Picture the scene..... DBA Doug is sitting in his cubicle minding his own business when App Dev Allister gives him a call...
 

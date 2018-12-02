@@ -2,6 +2,7 @@
 layout: post
 title: Avoid Errors With using SNAPSHOT Isolation From Transactions Under Different Isolation Levels
 date: '2018-05-05 08:17:12'
+tags: isolation-levels
 ---
 For older systems where the move to READ COMMITTED SNAPSHOT (RCSI) might not be an option or you're running a version of SQL Server that doesn't support this then you can fall back to an adhoc SNAPSHOT isolation option. This is a great way to dip your toe in to the RCSI world without going all in.
 

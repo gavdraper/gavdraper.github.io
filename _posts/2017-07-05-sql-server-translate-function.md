@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server 2017+ How To Replace Multiple Characters In A Single Statement With TRANSLATE
 date: '2017-07-05 07:35:36'
+tags: tsql
 ---
 The REPLACE function in SQL Server has until now been quite limited. SQL Server 2017 has introduced a new TRANSLATE function that addresses many of these shortcomings, namely the need to daisy chain replace calls to replace multiple characters. 
 

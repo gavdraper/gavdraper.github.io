@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server How to Check What Settings Are Set On Active Sessions
 date: '2018-06-01 08:16:21'
+tags: profiling
 ---
 SQL Server has a number of settings set on a session that can influence the behaviour or queries.  When debugging issues, it's often useful to be able
 to get a list of all user sessions and their current settings to check nothing specific to the session is causing odd behaviour. The sys.dm_exec_sessions

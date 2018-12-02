@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Triggers and Transactions
 date: '2018-05-19 14:32:14'
+tags: triggers transactions
 ---
 In this post I'm going to detail with examples how triggers behave with transactions...
 

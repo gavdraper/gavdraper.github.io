@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Debugging With RAISERROR Instead Of Print
 date: '2018-05-21 20:07:45'
+tags: tsql tips-and-tricks
 ---
 When testing/debugging TSQL it's common to use the print statement throughout to see what was happening where in much the same way that other languages use things like console.log.
 

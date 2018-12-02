@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Filtered Indexes By Example
 date: '2017-05-30 08:23:18'
+tags: indexing performance-tuning
 ---
 
 ## What Are Filtered Indexes ##

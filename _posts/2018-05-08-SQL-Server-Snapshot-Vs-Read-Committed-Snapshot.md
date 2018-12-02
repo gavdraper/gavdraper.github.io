@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Snapshot vs Read Committed Snapshot
 date: '2018-05-08 20:56:51'
+tags: isolation-levels
 ---
 For a quick introduction to transaction isolation levels see my [previous post](https://gavindraper.com/2012/02/18/sql-server-isolation-levels-by-example/) on them.
 

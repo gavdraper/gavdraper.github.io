@@ -2,10 +2,6 @@
 layout: post
 title: 'ASP.NET 5 On OS X : Getting Started'
 date: '2015-05-13 09:40:45'
-tags:
-- aspnet5
-- dnx
-- aspnet-mvc
 ---
 
 This post is part of a series of posts on ASP.NET 5 the series index can be found here [ASP.NET 5 Up and Running](https://gavindraper.com/2015/05/20/asp-net-5-up-and-running-series/).

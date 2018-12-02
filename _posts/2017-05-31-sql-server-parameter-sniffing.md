@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Parameter Sniffing In Depth
 date: '2017-05-31 08:38'
+tags: performance-tuning
 ---
 If you've ever searched for SQL Server parameter sniffing you've probably read all sorts of bad things about it. In truth parameter sniffing is an optimization technique SQL Server uses to allow plans to be cache and reused with different parameter values  and for the most part it works well and significantly improves overall performance vs not using parameter sniffing. We are going to look at some examples here where parameter sniffing does cause a problem and how to solve it.
 

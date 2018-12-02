@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Removing Outliers With Standard Deviation
 date: '2018-04-30 21:26:04'
+tags: tsql
 ---
 When running aggregations for reporting in some situations outliers can throw out the numbers. 
 

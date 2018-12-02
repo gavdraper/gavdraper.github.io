@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Application Roles
 date: '2017-06-05 07:47:47'
+tags: security
 ---
 If you're using Windows Authentication then you probably have a database user for each user of your application or at least the relevant groups for them. This  makes permissioning a lot easier as we can only allow users certain users to certain resources. For example if an app is using Windows authentication then we most likely have information like Groups from Active Directory and can permission at both User and Group level. If however Windows Authentication is not an option because there is no centralized Active Directory or you're running a public facing web application then you most likely have your app always authenticate to SQL Server as the same user. This makes permissioning more difficult as this one user needs full permission to do everything your application could ever need to do, so any one user of the application has as much access as the next user at the database level. 
 

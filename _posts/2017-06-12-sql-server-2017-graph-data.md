@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server 2017 Graph Data Features In Action
 date: '2017-06-12 20:23:18'
+tags: graph-data tsql
 ---
 
 The [Wikipedia Graph Database](https://en.wikipedia.org/wiki/Graph_database) page has the following definition...

@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server 2016 Row Level Security In Action
 date: '2017-06-07 08:35:47'
+tags: security
 ---
 Row Level security was introduced with SQL Server 2016 and allows us to specify predicates for what rows can be accessed in the context of for example the logged in user.
 

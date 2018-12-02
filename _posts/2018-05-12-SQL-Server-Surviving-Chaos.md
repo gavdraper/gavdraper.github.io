@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Corruption - Bring Order Out Of Chaos
 date: '2018-05-12 15:23:33'
+tags: maintenance
 ---
 I wanted to document a couple of important tasks you should be doing as part of your SQL Server maintenance/backup strategy to not only recover from corruption with the smallest amount of loss but also be aware of it as soon as possible. If not setup correctly your database could go weeks or even months with undetected corruption at which point do you have backups that even go that far back to recover lost data? Probably not....
 

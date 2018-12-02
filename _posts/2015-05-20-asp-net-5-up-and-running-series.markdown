@@ -2,9 +2,6 @@
 layout: post
 title: ASP.NET 5 Up and Running Series
 date: '2015-05-20 08:53:15'
-tags:
-- aspnet5
-- dnx
 ---
 
 In the last week or so I've published 2 ASP.NET 5 posts each building on top of the previous. I've got a plan for at least 4 more which will I think turn it in to quite a good starting point to get up and running with ASP.NET 5. This page will act as an index for published and planned future posts.

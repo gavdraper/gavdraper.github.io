@@ -2,10 +2,6 @@
 layout: post
 title: MVVM Page Navigation Using MVVM Light On WP7
 date: '2013-01-14 08:05:05'
-tags:
-- mvvm
-- mvvm-light
-- xaml
 ---
 
 <p>Page navigation can be a pain to achieve in a true MVVM way, I recently ran in to this problem with a WP7 project but the solution should be the same for Silverlight on Windows and WPF. I ended up solving this using base pages and the messaging functionality in MVVM light. The solution isn't as clean as I would have liked but I’m fairly happy with it.</p> <p>Below are the steps I took to achieve this.</p> <ol> <li>Create a new WP7 Application in Visual Studio and call it MVVMNavigation.  <li>Add the “MMVM Light Libraries Only” Nuget package to the project.  <li>Create a new class called BaseApplicationPage.cs with the following code in it <pre class="brush: csharp; gutter: false; toolbar: false;">using System;
