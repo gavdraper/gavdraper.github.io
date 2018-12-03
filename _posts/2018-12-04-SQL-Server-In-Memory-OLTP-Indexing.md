@@ -2,6 +2,7 @@
 layout: post
 title: Indexing In Memory OLTP Tables
 date: '2018-12-04 01:01:23'
+tags: in-memory-oltp indexing performance-tuning
 ---
 Indexing on In Memory OLTP tables is a little different from your traditional on disk rowstore tables...
 
