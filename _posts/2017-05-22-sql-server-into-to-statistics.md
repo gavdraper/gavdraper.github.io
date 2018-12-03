@@ -2,6 +2,7 @@
 layout: post
 title: Introduction To SQL Server Statistics
 date: '2017-05-22 07:20:38'
+tags: statistics performance-tuning
 ---
 SQL Server statistics are often thought of as a bit of a black box, this is completely not the case and I want to use this post to detail what they are, how they work and how we can view what they're doing....
 

@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Dynamic Pivot
 date: '2017-05-07 13:15:32'
+tags: tsql pivot
 ---
 Often when trying to pivot data you wont know what the possible values that you need to pivot on, in this case you can use dynamic SQL.
 

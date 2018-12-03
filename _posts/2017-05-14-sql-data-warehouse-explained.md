@@ -2,6 +2,7 @@
 layout: post
 title: Data Warehousing Explained
 date: '2017-05-14 08:05:38'
+tags: data-warehouse
 ---
 
 ### Why Warehouse ###

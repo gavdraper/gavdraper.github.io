@@ -2,6 +2,7 @@
 layout: post
 title: SQL 2016 Temporal Tables By Example
 date: '2016-04-15 09:48:20'
+tags: temporal-tables
 ---
 
 ## Brief Description

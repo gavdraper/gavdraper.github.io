@@ -2,6 +2,7 @@
 layout: post
 title: Using JSON In SQL Server 2016
 date: '2017-05-06 09:01:32'
+tags: tsql json
 ---
 
 The new JSON bits in SQL Server 2016 give you the ability to pull stuff out of JSON and to convert relational sets to JSON. This is similar to the XML features in SQL Server that have existed for some time now.
