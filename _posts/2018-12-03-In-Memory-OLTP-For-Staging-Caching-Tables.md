@@ -107,7 +107,7 @@ That's basically removed all of our IO! Magic right?
 This speed difference comes from a few places...
 
 - Memory is WAY faster than disk
-- We've sacrificed persistance
+- We've sacrificed persistence
 - In Memory OLTP uses a completely new storage structure (There be no pages here)
 - It's completely lockless (Optimistic Concurrency, even for Write, Write scenarios)
 
