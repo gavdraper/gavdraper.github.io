@@ -22,7 +22,7 @@ To get a list of unused data files set the path in the below script to be the lo
 
 {% highlight sql %}
 DROP TABLE #sqlfiles
-DECLARE @Path NVARCHAR(200) = 'D:\\Databases\\'
+DECLARE @Path NVARCHAR(200) = 'D:&#92;Databases&#92;'
 DECLARE @CmdFileList VARCHAR(150) = 
     'cmd  /c ' + /* Run x_cmdshell */
     '"cd ' + @path + ' && ' +  /* change directory */
