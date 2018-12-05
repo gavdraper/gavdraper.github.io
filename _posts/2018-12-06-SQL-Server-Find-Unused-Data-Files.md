@@ -21,7 +21,7 @@ GO
 To get a list of unused data files set the path in the below script to be the location of your data/log or a directory above them (It searches subdirectories) 
 
 {% highlight sql %}
-DECLARE @Path NVARCHAR(200) = 'D:&#92;Databases&#92;'
+DECLARE @Path NVARCHAR(200) = 'D:\Databases\'
 DECLARE @CmdFileList VARCHAR(150) = 
     'cmd  /c ' + /* Run x_cmdshell */
     '"cd ' + @path + ' && ' +  /* change directory */
