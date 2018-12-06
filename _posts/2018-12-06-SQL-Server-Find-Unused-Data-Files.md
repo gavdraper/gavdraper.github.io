@@ -24,7 +24,7 @@ To get a list of unused data files set the path in the below script to be the lo
 DECLARE @Path NVARCHAR(200) = 'D:\Databases\'
 DECLARE @CmdFileList VARCHAR(150) = 
     'cmd  /c ' + /* Run x_cmdshell */
-    '"cd ' + @path + ' && ' +  /* change directory */
+    '"cd /d ' + @path + ' && ' +  /* change directory */
     'dir /b /s *.mdf, *.ldf ' /* List filenames only (/b) and subdirs (/s)  Lfd and Mdf*/
 
 CREATE TABLE #SqlFiles ([filename] VARCHAR(1024))
