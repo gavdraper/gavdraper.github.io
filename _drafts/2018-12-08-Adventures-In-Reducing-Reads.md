@@ -3,7 +3,7 @@ layout: post
 title: SQL Server Adventures In Reducing Reads
 date: '2018-12-08 09:34:01'
 ---
-After recently spending some time tuning a query where the bottleneck was IO due to the query having a huge amount of reads I thought I'd run some different tests in approached to reducing reads. I'm not suggesting anything here should be blindly followed as with all things there are trade-offs. but the results are I think interesting none the less. 
+In the interests of curiosity I'm going to take a query that runs a relatively simple aggregation over a large table and see how much I can reduce the IO. I'm not suggesting anything here should be blindly followed, as with all things there are trade-offs. but the results are I think interesting none the less. 
 
 Let's take this fairly simple query on the Stack Overflow data dump database to get the top 5 users by posts and return their name and the amount of posts they have...
 
@@ -22,7 +22,7 @@ GROUP BY
 ORDER BY COUNT(*) DESC
 {% endhighlight %}
 
-On my laptop the statistics output I get is this...
+On my machine the statistics output I get is this...
 
 > Table 'Posts'. Scan count 5, logical reads 800230, physical reads 0, read-ahead reads 797892, 
 > lob logical reads 0, lob physical reads 0, lob read-ahead reads 0.
@@ -32,10 +32,10 @@ On my laptop the statistics output I get is this...
 
 >  SQL Server Execution Times: CPU time = 7294 ms,  elapsed time = 7178 ms.
 
-So roughly 7 seconds to execute and our biggest hit on reads is 799999 on the Posts table and 121 on Users. Let's start on the small but easy low hanging fruit. 
+So roughly 7 seconds to execute the query with our biggest hit on reads being 799999 on the Posts table and 121 on Users. Let's start on the small but easy low hanging fruit....
 
 ## Lightweight Covering Index ##
-The user table is currently scanning the clustered index to get the DisplayUsername, because the clustered index contains all the fields it's having to read data we don't need, we can create a lightweight covering index with just Id and an include on DisplayName.
+The user table is currently scanning the clustered index to get the DisplayUsername, because the clustered index contains all the fields it's having to read data we don't need, we can create a lightweight covering index with just Id and an include on DisplayName to stop the query reading any pages with data in them that it doesn't need.
 
 {% highlight sql %}
 CREATE NONCLUSTERED INDEX ndx_user_id_include_displayname 
@@ -87,12 +87,12 @@ ORDER BY COUNT(*) DESC
 
 > SQL Server Execution Times: CPU time = 1157 ms,  elapsed time = 738 ms.
 
-For me, the query now runs in less than a second and our reads on the posts table have gone from 799999 down to 6539. We could happily stop here (and in this case probably should) but in the interest of this post, I wanted to see how much further I could take this.
+For me, the query now runs in less than a second and our reads on the posts table have gone from 799999 down to 6539. We could happily stop here but in the interest of this post, I wanted to see how much further I could take it.
 
 We're now at the point where our query is reading only information it absolutely needs in order to complete, so how can we reduce reads further? Compression! 
 
 ## Compressed Indexes ##
-We have a couple of options here, we can compress our indexes with Row or Page level compression or we can get fancy and use a Columnstore index. Let's compare these options...
+We have a couple of options here, we can compress our indexes with Row or Page level compression or we can change tracks a little and use a Columnstore index. Let's compare these options...
 
 First up lets set our posts index to use page compression...
 
@@ -119,7 +119,7 @@ ORDER BY COUNT(*) DESC
 
 > SQL Server Execution Times: CPU time = 1457 ms,  elapsed time = 695 ms.
 
-That's just over another 2000 reads knocked off. We've traded off reads for CPU A little here as the compression/decompression process will add overhead on the processor. 
+That's just over another 2000 reads knocked off and about 200ms faster. We've traded off reads for CPU A little here as the compression/decompression process will add overhead on the processor. 
 
 ## Columnstore ##
 Let's now drop our compressed index and try a Columnstore index...
@@ -154,3 +154,39 @@ ORDER BY COUNT(*) DESC
 
 Clearly, our read counts have shot up here, whilst we only read 6382 pages (Similar to our non compressed index) 22818 were pre-fetched in anticipation that we might need them as can be seen in the "lob read-ahead reads". So in the interest of just trying to reduce reads, our columnstore was a failure, however I should also add that this query ran in less than 300ms being more than twice as fast as our previous compressed covering index. The compression of a Columnstore index will vary massively depending on how much duplication you have in your data, the more duplication the more compression you will see.
 
+## Indexed Views ##
+We've created lightweight indexes to reduce the data touched, we've compressed them to reduce IO and we've tried Columnstore for it's aggregation and compression wizardry. So what next? This one feels a bit like cheating but we can harness index views to pre-calculate our aggregations and automatically manage them going forwards...
+
+{% highlight sql %}
+CREATE VIEW vw_TopPosters_Indexed WITH SCHEMABINDING
+AS
+SELECT 
+   Users.Id,
+  Users.DisplayName,
+  COUNT_BIG(*) Posts
+FROM 
+  dbo.Posts
+  INNER JOIN dbo.Users ON Users.Id = Posts.OwnerUserId
+GROUP BY 
+  Users.Id,Posts.OwnerUserId,Users.DisplayName
+GO
+
+CREATE UNIQUE CLUSTERED INDEX pk_PostAggregates ON vw_TopPosters_Indexed(Id)
+CREATE NONCLUSTERED INDEX ndx_test ON vw_TopPosters_Indexed(Posts)
+{% endhighlight %}
+
+We'll need to make a couple of changes to our query to get it to use the indexed view and return the results we need...
+
+{% highlight sql %}
+SELECT TOP 5
+   DisplayName,
+   Posts
+FROM vw_TopPosters_Indexed WITH(NOEXPAND)
+ORDER BY Posts DESC
+{% endhighlight %}
+
+> Table 'vw_TopPosters_Indexed'. Scan count 1, logical reads 22, physical reads 0, read-ahead reads 0, lob logical reads 0, lob physical reads 0, lob read-ahead reads 0.
+
+>  SQL Server Execution Times: CPU time = 0 ms,  elapsed time = 283 ms.
+
+22 reads! Jackpot? Maybe, the indexed view is a bit of a cheat as it's just moved the IO to the writes rather than reads. Depending on how read or write heavy your system is you may or may not see this as a worthwhile tradeoff.  Something to highlight here that I think is often missed is whilst the clustered index on an indexed view has a lot of restrictions, once you've created it you can create a restriction free nonclustered index not unique, non grouped fields etc.
