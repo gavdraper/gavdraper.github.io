@@ -3,13 +3,13 @@ layout: post
 title: SQL Server Impacts of Compression
 date: '2018-08-17 13:34:01'
 ---
-I recently had an issue where a server's CPU load was running a lot higher than usual, after studying a profile for while it quickly highlighted the offending queries. What wasn't obvious was why some of these simple queries were using so much CPU, the only thing they had in common was they were temporal queries using the AS OF syntax to go across the main and history table. After a little head scratching I realised all the history tables were compressed at the page level, it turns out history tables by default are compressed. After rebuilding the table to turn of compression the CPU load dropped right back down. Problem solved.
+I recently had an issue where a server's CPU load was running a lot higher than usual, after studying a profile for while it quickly highlighted the offending queries. What wasn't obvious was why some of these simple queries were using so much CPU, the only thing they had in common is that they were temporal queries using the AS OF syntax to go across the main and history table. After a little head scratching I realized all the history tables were compressed at the page level, it turns out history tables by default are compressed. After rebuilding the table to turn of compression the CPU load dropped right back down. Problem solved.
 
 This got me thinking though, I've never worked on a system where I've needed to compress tables so had never really looked at what compression does to query performance and their plans. I'm going to delve into this in this post.
 
-All examples in this post are based on a data dump of stackoverflow from 2010 mainly because it's a nice size and well distributed test bed.
+All examples in this post are based on a data dump of Stack Overflow from 2010 mainly because it's a nice size and well distributed test bed.
 
-First let's take a baseline against the unencrypted posts table...
+First let's take a baseline against the non compressed posts table...
 
 {% highlight sql %}
 SELECT TOP 5 
