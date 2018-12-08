@@ -1,11 +1,13 @@
 ---
 layout: post
-title: SQL Server Adventures In Reducing Reads
+title: SQL Server Adventures In Reducing IO
 date: '2018-12-08 09:34:01'
 ---
-In the interests of curiosity I'm going to take a query that runs a relatively simple aggregation over a large table and see how much I can reduce the IO. I'm not suggesting anything here should be blindly followed, as with all things there are trade-offs. but the results are I think interesting none the less. 
+In the interests of curiosity I'm going to take a query that runs a relatively simple aggregation over a large table and see how much I can reduce the IO. I'm not suggesting anything here should be blindly followed, as with all things there are trade-offs. but the results are I think interesting none the less. Disks are getting faster and cheaper all the time, however no amount of progress in this area will ever give you free IO, the cheapest IO will always be the IO you don't make. If we can tune our query to do less it will often give a far better bang for buck than any advancements in hardware.
 
-Let's take this fairly simple query on the Stack Overflow data dump database to get the top 5 users by posts and return their name and the amount of posts they have...
+If you want to follow along the Stack Overflow database I'm using can be downloaded from [here](https://www.brentozar.com/archive/2015/10/how-to-download-the-stack-overflow-database-via-bittorrent/).
+
+Let's take this fairly simple query on the Stack Overflow database to get the top 5 users by posts and return their name along with the amount of posts they have...
 
 {% highlight sql %}
 SET STATISTICS IO ON
@@ -32,7 +34,7 @@ On my machine the statistics output I get is this...
 
 >  SQL Server Execution Times: CPU time = 7294 ms,  elapsed time = 7178 ms.
 
-So roughly 7 seconds to execute the query with our biggest hit on reads being 799999 on the Posts table and 121 on Users. Let's start on the small but easy low hanging fruit....
+So roughly 7 seconds to execute the query with our biggest hit on reads being 799999 on the Posts table and 121 on Users. I should probably add that at this point both our posts and users table have a single index and that's a clustered index on their ID columns. Let's start on the small but easy low hanging fruit....
 
 ## Lightweight Covering Index ##
 The user table is currently scanning the clustered index to get the DisplayUsername, because the clustered index contains all the fields it's having to read data we don't need, we can create a lightweight covering index with just Id and an include on DisplayName to stop the query reading any pages with data in them that it doesn't need.
@@ -61,7 +63,7 @@ ORDER BY COUNT(*) DESC
 
 It's a small gain but we've halved the reads required for our join to the users table.
 
-Now to tackle that posts table, this is a bit more difficult as we have to touch every record in order to group and count. An obvious place to start is to create a smaller index than the clustered index it's currently using so only the field we need in order to satisfy our group gets read...
+Now to tackle that posts table, this is a bit more difficult as we have to touch every record in order to group and count. An obvious place to start is to create a nonclustered index with a sort order more suited to our aggregation and without any of the fields we don't need...
 
 {% highlight sql %}
 CREATE NONCLUSTERED INDEX ndx_posts_owner_userId
@@ -190,3 +192,6 @@ ORDER BY Posts DESC
 >  SQL Server Execution Times: CPU time = 0 ms,  elapsed time = 283 ms.
 
 22 reads! Jackpot? Maybe, the indexed view is a bit of a cheat as it's just moved the IO to the writes rather than reads. Depending on how read or write heavy your system is you may or may not see this as a worthwhile tradeoff.  Something to highlight here that I think is often missed is whilst the clustered index on an indexed view has a lot of restrictions, once you've created it you can create a restriction free nonclustered index not unique, non grouped fields etc.
+
+## Summary ##
+Any thing I've missed? Do you have other tricks for lowering IO? Let me know in the comments or drop me a message on one of the social networks in the header/footer.
