@@ -8,6 +8,10 @@
   {% if site.github_username %}
     {% include icon-github.html username=site.github_username %}
   {% endif %}
+  {% if site.linkedin_username %}
+  {% include icon-linkedin.html username=site.linkedin_username %}
+{% endif %}
+
  </div>
     {% assign default_paths = site.pages | map: "path" %}
     {% assign page_paths = site.header_pages | default: default_paths %}
