@@ -3,7 +3,7 @@ layout: post
 title: SQL Server Adventures In Reducing Reads
 date: '2018-12-08 09:34:01'
 ---
-After recently spending some time tuning a query where the bottleneck was IO due to the query having a huge amount of reads I thought I'd run some different tests in approached to reducing reads. I'm not suggesting anything here should be blindly followed as with all things there are trade offs. but the results are I think interesting none the less. 
+After recently spending some time tuning a query where the bottleneck was IO due to the query having a huge amount of reads I thought I'd run some different tests in approached to reducing reads. I'm not suggesting anything here should be blindly followed as with all things there are trade-offs. but the results are I think interesting none the less. 
 
 Let's take this fairly simple query on the Stack Overflow data dump database to get the top 5 users by posts and return their name and the amount of posts they have...
 
@@ -42,7 +42,7 @@ CREATE NONCLUSTERED INDEX ndx_user_id_include_displayname
 	ON Users(Id) INCLUDE(DisplayName)
 {% endhighlight %}
 
-No lets try our query again...
+Now let's try our query again...
 
 {% highlight sql %}
 SELECT TOP 5 
@@ -87,7 +87,7 @@ ORDER BY COUNT(*) DESC
 
 > SQL Server Execution Times: CPU time = 1157 ms,  elapsed time = 738 ms.
 
-For me the query now runs in less than a second and our reads on the posts table have gone from 799999 down to 6539. We could happily stop here (and in this case probably should) but in the interest of this post I wanted to see how much further I could take this.
+For me, the query now runs in less than a second and our reads on the posts table have gone from 799999 down to 6539. We could happily stop here (and in this case probably should) but in the interest of this post, I wanted to see how much further I could take this.
 
 We're now at the point where our query is reading only information it absolutely needs in order to complete, so how can we reduce reads further? Compression! 
 
@@ -152,5 +152,5 @@ ORDER BY COUNT(*) DESC
 
 > SQL Server Execution Times: CPU time = 187 ms,  elapsed time = 276 ms.
 
-Clearly our read counts have shot up here, whilst we only read 6382 pages (Similar to our non compressed index) 22818 were pre-fetched in anticipation that we might need them as can be seen in the "lob read-ahead reads". So in the interest of just trying to reduce reads our columnstore was a failure however I should also add that this query ran in less than 300ms being more than twice as fast as our previous compressed covering index. The compression of a Columnstore index will vary massively depending on how much duplication you have in your data, the more duplication the more compression you will see.
+Clearly, our read counts have shot up here, whilst we only read 6382 pages (Similar to our non compressed index) 22818 were pre-fetched in anticipation that we might need them as can be seen in the "lob read-ahead reads". So in the interest of just trying to reduce reads, our columnstore was a failure, however I should also add that this query ran in less than 300ms being more than twice as fast as our previous compressed covering index. The compression of a Columnstore index will vary massively depending on how much duplication you have in your data, the more duplication the more compression you will see.
 
