@@ -10,7 +10,7 @@
   <div id="wrap" class="container-fluid">
     <div class="row">
         <div class="content col-md-2 hidden-md-down sidebar">
-          <img src="/content/images/profile.jpg"/><span style="font-size:9pt;line-height:0.8em;">Software Developer/Dev DBA. Often hyper, often talking rubbish pick and choose what to take away from this blog....</span>
+          <img src="/content/images/profile.jpg"/><span style="font-size:9pt;line-height:0.8em;">Software Developer/Dev DBA. Often hyper, often talking rubbish pick and choose what to take away from this blog.... Want to get in touch? My social network profiles are listed above.</span>
           <div style="font-size:16pt;margin-top:20px;">Tags</div>
           {% for tag in site.tags %}
           <!-- Here's a hack to generate a "tag cloud" where the size of
@@ -34,6 +34,10 @@
           <li/><a href="https://gavindraper.com/2012/06/03/sql-server-service-broker-explained/">SQL Server Service Broker Explained</a>
           <li/><a href="https://gavindraper.com/2017/05/31/sql-server-parameter-sniffing/">Parameter Sniffing In Depth</a>
           <li/><a href="https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/">Clustered & NonClustered Indexes Explained</a>
+          <li/><a href="https://gavindraper.com/2018/05/29/SQL-Server-Minimal-Logging-Inserts/">Minimally Logged Inserts (Assume Nothing!)</a>
+          <li/><a href="https://gavindraper.com/2018/09/29/These-Are-Not-The-Indexes-Youre-Looking-For/">These Are Not The Indexes You're Looking For</a>
+          <li/><a href="https://gavindraper.com/2018/11/29/SQL-Server-Guide-To-NULL-Handling/">SQL Server Guide To NULL Handling</a>
+          <li/><a href="https://gavindraper.com/2018/12/04/SQL-Server-In-Memory-OLTP-Indexing/">Indexing In Memory OLTP Tables</a>
         </ul>
         <h2>Recent Posts</h2>
         {%for post in site.posts limit:10 %} {% unless post.next %}
