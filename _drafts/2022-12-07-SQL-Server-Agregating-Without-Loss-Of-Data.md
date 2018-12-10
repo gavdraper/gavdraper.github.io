@@ -35,3 +35,5 @@ I've populated my posts table with 5 million records and the above query did the
 
 TODO : Query Plan
 TODO : Stats
+
+Since SQL Server 2005 we've have frameless window function, that is a function that runs per row with no bounds. Use this we can rewrite the above query as...

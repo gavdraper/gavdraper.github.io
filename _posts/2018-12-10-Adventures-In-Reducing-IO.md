@@ -1,7 +1,8 @@
 ---
 layout: post
 title: SQL Server Adventures In Reducing IO
-date: '2018-12-10 08294:23'
+date: '2018-12-10 08:29:23'
+tags: indexing performance-tuning
 ---
 In the interests of curiosity I'm going to take a query that runs a relatively simple aggregation over a large table and see how much I can reduce the IO. I'm not suggesting anything here should be blindly followed, as with all things there are trade-offs. but the results are I think interesting none the less. Disks are getting faster and cheaper all the time, however no amount of progress in this area will ever give you free IO, the cheapest IO will always be the IO you don't make. If we can tune our query to do less it will often give a far better bang for buck than any advancements in hardware.
 

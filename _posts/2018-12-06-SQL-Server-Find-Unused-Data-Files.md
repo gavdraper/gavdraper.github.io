@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Find Unused Data Files
 date: '2018-12-06 02:55:23'
+tags: tsql maintenance
 ---
 You know that old SQL Server you've left running the last 5 years and had numerous databases dropped and restored to? Have any databases been detached/restores failed part way through and data files just been left behind unused?
 
