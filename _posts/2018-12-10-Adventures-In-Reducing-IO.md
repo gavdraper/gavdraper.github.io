@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SQL Server Adventures In Reducing IO
-date: '2018-12-08 09:34:01'
+date: '2018-12-10 08294:23'
 ---
 In the interests of curiosity I'm going to take a query that runs a relatively simple aggregation over a large table and see how much I can reduce the IO. I'm not suggesting anything here should be blindly followed, as with all things there are trade-offs. but the results are I think interesting none the less. Disks are getting faster and cheaper all the time, however no amount of progress in this area will ever give you free IO, the cheapest IO will always be the IO you don't make. If we can tune our query to do less it will often give a far better bang for buck than any advancements in hardware.
 
@@ -121,7 +121,7 @@ ORDER BY COUNT(*) DESC
 
 > SQL Server Execution Times: CPU time = 1457 ms,  elapsed time = 695 ms.
 
-That's just over another 2000 reads knocked off and about 200ms faster. We've traded off reads for CPU A little here as the compression/decompression process will add overhead on the processor. 
+That's just over another 2000 reads knocked off and about 200ms faster. We've traded off reads for CPU a little here as the compression/decompression process will add overhead on the processor. 
 
 ## Columnstore ##
 Let's now drop our compressed index and try a Columnstore index...
@@ -131,7 +131,7 @@ DROP INDEX ndx_posts_owner_userId ON Posts
 CREATE NONCLUSTERED COLUMNSTORE INDEX ndx_cs_owner_user_id ON Posts(OwnerUserId)
 {% endhighlight %}
 
-I'll leave you to read more about Columnstore elsewhere but just know they work great on large reporting tables with lots of duplication, because of the way they store data the duplicates are only stored once.
+I'll leave you to read more about Columnstore elsewhere but just know they work great on large reporting tables with lots of duplication, because of the way they store data a lot of duplication in the storage is removed.
 
 Now let's see what this does...
 
@@ -157,7 +157,7 @@ ORDER BY COUNT(*) DESC
 Clearly, our read counts have shot up here, whilst we only read 6382 pages (Similar to our non compressed index) 22818 were pre-fetched in anticipation that we might need them as can be seen in the "lob read-ahead reads". So in the interest of just trying to reduce reads, our columnstore was a failure, however I should also add that this query ran in less than 300ms being more than twice as fast as our previous compressed covering index. The compression of a Columnstore index will vary massively depending on how much duplication you have in your data, the more duplication the more compression you will see.
 
 ## Indexed Views ##
-We've created lightweight indexes to reduce the data touched, we've compressed them to reduce IO and we've tried Columnstore for it's aggregation and compression wizardry. So what next? This one feels a bit like cheating but we can harness index views to pre-calculate our aggregations and automatically manage them going forwards...
+We've created lightweight indexes to reduce the data touched, we've compressed them to reduce IO and we've tried Columnstore for it's aggregation and compression wizardry. So what next? This one feels a bit like cheating but we can harness indexed views to pre-calculate our aggregations and automatically manage them going forwards...
 
 {% highlight sql %}
 CREATE VIEW vw_TopPosters_Indexed WITH SCHEMABINDING
@@ -191,7 +191,7 @@ ORDER BY Posts DESC
 
 >  SQL Server Execution Times: CPU time = 0 ms,  elapsed time = 283 ms.
 
-22 reads! Jackpot? Maybe, the indexed view is a bit of a cheat as it's just moved the IO to the writes rather than reads. Depending on how read or write heavy your system is you may or may not see this as a worthwhile tradeoff.  Something to highlight here that I think is often missed is whilst the clustered index on an indexed view has a lot of restrictions, once you've created it you can create a restriction free nonclustered index not unique, non grouped fields etc.
+22 reads! Jackpot? Maybe, the indexed view is a bit of a cheat as it's just moved the IO to the writes rather than reads. Depending on how read or write heavy your system is you may or may not see this as a worthwhile tradeoff.  Something to highlight here that I think is often missed is whilst the clustered index on an indexed view has a lot of restrictions, once you've created it you can create a restriction free nonclustered index (not unique, non grouped fields etc).
 
 ## Summary ##
 Any thing I've missed? Do you have other tricks for lowering IO? Let me know in the comments or drop me a message on one of the social networks in the header/footer.
