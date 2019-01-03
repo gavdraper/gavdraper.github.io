@@ -131,3 +131,17 @@ WITH cte_dupes AS
 )
 DELETE FROM cte_dupes WHERE RowNumber<>1
 {% endhighlight %}
+
+It's worth noting that everything above can be achieved without the use of CTE's, I use them so I can first run a select against the CTE to check what I'm going to be deleting, for example...
+
+{% highlight sql %}
+WITH cte_dupes AS
+(
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY SuperHero ORDER BY id) AS RowNumber
+    FROM DupesWithUniqueKey
+)
+--DELETE FROM cte_dupes  WHERE RowNumber<>1
+SELECT * FROM cte_dupes WHERE RowNumber<>1
+{% endhighlight %}
+
+In the above I've changed the CTE to "SELECT *" so we can see all the data and also commented out the delete statement to replace it with a select. With this method you can always run the select first and when happy just comment out and uncomment the delete line. 
