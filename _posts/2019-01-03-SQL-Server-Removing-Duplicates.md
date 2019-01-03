@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server Removing Duplicates
 date: '2019-01-03 08:13:23'
+tags: tsql maintenance
 ---
 I know, I know your data could never possibly have duplicates because obviously, you have all the constraints in place to stop this bad data before it gets into the system... But we all make mistakes right? Let's imagine someone did let the little critters in, how can we then write a query that will remove the duplicates?
 
