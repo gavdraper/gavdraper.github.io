@@ -28,7 +28,7 @@ include: ['tags']
 paginate: 3
 # Build settings
 markdown: kramdown
-gems:
+plugins:
   - jekyll-feed
   - jekyll-redirect-from
   - jekyll-paginate
