@@ -3,9 +3,9 @@ layout: post
 title: SQL Server Removing Duplicates
 date: '2019-01-03 08:13:23'
 ---
-The best solution to this is to not allow duplicates into your data in the first places but let's imagine someone did let the little critters in, how can we then write a query that will remove the duplicates?
+I know, I know your data could never possibly have duplicates because obviously, you have all the constraints in place to stop this bad data before it gets into the system... But we all make mistakes right? Let's imagine someone did let the little critters in, how can we then write a query that will remove the duplicates?
 
-We actually have a few options, some good, some not so good. Before we run through them if you want to follow along then run the following SQL to create two tables and populate them with some duplicates data...
+We actually have a few options, some good, some not so good. Before we run through them if you want to follow along then run the following SQL to create two tables and populate them with some duplicated data...
 
 {% highlight sql %}
 CREATE TABLE DupesWithNoUniqueKey
@@ -40,12 +40,12 @@ UNION ALL SELECT 'Jessica Jones'
 {% endhighlight %}
 
 
-## De-Duping Without Windows Functions ##
-Let's imagine for whatever reason you're still rocking SQL Server 2000 and don't have access to the hotness that are window functions. What are our options for de-duping data?
+## De-Duping Without Window Functions ##
+Let's imagine for whatever reason you're still rocking SQL Server 2000 and don't have access to the hotness that is window functions. What are our options for de-duping data?
 
 We currently have 2 tables, one with a unique key and one without. Let's start with the one with no unique key...
 
-In DupesWithNoUniqeKey table with have absolutely nothing unique to use in our filters to say delete this record but leave at least one copy, we also don't have access to window functions so we can't stick a row number on and delete all with a row number greater than one. This really leaves us with only one option and it's a pretty painful option especially if it's a large table....
+In  the DupesWithNoUniqeKey table with have absolutely nothing unique to use in our filters to say delete this record but leave at least one copy, we also don't have access to window functions so we can't stick a row number on each record and delete all the ones with a row number greater than one. This really leaves us with only one option and it's a pretty painful option, especially if it's a large table...
 
 {% highlight sql %}
 BEGIN TRAN
@@ -60,7 +60,7 @@ We're having to do a SELECT DISTINCT into a new table to remove the duplicates, 
 
 Let's now look at our other table that does have a unique key which allows us to differentiate between the duplicate records...
 
-We can run the following query to see all the duplicate records and filter out the first occurence of them...
+We can run the following query to see all the duplicate records and filter out the first occurrence of them...
 
 {% highlight sql %}
 WITH cte_dupes AS
@@ -80,10 +80,12 @@ WHERE
 SELECT * FROM cte_dupes
 {% endhighlight %}
 
-Once we've run that and looked at the output to confirm it's returning the record we want to delete we can use the same CTE to do our delete...
+This is basically getting all duplicates except the one with the lowest ID, this will allow us to keep the first occurrence of every duplicate.
+
+Once we've run that and looked at the output to confirm it's returning the records we want to delete we can use the same CTE to do our delete...
 
 {% highlight sql %}
-;WITH cte_dupes AS
+WITH cte_dupes AS
 (
 SELECT 
     d.*
@@ -103,12 +105,10 @@ FROM cte_dupes
         ON s.id = cte_dupes.id
 {% endhighlight %}
 
-This time we're only touching the deleted rows and not having to move the whole table.
+This time we're only touching the deleted rows and not having to move the whole table which in most cases will be far less overhead and cause less blocking.
 
 ## De-Duping With Windows Functions ##
-Things get a lot better with the introudction of Window Functions in SQL Server 2005, we no longer need to worry about having a unique key or some way to differentiate duplicates from each other...
-
-We can now use PARTITION BY to define what needs to be unique in order for it to be classed as a duplicate and ROW_NUMBER() to give each duplicate a ascending ID. At which point we can then delete anything with an ID > 1...
+Things get a lot better with the introduction of Window Functions in SQL Server 2005, we no longer need to worry about having a unique key or some way to differentiate duplicates from each other, We can now use PARTITION BY to define what needs to be unique in order for it to be classed as a duplicate and ROW_NUMBER() to give each duplicate an ascending ID. At which point we can then delete anything with an ID > 1...
 
 {% highlight sql %}
 WITH cte_dupes AS
@@ -119,9 +119,9 @@ WITH cte_dupes AS
 DELETE FROM cte_dupes WHERE RowNumber<>1
 {% endhighlight %}
 
-Notice we're orders by SELECT NULL this is because we have no real ID and so don't create which version of a duplicate gets deleted. 
+Notice we're ordering by SELECT NULL this is because we have no real ID and so don't care which version of a duplicate gets deleted. 
 
-Let's imagine on our other table that does have a duplicate ID we only want records after the first one to be deleted, we can do that by ordering by ID in our partition....
+Let's imagine on our other table that does have a duplicate ID we only want records after the first one to be deleted, we can do that by ordering by ID in our partition...
 
 {% highlight sql %}
 WITH cte_dupes AS
@@ -140,8 +140,8 @@ WITH cte_dupes AS
     SELECT *, ROW_NUMBER() OVER (PARTITION BY SuperHero ORDER BY id) AS RowNumber
     FROM DupesWithUniqueKey
 )
---DELETE FROM cte_dupes  WHERE RowNumber<>1
+/*DELETE FROM cte_dupes  WHERE RowNumber<>1*/
 SELECT * FROM cte_dupes WHERE RowNumber<>1
 {% endhighlight %}
 
-In the above I've changed the CTE to "SELECT *" so we can see all the data and also commented out the delete statement to replace it with a select. With this method you can always run the select first and when happy just comment out and uncomment the delete line. 
+In the above, I've changed the CTE to "SELECT *" so we can see all the data and also commented out the delete statement to replace it with a select. With this method, you can always run the select first and when you're happy just comment it out and uncomment the delete line. 
