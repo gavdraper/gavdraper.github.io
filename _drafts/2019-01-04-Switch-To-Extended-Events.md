@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Profiler Is Dead, Long Live Extended Events
-date: '2019-01-04 09:34:01'
+date: '2019-01-03 09:34:01'
 tags: tsql maintenance
 ---
 SQL Server profiler has been deprecated since about 2012 and has had no new features since then, Extended Events on the other hand is getting new events and fields added all the time. And Yet... And yet for the most part people are still using profiler and ignoring Extended Events. In this post I'm going to go over a couple of common profiler use cases and show how it's actually easier to use in Extended Events once you've got your head round it. 
