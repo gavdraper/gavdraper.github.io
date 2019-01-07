@@ -76,7 +76,8 @@ WITH (MAX_MEMORY=4096 KB)
 GO
 {% endhighlight %}
 
-### RPC/Statement Completed Over X Seconds ###
+RPC/Statement Completed Over X Seconds
+------
 {% highlight sql %}
 CREATE EVENT SESSION [RpcAndBatchCompletedOverXSeconds] ON SERVER 
 ADD EVENT sqlserver.rpc_completed
@@ -131,7 +132,8 @@ WITH (MAX_MEMORY=4096 KB)
 GO
 {% endhighlight %}
 
-### Memory Grants Over 1GB ###
+Memory Grants Over 1GB
+------
 {% highlight sql %}
 CREATE EVENT SESSION MemoryUsageAbove1GB ON SERVER 
 ADD EVENT sqlserver.query_memory_grant_usage
@@ -142,7 +144,8 @@ ADD EVENT sqlserver.query_memory_grant_usage
 WITH (MAX_MEMORY=4096 KB)
 {% endhighlight %}
 
-### Deadlocks With Graphs ###
+Deadlocks With Graphs
+------
 {% highlight sql %}
 CREATE EVENT SESSION DeadLocks ON SERVER 
 ADD EVENT sqlserver.lock_deadlock
