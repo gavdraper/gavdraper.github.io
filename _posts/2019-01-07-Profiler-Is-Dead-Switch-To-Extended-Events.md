@@ -182,7 +182,7 @@ The sessions I've created above are all currently scripted not to store the sess
 
 As mentioned above Extended Events also has a nice Wizard built into SSMS for setting up new sessions, To access this right click the Sessions folder under the Extended Events node in SSMS and click "New Session Wizard".  This wizard allows you to browse and search through all the available Events and Actions which can be a great way to find what you can capture. At the end of the wizard you can either click to create the session or even better click the script button to get the TSQL for it so you can save it away for future. 
 
-## Why Is this Better Than Profiler ##
+## Why This Is Better Than Profiler ##
 *	It's not deprecated - Profiler could go away with any next major version of SQL Server.
 *	One tool SSMS - No more having to drop in and out of SSMS to Profiler
 *	Easy to create and filter with TSQL - I find with Extended Events I'm much more likely to script my sessions or just leave them stopped on the server ready to run again. It always felt a bit clunky to say templates in profiler so I rarely did it.
