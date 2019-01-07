@@ -17,7 +17,8 @@ Let's take 4 common profiles that I used to use all the time before switching to
 
 Run the following TSQL snippets to create but not start Extended Event sessions for the above 4 scenarios.
 
-### RCP/Statement Completed For User X ###
+RCP/Statement Completed For User X
+------
 {% highlight sql %}
 CREATE EVENT SESSION [RpcAndBatchCompletedForUserX] ON SERVER 
 ADD EVENT sqlserver.rpc_completed
