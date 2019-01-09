@@ -122,3 +122,4 @@ Some things to take away from this...
 * You don't need to include Clustered index fields in your Non-Clustered indexes as they are already there.
 * You don't need to add additional indexes to avoid lookups from Non-Clustered to Clustered when the lookup fields are already defined on the Clustered Index.
 * Lookups will never happen from a Non-Clustered index to a field defined on the Clustered Index.
+* This can also work in reverse, for any record in a Clustered index you can find the matching record in each Non-Clustered index. This is how things like Deletes and Updates work, e.g Update Clustered Index then lookup each matching record in Non-Clustered indexes and update them too.
