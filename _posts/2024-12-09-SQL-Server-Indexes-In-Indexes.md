@@ -4,8 +4,6 @@ title: Waiter Waiter There's an Index in my Index
 date: '2019-01-09 08:53:01'
 tags: performance-tuning indexing
 ---
-Waiter Waiter, There's an Index in my Index
-
 I've done a few [posts on Clustered and Non-Clustered indexes](https://gavindraper.com/2017/05/16/clustered-and-nonclustered-indexes/) before, what I've not however covered and something that is often not thought about is how SQL Server links the NonClustered and Clustered indexes together for lookups.
 
 In Summary, it works like this...
