@@ -15,7 +15,7 @@ ChaosLoad allows you to define a JSON template of the load you want to run that 
    "ConnectionString": "Server=localhost\\sql2019;Database=WideWorldImporters;Trusted_Connection=True;",
    "Templates": [
       {
-         "ScriptPath": "Scripts\\Demo1\\HammerTim.sql",
+         "ScriptPath": "Scripts\\Demo1\\HammerTime.sql",
          "Sleep": 100,
          "Threads": 50,
          "RunCount": 1000
