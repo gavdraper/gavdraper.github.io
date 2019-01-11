@@ -50,7 +50,7 @@ You can script some pretty cool labs with this to use in training sessions, For 
 
 If you want a quick example you can run the one in the sample folder that can be run against the StackOverflow database. It looks like this...
 
-{% highlight sql %}
+{% highlight javascript %}
 {
    "ConnectionString": "Server=localhost\\sql2017;Database=StackOVerflow2013;Trusted_Connection=True;",
    "Templates": [{
