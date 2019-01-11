@@ -48,6 +48,62 @@ ChaosLoad.exe PathToYourJson.exe
 
 You can script some pretty cool labs with this to use in training sessions, For example hide a rogue query doing a crazy memory hogging sort in a bunch of innocent queries and play find the problem.
 
+If you want a quick example you can run the one in the sample folder that can be run against the StackOverflow database. It looks like this...
+
+{% highlight sql %}
+{
+   "ConnectionString": "Server=localhost\\sql2017;Database=StackOVerflow2013;Trusted_Connection=True;",
+   "Templates": [{
+      "ScriptPath": "Scripts\\Demo1\\GetAllUsersEndWithG.sql",
+      "Sleep": 0,
+      "Threads": 5,
+      "RunCount": 10
+   },
+   {
+      "ScriptPath": "Scripts\\Demo1\\GetCountPosts.sql",
+      "Sleep": 0,
+      "Threads": 5,
+      "RunCount": 10
+   },
+   {
+      "ScriptPath": "Scripts\\Demo1\\GetMostPopularBadge.sql",
+      "Sleep": 10,
+      "Threads": 5,
+      "RunCount": 10
+   }]
+}
+{% endhighlight %}
+
+{% highlight sql %}
+/*GetMostPopularBadge.sql*/
+SELECT TOP 1
+    COUNT(*), [Name]
+FROM dbo.Badges
+GROUP BY [name]
+ORDER BY COUNT(*) DESC
+
+/*GetAllUsersEndWithG.sql*/
+SELECT *
+FROM [users]
+WHERE DisplayName LIKE '%G'
+
+/*GetCountPosts.Sql*/
+SELECT COUNT(*)
+FROM Posts
+{% endhighlight %}
+
+Before I run this the server has nothing going on...
+
+![Empty sp_whoisactive]({{site.url}}/content/images/2019-ChaosLoad\NoLoad.PNG)
+
+Let's then fire it up...
+
+![Starting From Console]({{site.url}}/content/images/2019-ChaosLoad\Start.PNG)
+
+Now our server looks like this...
+
+![Loaded sp_whoisactive]({{site.url}}/content/images/2019-ChaosLoad\Load.PNG)
+
 Minor disclaimer, This project was written in an hour or so late one evening, it's pretty scrappy and whilst I fully intend to go back and tidy up there is a good chance I'll never get to it ;) Feel free to submit pull requests.
 
 
