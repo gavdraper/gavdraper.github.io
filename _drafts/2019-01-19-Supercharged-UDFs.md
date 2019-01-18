@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Supercharge Your Scalar Functions By Switching To Table Value Functions
-date: '2019-01-17 06:34:01'
+title: Supercharge Your SQL Server Scalar Functions By Switching To Table Value Functions
+date: '2019-01-18 07:35:17'
 tags: performance-tuning tsql
 ---
 User defined functions in SQL server can cause all kinds of performance problems, there are however some tricks that are well worth knowing when you can't avoid using them...
@@ -53,7 +53,7 @@ This gives that exact same results but now runs in less than a second. What's ch
 
 Not only do we now have a parallel plan but that filter has been moved into the index scan lowering the amount of rows flowing through our plan, although yes we did still have to read them all as like I said earlier there is no index we can create that will allow a seek.
 
-With the above in mind I find anytime I'm running a function across anything more than a couple of rows I'll lean towards using that Table Value Function first even if it does feel a little less intuitive to write.
+With the above in mind I find any time I'm running a function across anything more than a couple of rows I'll lean towards using that Table Value Function first even if it does feel a little less intuitive to write.
 
 
 
