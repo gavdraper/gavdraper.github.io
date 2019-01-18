@@ -2,6 +2,7 @@
 layout: post
 title: Supercharge Your Scalar Functions By Switching To Table Value Functions
 date: '2019-01-17 06:34:01'
+tags: performance-tuning tsql
 ---
 User defined functions in SQL server can cause all kinds of performance problems, there are however some tricks that are well worth knowing when you can't avoid using them...
 
