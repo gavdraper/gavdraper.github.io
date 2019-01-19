@@ -60,7 +60,7 @@ This gives that exact same results but now runs in less than a second. What's ch
 
 Not only do we now have a much better plan/faster query but we also have the same plan plan we'd end up with if we'd inlined the function ourselves...
 
-{% highloght sql %}
+{% highlight sql %}
 SELECT 
    * 
 FROM 
