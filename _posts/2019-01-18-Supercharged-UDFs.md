@@ -33,7 +33,7 @@ I completely accept it's quicker to just change our parameter to a DATETIME, but
 
 ![Scalar Plan]({{site.url}}/content/images/2019-TVP-UDF/udf-plan.PNG)
 
-This plan did not go parallel anywhere even though it is seemingly pretty high cost, this is because a scalar function used anywhere in your query will force a serial plan. So what happens if we switch our Scalar function to a Table Value Function and use a CROSS APPLY in our query to filter by it?...
+This plan did not go parallel anywhere even though it is seemingly pretty high cost, this is because a scalar function used anywhere in your query will force a serial plan. Now because the scalar function we've written is a single statement we can rewrite it as a Table Value Function and SQL Server will essentially inline it into our query...
 
 {% highlight sql %}
 CREATE FUNCTION dbo.DateToNumberTvf(@Date DATETIME)
@@ -58,11 +58,20 @@ This gives that exact same results but now runs in less than a second. What's ch
 
 ![Scalar Plan]({{site.url}}/content/images/2019-TVP-UDF/tvf-plan.PNG)
 
-Not only do we now have a parallel plan but that filter has been moved into the index scan lowering the amount of rows flowing through our plan, although yes we did still have to read them all as like I said earlier there is no index we can create that will allow a seek.
+Not only do we now have a much better plan/faster query but we also have the same plan plan we'd end up with if we'd inlined the function ourselves...
 
-With the above in mind I find any time I'm running a function across anything more than a couple of rows I'll lean towards using that Table Value Function first even if it does feel a little less intuitive to write.
+{% highlight sql %}
+SELECT 
+   * 
+FROM 
+   Badges 
+   CROSS APPLY (SELECT CONVERT(VARCHAR(10), Badges.[Date], 112) [Date]) d
+WHERE d.[Date] = '20120804'
+{% endhighlight %}
 
+With the above in mind I find any time I'm running a single statement scalar function across anything more than a couple of rows I'll lean towards using that Table Value Function first even if it does feel a little less intuitive to write.
 
+One final note on this topic is as of the [preview release](https://blogs.msdn.microsoft.com/sqlserverstorageengine/2018/11/07/introducing-scalar-udf-inlining/) of SQL Server 2019 the optimizer is now automatically inlining a lot of single statement scalar functions so this table valued function optimization will probably not be needed in future versions.
 
 
 
