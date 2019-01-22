@@ -71,7 +71,7 @@ FROM
 
 For more information see [SQL 2016 Temporal Tables By Example](https://gavindraper.com/2016/04/15/sql-2016-temporal-tables-by-example-2/)
 
-## TRANCATE TABLE WITH PARTITION ##
+## TRUNCATE TABLE WITH PARTITION ##
 The TRUNCATE TABLE statement has been improved to allow you to truncate by partition on partitioned tables. If no partitions are specified it will truncate all of them. To specify partitions you can list them one by one or pass in a range or a mixture of both...
 
 {% highlight sql %}
