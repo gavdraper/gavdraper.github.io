@@ -271,3 +271,11 @@ Having looked at the problems it's fairly easy to stop using it going forwards b
 
 ## Benefits ##
 The only benefit I've ever heard argued for using SELECT * is it's less to type/maintain in the code. Given the bad things that can come out of this, I'll pick the extra work up front every time. That's not to say it's never safe, if you've got a table you know will never change and you always want all the fields then go ahead, I just think these situations are almost non-existent, and we can never predict what might happen down the line. 
+
+## Exceptions ##
+Because there are always exceptions right? I'd still try to avoid it all together but if you really insist on using it then the below are some situations where it is unlikely to bite you...
+
+* When querying a CTE that has already limited the fields
+* From a Table Variable or Temp table where you've already limited the data
+* As part of ETL Warehousing processes where you always want all the data
+* Anything else similar to above where a limit has either already been applied or you know you'll always need all the data
