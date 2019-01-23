@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Why You Should NEVER Use SELECT * In Production Systems (EVER!)
+title: Why You Shouldn't Use SELECT * In Production Systems (EVER!)
 date: '2019-01-23 08:56:56'
 tags: performance-tuning indexing tsql
 ---
