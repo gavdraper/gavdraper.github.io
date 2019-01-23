@@ -2,6 +2,7 @@
 layout: post
 title: Why You Should NEVER Use SELECT * In Production Systems (EVER!)
 date: '2019-01-23 08:56:56'
+tags: performance-tuning indexing tsql
 ---
 OK so the title is a bit of a bold statement but bear with me, I've been burned by this too many times and the above is a rule I now follow for the reasons outlined below...
 
