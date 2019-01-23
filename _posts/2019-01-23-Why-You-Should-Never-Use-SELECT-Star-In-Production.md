@@ -9,7 +9,7 @@ This doesn't mean I never SELECT * because I totally do use it for ad-hoc develo
 
 > Disclaimer, the below demos were all run on SQL Server 2017 and your output may vary depending on version due to differences in statistics and optimizer choices.
 
-# Setup #
+## Setup ##
 Now imagine we have a requirement to report the Id,DisplayName and Location of all users who have a last accessed date between 2008-01-01 and 2008-01-31...
 
 {% highlight sql %}
@@ -56,7 +56,7 @@ This index fully covers our non SELECT * query (There is already a clustered ind
 
 Now onto the problem scenarios...
 
-# Increased IO #
+## Increased IO ##
 The obvious one here is the more we bring back from our queries the more IO we need to perform. It's easy to try to write this off with "What's a couple of extra fields?", however let's actually take a look at that. If we turn on statistics IO and run our non SELECT * query...
 
 {% highlight sql %}
@@ -85,7 +85,7 @@ EXEC LastAccessedReportSelectStar
 
 4 reads vs 44530, given that a read is an 8kb Page we've gone from reading 32kb to 347MB! Looking at the plans we can see this is because SQL Server didn't use our index and instead did a full scan of the clustered index, it did this because all the key lookups back to fields not in the index would have been more expensive than just scanning the whole table.
 
-# Indexes Not Being Used #
+## Indexes Not Being Used ##
 The above example was a bit of a cheap shot as I deliberately created an index for the non SELECT * version so let's now create another for SELECT *...
 
 {% highlight sql %}
@@ -143,7 +143,7 @@ EXEC LastAccessedReportSelectStar
 
 Uh Oh, our finely tuned SELECT * index is no longer being used! All someone did was add a single BIT field and we've jumped back to reading 44530 pages! 32kb to 347MB just because a BIT field was added! The point to make here is that no matter how you design your index for a SELECT * query it's going to be fragile and any small addition to the table schema could cause it to no longer be used, not only that but we're still paying the cost to maintain the now unused index.
 
-# Expensive Lookups #
+## Expensive Lookups ##
 Now let's look at a scenario where adding a field will still allow our index to be used but with a different side effect. Let's make a small modification to our procedure to return the results ordered by LastAccessDate, this is enough of a change that the optimizer will want to use our index even though it doesn't contain the new BIT field we added in the previous step...
 
 {% highlight sql %}
@@ -189,7 +189,7 @@ EXEC LastAccessedReportSelectStar
 
 We're now back to using our index and reads have massively dropped however we're still well above that 4 reads we were getting before because for each row we're having to do a lookup back to the clustered index to get our new field. Now 141 pages isn't massive and this probably won't notice in execution times but magnify that across more rows and potentially much bigger fields that we don't need and this can become very costly.
 
-# Sorts and Memory Grants  #
+## Sorts and Memory Grants  ##
 Sorts are one of the most memory intensive operations your SQL Server can do, one thing that's easy to miss is when you sort a dataset you're moving all the fields in the row, the more fields in the row the more memory the sort needs. Let's modify our queries slightly to sort by a non indexed field forcing a sort operation...
 
 {% highlight sql %}
@@ -250,7 +250,7 @@ Our query has asked for 2.1GB of memory of which has only been granted 1.2GB, we
 
 The exact same logic is also true for things like Hash Matches if you start joining these tables. 
 
-# Queries Can Be Harder To Debug/Read #
+## Queries Can Be Harder To Debug/Read ##
 When you use SELECT * in a query with several tables joined it becomes very hard to reason what fields are coming from what tables. As I start joining tables I make a point to prefix every field with it's table name to make debugging and working with it later easier e.g...
 
 {% highlight sql %}
@@ -265,8 +265,8 @@ WHERE
    Table1.FieldA = 'Test'   
 {% endhighlight %}
 
-# Hard To Remove #
+## Hard To Remove ##
 Having looked at the problems it's fairly easy to stop using it going forwards but removing SELECT * from existing queries is a lot more difficult as at this point you likely won't know what fields are being used by the calling application.
 
-# Benefits #
+## Benefits ##
 The only benefit I've ever heard argued for using SELECT * is it's less to type/maintain in the code. Given the bad things that can come out of this, I'll pick the extra work up front every time. That's not to say it's never safe, if you've got a table you know will never change and you always want all the fields then go ahead, I just think these situations are almost non-existent, and we can never predict what might happen down the line. 
