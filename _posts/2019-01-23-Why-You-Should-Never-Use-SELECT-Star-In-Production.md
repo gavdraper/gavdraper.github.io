@@ -251,7 +251,7 @@ Our query has asked for 2.1GB of memory of which has only been granted 1.2GB, we
 The exact same logic is also true for things like Hash Matches if you start joining these tables. 
 
 ## Queries Can Be Harder To Debug/Read ##
-When you use SELECT * in a query with several tables joined it becomes very hard to reason what fields are coming from what tables. As I start joining tables I make a point to prefix every field with it's table name to make debugging and working with it later easier e.g...
+When you use SELECT * in a query with several tables joined it becomes very hard to distinguish what fields are coming from what tables. As I start joining tables I make a point to prefix every field with it's table name to make debugging and working with it later easier e.g...
 
 {% highlight sql %}
 SELECT
