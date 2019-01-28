@@ -1,6 +1,6 @@
 ---
 layout: post
-title: SQL Server - How to Encrypt and Restore Your Database Backups
+title: How to Encrypt and Restore Your SQL Server Database Backups
 date: '2019-01-28 08:12:43'
 tags: security backup-and-restore
 ---
