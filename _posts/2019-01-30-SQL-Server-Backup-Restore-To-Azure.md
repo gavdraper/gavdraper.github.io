@@ -50,8 +50,8 @@ We now have all we need to backup a database to the new blob storage container, 
 
 {% highlight sql %}
 BACKUP DATABASE MyDb 
-	TO  URL = N'https://dbbackupstores.blob.core.windows.net/dbcontainer/MyBackup.bak' 
-	WITH  CREDENTIAL = N'dbbackupstorescredential'
+   TO  URL = N'https://dbbackupstores.blob.core.windows.net/dbcontainer/MyBackup.bak' 
+   WITH  CREDENTIAL = N'dbbackupstorescredential'
 {% endhighlight %}
 
 ![Backup Complete]({{site.url}}/content/images/2019-Azure-SQL-Backup\backup-complete.PNG)
@@ -66,8 +66,8 @@ Finally, let's restore our backup from Azure to a new on-premise database...
 RESTORE DATABASE MyRestoredDatabase 
 FROM  URL = N'https://dbbackupstores.blob.core.windows.net/dbcontainer/MyBackup.bak'
 WITH  CREDENTIAL = N'dbbackupstorescredential'
- 	,MOVE N'MyDb' TO N'C:\temp\MyRestoredDb.mdf'
-	,MOVE N'MyDb_Log' TO N'C:\temp\MyRestoredDb.ldf'
+   ,MOVE N'MyDb' TO N'C:\temp\MyRestoredDb.mdf'
+   ,MOVE N'MyDb_Log' TO N'C:\temp\MyRestoredDb.ldf'
 {% endhighlight %}
 
 ![Restore Complete]({{site.url}}/content/images/2019-Azure-SQL-Backup\restore-complete.PNG)
