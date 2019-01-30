@@ -23,7 +23,7 @@ Next up let's get the keys required to access this account...
 
 1. Open the newly created storage account and navigate to the Access Keys menu item
 
-![Access Keys]({{site.url}}/content/images/2019-Azure-SQL-Backup\access-keys.PNG)
+   ![Access Keys]({{site.url}}/content/images/2019-Azure-SQL-Backup\access-keys.PNG)
 
 2. Copy the value in Key 1 
 
