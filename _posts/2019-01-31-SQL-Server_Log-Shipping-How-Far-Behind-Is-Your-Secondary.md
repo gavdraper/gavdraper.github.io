@@ -6,7 +6,7 @@ tags: backup-and-restore hadr
 ---
 Log shipping is one of the simplest and most bulletproof methods to get SQL Server to replicate data to a different server/location. For the most part, you set it up and don't need to touch it again, it just works. Out of the box the agent jobs SQL Server sets up for this generates alerts when a backup/restore hasn't run for a period of time notifying you that there is a problem. 
 
-One thing you don't get however is any nice way to see how up to date each of your databases are on the secondary. With a fairly simple query we can take the databasename, last restored time and time the last restored backup was taken to give some useful information.
+One thing you don't get however is any nice way to see how up to date each of your databases are on the secondary. With a fairly simple query we can take the database name, last restored time and the backup time of the file we're restoring to give some useful information.
 
 To make this even more interesting we can add some RPO thresholds to derive a status field...
 
