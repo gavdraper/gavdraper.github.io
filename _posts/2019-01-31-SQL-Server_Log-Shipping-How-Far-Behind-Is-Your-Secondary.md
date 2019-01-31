@@ -2,7 +2,7 @@
 layout: post
 title: How To Check How Far Behind Your SQL Server Log Shipping Secondary Is
 date: '2019-01-31 07:56:13'
-tags: backup-and-restore
+tags: backup-and-restore hadr
 ---
 Log shipping is one of the simplest and most bulletproof methods to get SQL Server to replicate data to a different server/location. For the most part, you set it up and don't need to touch it again, it just works. Out of the box the agent jobs SQL Server sets up for this generates alerts when a backup/restore hasn't run for a period of time notifying you that there is a problem. 
 
@@ -24,21 +24,15 @@ DECLARE @HighRPOWarning INT = 15
 SELECT
     [d].[name] [Database],
     bmf.physical_device_name [LastFileRestored],
-    RealDateTime.FinalDateTime [LastFileRestoredCreatedTime],
+    CONVERT(DATETIME,
+        STUFF(STUFF(STUFF(SUBSTRING(physical_device_name,LEN([physical_device_name])-17,14),13,0,':'),11,0,':'),9,0,' ') 
+    ) LastFileRestoredCreatedTime,
     r.restore_date [DateRestored],        
     RowNum = ROW_NUMBER() OVER (PARTITION BY d.Name ORDER BY r.[restore_date] DESC)
 FROM master.sys.databases d
     INNER JOIN msdb.dbo.[restorehistory] r ON r.[destination_database_name] = d.Name
     INNER JOIN msdb..backupset bs ON [r].[backup_set_id] = [bs].[backup_set_id]
     INNER JOIN msdb..backupmediafamily bmf ON [bs].[media_set_id] = [bmf].[media_set_id] 
-    CROSS APPLY(SELECT SUBSTRING([physical_device_name],LEN([physical_device_name])-17,8) [date])  StringDate
-    CROSS APPLY(SELECT SUBSTRING([physical_device_name],LEN([physical_device_name])-9,6) [time])  StringTime
-    CROSS APPLY(SELECT 
-            SUBSTRING(StringTime.Time,1,2) + ':' + 
-            SUBSTRING(StringTime.Time,3,2) + ':' + 
-            SUBSTRING(StringTime.Time,5,2) 
-        [time])  CorrectedTime
-    CROSS APPLY(SELECT StringDate.Date + ' ' + CorrectedTime.Time AS FinalDateTime)  RealDateTime
 )
 SELECT 
      CASE WHEN DATEDIFF(MINUTE,LastFileRestoredCreatedTime,GETDATE()) > @HighRPOWarning THEN 'RPO High Warning!'
