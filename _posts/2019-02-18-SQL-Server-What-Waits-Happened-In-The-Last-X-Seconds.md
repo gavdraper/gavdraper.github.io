@@ -2,6 +2,7 @@
 layout: post
 title: SQL Server, What Waits Happened In The Last X Seconds
 date: '2019-02-18 08:07:42'
+tags: performance-tuning profiling
 ---
 There are plenty of scripts out there that can show you the waits that are occurring on your server, however, a lot of them do a lot more than just that. I recently wanted a script that does just the absolute minimum for me to specify a time window and get that wait stats.
 
