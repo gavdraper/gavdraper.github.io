@@ -75,7 +75,7 @@ SELECT * FROM InRow
 
 Bingo.
 
-## Row-Overflow Demo ##
+## Overflow-Row Demo ##
 
 Let's now create a table with no fields that qualify for LOB but enough variable length for us to cause overflows...
 
