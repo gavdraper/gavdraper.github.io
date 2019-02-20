@@ -1,13 +1,15 @@
 ---
 layout: post
-title: Wonky LOB/Overflow Read Counts
-date: '2019-02-19 09:07:42'
+title: Odd Behavior With LOB/Overflow Data
+date: '2019-02-20 05:56:22'
 ---
-I've been playing around with querying the Allocation Unit system views and comparing read page counts in my queries against what's there, in doing this I noticed a couple of things that seem a little odd...
+In writing some sample demos around LOB and Row-Overflow data I found a couple of oddities in the way reads are reported in STATISTICS IO and query plans, There is every chance I'm missing something obvious here and if that is the case then please let me know as I'd love to understand this more. 
 
-* If I turn on Statistics IO and query a table with no LOB allocations but some Row-Overflow allocations I see LOB logical reads occurring (This may just be how overflow reads are reported, but it seems misleading)
+The following is what I have observed on SQL Server 2017...
+
+* If I turn on Statistics IO and query a table with no LOB allocations but some Row-Overflow allocations I see LOB logical reads occurring
 * If I run that same query and look at the actual execution plan under Actual I/O Statistics no LOB reads are reported
-* If I create a new table with a column that will be put in LOB storage the query plan still reports zero LOB logical reads.
+* If I create a new table with a column that will be put in LOB storage the query plan still reports zero LOB logical reads even though STATISTICS IO returns a number greater than zero.
 
 Let's look at these examples...
 
