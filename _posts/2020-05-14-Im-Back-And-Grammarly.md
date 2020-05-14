@@ -1,7 +1,7 @@
 ---
 title: The blog is back and... Grammarly!
 date: 2020-05-14 00:00:00
-description: 'The blog is back and we&pos;re trying Grammarly'
+description: "The blog is back and we're trying Grammarly"
 featured_image: '/images/hero-images/notebooks.jpg'
 ---
 It's been a while... Work got busy, life got busy, and I lost my enthusiasm for posting to this blog, all that's about to change! I'm restarting the blog and making it less SQL Server focussed and more generic to Software Development/Anything I find interesting at the time. I've also got a new theme, can't restart this thing without procrastinating for weeks about the look right? Let me know what you think.
