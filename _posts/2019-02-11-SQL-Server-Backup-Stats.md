@@ -3,6 +3,7 @@ layout: post
 title: SQL Server Script To Check Your Backup RPO Status
 date: '2019-02-13 08:31:22'
 tags: backup-and-restore hadr
+featured_image: '/images/hero-images/typewriter.jpg'
 ---
 I recently wanted a script to tell me that for every database on a given server
 
