@@ -1,6 +1,6 @@
 site: Gavin Draper
 
-url:
+url: "https://gavindraper.com"
 baseurl:
 
 collections:
@@ -49,4 +49,4 @@ plugins:
   - jekyll-sitemap
 
 paginate: 6
-paginate_path: "/blog/page:num/"
+paginate_path: "/page:num/"
