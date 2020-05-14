@@ -3,8 +3,9 @@ layout: post
 title: Odd Behavior With LOB/Overflow Data
 date: '2019-02-20 05:56:22'
 excerpt: 'In writing some sample demos around LOB and Row-Overflow data I found a couple of oddities in the way reads are reported in STATISTICS IO and query plans'
+featured_image: '/images/hero-images/typewriter.jpg'
 ---
-In writing some sample demos around LOB and Row-Overflow data I found a couple of oddities in the way reads are reported in STATISTICS IO and query plans, There is every chance I'm missing something obvious here and if that is the case then please let me know as I'd love to understand this more. 
+In writing some sample demos around LOB and Row-Overflow data I found a couple of oddities in the way reads are reported in STATISTICS IO and query plans, There is every chance I'm missing something obvious here and if that is the case then please let me know as I'd love to understand this more.  
 
 The following is what I have observed on SQL Server 2017...
 

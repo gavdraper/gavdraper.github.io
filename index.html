@@ -1,6 +1,52 @@
 ---
-# You don't need to edit this file, it's empty on purpose.
-# Edit theme's home layout instead if you wanna make some changes
-# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-layout: home
+layout: default
+title: Projects
+description: personal websites. Personal is the perfect theme for developers, designers and other creatives.
+featured_image: /images/hero-images/clean-desk.jpg
 ---
+
+<section class="hero">
+
+	<div class="hero__image" style="background-image: url({{ page.featured_image | relative_url }})">
+		<div class="hero__overlay"></div>
+	</div>
+
+	<div class="wrap">
+
+		<h1>Projects That Were Going To Change The World</h1>
+		<p>Mostly unfinished, mostly broken, might find the odd gem ;)</p>
+
+		{% include socials.html %}
+
+	</div>
+
+</section>
+
+<section class="listing">
+
+	<div class="wrap">
+
+		{% for project in site.projects reversed %}
+
+		<article class="post">
+
+			<div class="post__image-wrap">
+				<div class="post__image" style="background-image: url({{ project.featured_image | relative_url }})">
+				</div>
+			</div>
+
+			<div class="post__content-wrap">
+				<div class="post__content">
+					<h2 class="post__title"><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h2>
+					<p class="post__subtitle">{{ project.subtitle }}</p>
+					<p class="post__description">{{ project.description }}</p>
+				</div>
+			</div>
+
+		</article>
+
+		{% endfor %}
+
+	</div>
+
+</section>

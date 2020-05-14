@@ -3,6 +3,7 @@ layout: post
 title: Backing Up and Restoring Your On-Premise Databases To and From the Cloud
 date: '2019-01-30 05:21:44'
 tags: cloud azure backup-and-restore
+featured_image: '/images/hero-images/typewriter.jpg'
 ---
 I've been meaning to start a series of posts on "Dipping your toes into the cloud" for a while now, there are a number of things you can do to slowly take advantage of the cloud without having to re-architect your whole on-premise setup. This post will serve as part one of that series.
 
