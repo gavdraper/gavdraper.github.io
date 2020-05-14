@@ -3,7 +3,7 @@ layout: post
 title: SQL Server, What's In My Buffer Cache?
 date: '2019-02-19 05:32:12'
 tags: performance-tuning profiling
-featured_image: '/images/hero-images/typewriter.jpg'
+featured_image: '/images/hero-images/memory.jpg'
 ---
 When SQL Server reads pages it stores them in an area of memory called the buffer cache, things like memory pressure can then cause items to get removed from the buffer cache. I wrote the below script to check what's in the cache at any given time, it's scoped to the database you are running it in...
 

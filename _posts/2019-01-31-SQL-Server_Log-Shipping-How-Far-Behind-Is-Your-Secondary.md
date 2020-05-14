@@ -3,7 +3,7 @@ layout: post
 title: How To Check How Far Behind Your SQL Server Log Shipping Secondary Is
 date: '2019-01-31 07:56:13'
 tags: backup-and-restore hadr
-featured_image: '/images/hero-images/typewriter.jpg'
+featured_image: '/images/hero-images/log.jpg'
 ---
 Log shipping is one of the simplest and most bulletproof methods to get SQL Server to replicate data to a different server/location. For the most part, you set it up and don't need to touch it again, it just works. Out of the box the agent jobs SQL Server sets up for this generates alerts when a backup/restore hasn't run for a period of time notifying you that there is a problem. 
 
