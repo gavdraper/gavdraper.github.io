@@ -1,5 +1,5 @@
 ---
-title: 'ChaosLoad'
+title: 'Sample'
 subtitle: 'Load Simulator'
 date: 2018-06-30 00:00:00
 description: Works accross SQL Server, Rabbit MQ, Mongo...
