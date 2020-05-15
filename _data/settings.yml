@@ -34,7 +34,7 @@ contact_settings:
 
 social_settings:
   facebook_url: ""
-  twitter_url: ""
+  twitter_url: "http://twitter.com/gavdraper"
   instagram_url: ""
   snapchat_url: ""
   youtube_url: ""
@@ -58,7 +58,7 @@ social_settings:
   soundcloud_url: ""
   spotify_url: ""
   bandcamp_url: ""
-  linkedin_url: ""
+  linkedin_url: "https://www.linkedin.com/in/gavdraper/"
 
 color_settings:
   background_color: "#ffffff"
@@ -152,7 +152,7 @@ font_settings:
 
 advanced_settings:
   ajax_loading: true
-  analytics_code: ""
+  analytics_code: '<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-10162201-4"></script><script>window.dataLayer = window.dataLayer || [];  function gtag(){dataLayer.push(arguments);}  gtag(''js'', new Date());  gtag(''config'', ''UA-10162201-4'');</script>'
   custom_styles: ""
   header_js: ""
   footer_js: ""
