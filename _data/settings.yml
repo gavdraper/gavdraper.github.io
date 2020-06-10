@@ -14,8 +14,8 @@ menu_settings:
       url: "/project/"
     - title: "About"
       url: "/about"
-    - title: "Contact"
-      url: "/contact"
+    # - title: "Contact"
+    #   url: "/contact"
 
 footer_settings:
   footer_tagline: Gavin Draper's Blog
