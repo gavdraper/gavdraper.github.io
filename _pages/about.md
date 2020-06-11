@@ -10,7 +10,7 @@ Before I start, let me say I **love software**, and even more, I love talking ab
 
 I've been messing around with computers since we got our first family computer (486SX 50Mhz 4Mb with CD-ROM!), at some point a free version  of Borlands Delphi 1.0 shipped with a magazine, from that moment I was hooked. I went through book after book learning how to use the thing, and pretty much haven't stopped since (I did, however, move on from Delphi 1.0 at some point, weirdly my first job was working on various different airline systems writen in Pascal).
 
-I've spent most of my working career in the finance sector in either Airline Accounting or Investment Management, The industry provides a lot of fun challenges around the size of the data, bath processing, distribution and striving to make complex domains simple. As for where I'll end up next, it may be finance, but I'm as equally interested to discuss problems and solutions in other industries.
+I've spent most of my working career in the finance sector in either Airline Accounting or Investment Management, The industry provides a lot of fun challenges around the size of the data, batch processing, distributed systems and the ever growing problems of striving making complex domains simpler. As for where I'll end up next, it may be finance, but I'm as equally interested to discuss problems and solutions in other industries.
 
 I'm a firm believer in clean maintainable code, pragmatic SOID principles, and DevOps. 
 
