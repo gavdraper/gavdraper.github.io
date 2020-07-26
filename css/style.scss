@@ -134,9 +134,8 @@ $grid-spacing: {{ site.data.settings.post_settings.grid_spacing }}px;
 @import "_includes/_content";
 @import "_includes/_socials";
 @import "_includes/_gallery";
-@import "_includes/_syntax";
 @import "_includes/_contact-form";
-
+@import "monakai.css";
 
 
 // - - - - - - - - - - Section styles
@@ -146,22 +145,28 @@ $grid-spacing: {{ site.data.settings.post_settings.grid_spacing }}px;
 
 
 
-
 .roundCodeCorners
 {
-     background-color:black !important;
+     background-color:#36382F;
      border-radius: 6px;
-     background: #73AD21;
      box-shadow:5px 5px 5px #999;
-     padding-left:12px !important;
-     padding-bottom:10px !important;
+     padding-left:5px !important;
+     padding-right:5px !important;
+     padding-bottom:5px !important;
 }
+
+.codez
+{
+    padding:10px;
+    background-color:#272822;
+}
+
 
 .titleBar{
     text-align:right;
     padding:5px;
-    padding-right:10px;
-    height:30px;
+    padding-right:2px;
+    height:25px;
 }
 
 .greenCircle
@@ -188,25 +193,3 @@ $grid-spacing: {{ site.data.settings.post_settings.grid_spacing }}px;
     border-radius: 50%;
     display: inline-block;
 }
-
-// figure.highlight
-// {
-//     background-color:black !important;
-//     border-radius: 25px;
-//     background: #73AD21;
-// }
-
-// figure code::before
-// {
-//     content: "&#8226;&#8226;&#8226;";
-//     color:red;
-//     display:block;
-//     padding-right:20px;
-//     text-align:right;
-// }
-
-// figure.highlight pre
-// {
-//     padding-left:12px;
-//     padding-bottom:12px;
-// }
