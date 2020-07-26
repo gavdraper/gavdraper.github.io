@@ -182,6 +182,21 @@
 
 	// Destroy all existing waypoints
 	Waypoint.destroyAll();
+	//Add window to codes
+	var codeBlocks = $("figure.highlight");
+	//Inject TitleBar
+	for (var i = 0; i < codeBlocks.length; i++) {
+		codeBlocks[i].innerHTML = `
+				<div class="titleBar">
+					<span class="greenCircle">&nbsp;</span>
+					<span class="orangeCircle">&nbsp;</span>
+					<span class="redCircle">&nbsp;</span>
+				</div>
+				<div class="codez">
+			`+ codeBlocks[i].innerHTML + "</div>";
+	}
+	//Round Corners
+	codeBlocks.addClass("roundCodeCorners");
 
 	// Set up count for galleries to give them unique IDs
 	var galleryCount = 0;
