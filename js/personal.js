@@ -164,9 +164,6 @@
 		});
 
 	}
-	//Round Corners
-	codeBlocks.addClass("roundCodeCorners");
-
 
 
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Active links
