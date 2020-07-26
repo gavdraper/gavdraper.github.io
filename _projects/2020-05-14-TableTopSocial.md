@@ -6,8 +6,6 @@ description: Playing with client side blazor and SignalR to implement browser ba
 featured_image: '/images/hero-images/dice.jpg'
 ---
 
-TableTopSocial is currently hosted here : [https://tabletopsocial.azurewebsites.net](https://tabletopsocial.azurewebsites.net)
-
 I have a thing for board games and more specifically collecting them. The global pandemic has somewhat put a stop to our regular boardgame nights and has had me frantically downloading any digital tabletop games I can find. One of the popular games in our group is One Night Ultimate Werewolf, a hidden identity game where most of the game takes place via conversation and voting. This seemed like an ideal fit for playing over Zoom but there were no digital versions of the game available, and that's where this project came from, and ugly UI over a functional codebase :)
 
 I thought about using Angular initially, but then after reading a post on client-side Blazor with Web Assembly, I went all-in on that.
