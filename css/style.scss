@@ -145,3 +145,68 @@ $grid-spacing: {{ site.data.settings.post_settings.grid_spacing }}px;
 @import "_includes/_hero";
 
 
+
+
+.roundCodeCorners
+{
+     background-color:black !important;
+     border-radius: 6px;
+     background: #73AD21;
+     box-shadow:5px 5px 5px #999;
+     padding-left:12px !important;
+     padding-bottom:10px !important;
+}
+
+.titleBar{
+    text-align:right;
+    padding:5px;
+    padding-right:10px;
+    height:30px;
+}
+
+.greenCircle
+{
+    height: 15px;
+    width: 15px;
+    background-color: #27C93F;
+    border-radius: 50%;
+    display: inline-block;
+}
+.redCircle
+{
+    height: 15px;
+    width: 15px;
+    background-color: #FF5F56;
+    border-radius: 50%;
+    display: inline-block;
+}
+.orangeCircle
+{
+    height: 15px;
+    width: 15px;
+    background-color: #FFBD2E;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+// figure.highlight
+// {
+//     background-color:black !important;
+//     border-radius: 25px;
+//     background: #73AD21;
+// }
+
+// figure code::before
+// {
+//     content: "&#8226;&#8226;&#8226;";
+//     color:red;
+//     display:block;
+//     padding-right:20px;
+//     text-align:right;
+// }
+
+// figure.highlight pre
+// {
+//     padding-left:12px;
+//     padding-bottom:12px;
+// }
