@@ -134,9 +134,8 @@ $grid-spacing: {{ site.data.settings.post_settings.grid_spacing }}px;
 @import "_includes/_content";
 @import "_includes/_socials";
 @import "_includes/_gallery";
-@import "_includes/_syntax";
 @import "_includes/_contact-form";
-
+@import "monakai.css";
 
 
 // - - - - - - - - - - Section styles
@@ -145,3 +144,52 @@ $grid-spacing: {{ site.data.settings.post_settings.grid_spacing }}px;
 @import "_includes/_hero";
 
 
+
+.roundCodeCorners
+{
+     background-color:#36382F;
+     border-radius: 6px;
+     box-shadow:5px 5px 5px #999;
+     padding-left:5px !important;
+     padding-right:5px !important;
+     padding-bottom:5px !important;
+}
+
+.codez
+{
+    padding:10px;
+    background-color:#272822;
+}
+
+
+.titleBar{
+    text-align:right;
+    padding:5px;
+    padding-right:2px;
+    height:25px;
+}
+
+.greenCircle
+{
+    height: 15px;
+    width: 15px;
+    background-color: #27C93F;
+    border-radius: 50%;
+    display: inline-block;
+}
+.redCircle
+{
+    height: 15px;
+    width: 15px;
+    background-color: #FF5F56;
+    border-radius: 50%;
+    display: inline-block;
+}
+.orangeCircle
+{
+    height: 15px;
+    width: 15px;
+    background-color: #FFBD2E;
+    border-radius: 50%;
+    display: inline-block;
+}

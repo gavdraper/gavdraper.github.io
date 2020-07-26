@@ -136,6 +136,26 @@
 	{{ site.data.settings.advanced_settings.footer_js }}
 	{% endif %}
 
+	<script>
+		$(function () {
+			var codeBlocks = $("figure.highlight");
+			//Inject TitleBar
+			for (var i = 0; i < codeBlocks.length; i++) {
+				codeBlocks[i].innerHTML = `
+					<div class="titleBar">
+						<span class="greenCircle">&nbsp;</span>
+						<span class="orangeCircle">&nbsp;</span>
+						<span class="redCircle">&nbsp;</span>
+					</div>
+					<div class="codez">
+				`+ codeBlocks[i].innerHTML + "</div>";
+			}
+			//Round Corners
+			codeBlocks.addClass("roundCodeCorners");
+
+
+		});
+	</script>
 
 </body>
 
