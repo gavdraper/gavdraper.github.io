@@ -161,6 +161,8 @@ $grid-spacing: {{ site.data.settings.post_settings.grid_spacing }}px;
     padding:10px;
     background-color:#272822;
     overflow-x:auto;
+    max-height:500px;
+    overflow-y:auto;
 }
 
 
