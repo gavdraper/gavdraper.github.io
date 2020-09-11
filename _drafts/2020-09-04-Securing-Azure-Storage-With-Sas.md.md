@@ -23,24 +23,15 @@ $ az storage account create `
     --allow-blob-public-access false
 $ az storage container create `
     --name sasblobdemo `
-    --public-access container `
     --account-name storagesasdemo
 {% endhighlight %}
 
 Now lets try to list the contents of that container using the REST endpoint to proove we don't have any public access enabled...
 
 {% highlight bash %}
-$ curl "https://storagesasdemo.blob.core.windows.net/sasblobdemo?restype=container&comp=list"
-
-'curl : <?xml version="1.0" encoding="utf-8"?><Error><Code>PublicAccessNotPermitted</Code><Message>Public access is not permitted on this
-storage account.
-RequestId:25c8fb40-601e-0014-4a90-82e7ff000000
-Time:2020-09-04T07:50:46.9199184Z</Message></Error>
-At line:1 char:1
-+ curl "https://storagesasdemo.blob.core.windows.net/sasblobdemo?restyp ...
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
-    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand'
+$ curl "https://storagesasdemo.blob.core.windows.net/sasblobdemo"
+    Error : PublicAccessNotPermitted
+    Public access is not permitted on this storage account.
 {% endhighlight %}
 
 Access denied, just as we had hoped now lets grab one of our accounts access keys to try using that..
@@ -70,6 +61,9 @@ At which point you should see your two access keys...
 These keys give FULL access to storage Read, Write, List Delete. We can then use this key to make a rest request to get the container contents...
 
 {% highlight bash %}
+az storage blob list --container-name sasblobdemo --account-name storagesasdemo --account-key "oCeouCaEpl6OMI6ADYdZOrlOmaqwqYB1cP7hQSXLgnFyMiuJUV1bj0UpBThpuU4WfmhsVoLmwbo30mMDoOkk/w=="
+
+az storage blob upload --container-name sasblobdemo --account-name storagesasdemo --account-key "oCeouCaEpl6OMI6ADYdZOrlOmaqwqYB1cP7hQSXLgnFyMiuJUV1bj0UpBThpuU4WfmhsVoLmwbo30mMDoOkk/w==" --file c:\code\Hello.txt --name hm
 {% endhighlight %}
 
 
