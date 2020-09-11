@@ -6,39 +6,26 @@ description: "Blah Blah"
 featured_image: '/images/hero-images/hd-storage.jfif'
 ---
 
-All demos in this post can also be accomplished easily in the portal, I'm avoiding using that purely because the UI changes so often and any screenshots I post are out of date instantly, if you want to follow along you'll need to download and sign into the Azure CLI. I'm using powershell here but you should be able to follow along in any shell.
+Azure Storage has many options for security from VNets to AAD to Secure Access Key to Shared Access Signatures. This post will get you up to speed on setting up shared key access using Azure CLI, everything here can also be done via the portal or any of the other scripting options.
+
+## Setup
 
 Lets first create a new resource group and a storage account within it to play with...
 
 {% highlight bash %}
-$ az group create `
-    --name storagedemo `
-    --location ukwest 
-$ az storage account create `
-    --name storagesasdemo `
-    --resource-group storagedemo `
-    --location ukwest `
-    --sku Standard_LRS `
-    --kind StorageV2 `
-    --allow-blob-public-access false
-$ az storage container create `
-    --name sasblobdemo `
-    --account-name storagesasdemo
+$ az group create -n StorageDemoRG -l ukwest 
+$ az storage account create -n demoaccount -g StorageDemoRG --sku Standard_LRS
+$ az storage container create -n demo1 --account-name demoaccount
+$ az storage container create -n demo2 --account-name demoaccount    
 {% endhighlight %}
 
-Now lets try to list the contents of that container using the REST endpoint to proove we don't have any public access enabled...
+## Access Via Access Keys
+Our new storage account comes with two access keys both of which give complete control inside storage account to add, modify, read and delete data from all containers within the account. 
+
+Lets grabs these keys for a test...
 
 {% highlight bash %}
-$ curl "https://storagesasdemo.blob.core.windows.net/sasblobdemo"
-    Error : PublicAccessNotPermitted
-    Public access is not permitted on this storage account.
-{% endhighlight %}
-
-Access denied, just as we had hoped now lets grab one of our accounts access keys to try using that..
-
-{% highlight bash %}
-$ az storage account keys list `
-    --account-name storagesasdemo
+$ az storage account keys list -n demoaccount
 {% endhighlight %}
 
 At which point you should see your two access keys...
@@ -48,28 +35,50 @@ At which point you should see your two access keys...
   {
     "keyName": "key1",
     "permissions": "Full",
-    "value": "E50mo2yCbs9HKyEORiucw3dxUisVyge/MAH7WvSxnzXeJefAmHkHSfM2GUsrnnwPUi2vj+Bsv6ULpFbRoZ2bWg=="
+    "value": "E50mo2yCbs9HKyEOR..."
   },
   {
     "keyName": "key2",
     "permissions": "Full",
-    "value": "W1j8nyJoRwla8jS40p9vYUPxO8ZgK6iJg5sAvujHX6v57CVXll5n+df0U9THpdUIZKjyDMo9y22+4sd9oU2UJw=="
+    "value": "W1j8nyJoRwla8jS40..."
   }
 ]
 {% endhighlight %}
 
-These keys give FULL access to storage Read, Write, List Delete. We can then use this key to make a rest request to get the container contents...
+To reitterate these keys give FULL access to their storage accounts Read, Write, List Delete. Lets use these keys in one of our new containers to upload a file and then list the container
 
 {% highlight bash %}
-az storage blob list --container-name sasblobdemo --account-name storagesasdemo --account-key "oCeouCaEpl6OMI6ADYdZOrlOmaqwqYB1cP7hQSXLgnFyMiuJUV1bj0UpBThpuU4WfmhsVoLmwbo30mMDoOkk/w=="
-
-az storage blob upload --container-name sasblobdemo --account-name storagesasdemo --account-key "oCeouCaEpl6OMI6ADYdZOrlOmaqwqYB1cP7hQSXLgnFyMiuJUV1bj0UpBThpuU4WfmhsVoLmwbo30mMDoOkk/w==" --file c:\code\Hello.txt --name hm
+$ az storage blob upload 
+  -c demo1 
+  -f "c:\Testfile.txt" 
+  -n TestFile.txt 
+  --account-name demoaccount 
+  --account-key "REPLACEWITHKEY" 
+$ az storage blob list 
+  -c demo1 
+  --account-name demoaccount 
+  --account-key "REPLACEIWTHKEY"
 {% endhighlight %}
 
+All being well from our list command we'll get an array back containing details on the file we just uploaded.
+
+{% highlight json %}
+[
+  {
+    "container": "demo1",
+    "name": "HelloWorld.txt",
+    ...
+  }
+]
+{% endhighlight %}
+
+There is no way using access keys to restrict permissions on a container, file, or access type (Read, Delete, Write). 
+
+## Restricting Access With Shared Access Keys
 
 ## Clean Up
 Finallaly lets remove everything we've created to prevent any unwanted charges...
 
 {% highlight bash %}
-$ az group delete --name storagedemo
+$ az group delete --name StorageDemoRG
 {% endhighlight %}
