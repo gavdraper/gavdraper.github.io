@@ -27,7 +27,7 @@ Knowing when it's time to adapt or stop is incredibly important. Pushing too har
 
 Plan A should be achievable if no unknowns occur. We all know though that life happens when least expected and nothing can plan for that. I'd never run a race without at least two goal times and a Plan C of "Just finish". As long as I finish, I've achieved something. 
 
-You can learn more about a person in an hour when things get tough than in a month when things are going well. I'm still learning to balance the right amount of stress/accountability vs getting help/changing plans but the differences are night and day over a few years ago. 
+You can learn more about a person in an hour when things get tough than in a month when things are going well. I'm still learning to balance the right amount of stress/accountability vs when to ask for help/adapt the plan but the differences are night and day over a few years ago. 
 
 Anyway, Happy New Year, and here's to a great 2023. 
 
