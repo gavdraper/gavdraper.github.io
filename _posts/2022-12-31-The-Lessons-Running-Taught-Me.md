@@ -5,7 +5,7 @@ subtitle: ''
 description: "Ramblings of a running addict"
 featured_image: '/images/hero-images/run-hero.jpg'
 ---
-In 2022 I ran a bit, and then I ran some more. At some point, I had a crazy (stupid) idea to run 2022 miles in 2022, not something I plan to repeat but somehow, I managed to complete this with six days to spare.
+In 2022 I ran a bit, and then I ran some more. At some point, I had a crazy (stupid) idea to run 2022 miles in 2022, not something I plan to repeat but somehow, I managed to complete this with a month long injury and six days to spare.
 
 Running accounts for a lot of 2022's highlights. I've run countless training runs with friends, managed my first sub-4 Marathon, first ultra marathon and first trail Marathon. I won't be committing to quite as many races in 2023, but I am looking forward to kickstarting training for Brighton Marathon in January.
 
