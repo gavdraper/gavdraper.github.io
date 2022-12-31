@@ -17,9 +17,10 @@ We can all do things that we never thought possible. I'm a different person now 
 
 Knowing when it's time to adapt or stop is incredibly important. Pushing too hard can lead to a painful failure. Adapt early enough and you can still succeed. Always have a plan B/C in the back of your mind and adapt to them at the right time. 
 
-Plan A : I'd like to get Kubernetes certified in Q1
-Plan B : I'd like to finish the three Kubernetes books I bought and the Udemy Course
-Plan C : If I finish the course I'll still walk away knowing more than I did
+* Plan A : I'd like to get Kubernetes certified in Q1
+* Plan B : I'd like to finish the three Kubernetes books I bought and the Udemy Course
+* Plan C : If I finish the course I'll still walk away knowing more than I did
+
 Plan A should be achievable if no unknowns occur. We all know though, that life happens when least expected and nothing can plan for that. I'd run a race without at least two goal times and a Plan C of "Just finish". As long as I finish, I've achieved something. 
 
 Anyway, Happy New Year, and here's to a great 2023. 
