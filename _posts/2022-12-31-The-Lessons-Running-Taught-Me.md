@@ -1,5 +1,5 @@
 ---
-title: Life Lessons Learned Through Running
+title: Reflecting On 2022 and Lessons Learned Through Running
 date: 2022-12-31 00:00:00
 subtitle: ''
 description: "Ramblings of a running addict"
