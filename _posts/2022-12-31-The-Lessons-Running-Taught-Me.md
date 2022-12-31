@@ -9,8 +9,7 @@ In 2022 I ran a bit, and then I ran some more. At some point, I had a crazy (stu
 
 Running accounts for a lot of 2022's highlights. I've run countless training runs with friends, managed my first sub-4 Marathon, first ultra marathon and first trail Marathon. I won't be committing to quite as many races in 2023, but I am looking forward to kickstarting training for Brighton Marathon in January.
 
-A rare running photo where I'm not wearing a look of pain and regret (almost certainly a brave face for the photographer)
-
+<sub>A rare running photo where I'm not wearing a look of pain and regret (almost certainly a brave face for the photographer)</sub>
 ![Rare Feel Good Marathon Picture]({{site.url}}//images/posts/running.jpg) 
 
 I've learned more about myself through running than in most of my professional roles combined. The highs and lows of endurance running apply to so many life challenges. Things can and will go wrong, learning when to push through, when to adapt and when to walk away has changed the way I approach so many situations. 
