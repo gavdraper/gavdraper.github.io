@@ -11,7 +11,7 @@ Running accounts for a lot of 2022's highlights. I've run countless training run
 
 | ![Rare Feel Good Marathon Picture]({{site.url}}//images/posts/running.jpg) | 
 |:--:| 
-| *A rare running photo where I'm not wearing a look of pain and regret (almost certainly a brave face for the photographer)* |
+| *<sub>A rare running photo where I'm not wearing a look of pain and regret (almost certainly a brave face for the photographer)</sub>* |
 
 I've learned more about myself through running than in most of my professional roles combined. The highs and lows of endurance running apply to so many life challenges. Things can and will go wrong, learning when to push through, when to adapt and when to walk away has changed the way I approach so many situations. 
 
