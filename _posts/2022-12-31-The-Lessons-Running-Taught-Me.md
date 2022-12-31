@@ -1,9 +1,9 @@
 ---
-title: What Running Has Taught Me
+title: Life Lessons Learned Through Running
 date: 2022-12-31 00:00:00
 subtitle: ''
 description: "Ramblings of a running addict"
-featured_image: '/images/hero-images/running.jpg'
+featured_image: '/images/hero-images/run-hero.jpg'
 ---
 In 2022 I ran a bit, and then I ran some more. At some point, I had a crazy (stupid) idea to run 2022 miles in 2022, not something I plan to repeat but somehow, I managed to complete this with six days to spare.
 
