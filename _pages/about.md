@@ -12,14 +12,14 @@ featured_image: /images/hero-images/night-programming-outdoor.jpg
 - Passionate about building product-focused scalable platforms (and running)
 - Advocate for continuous improvement
 
-Right now I'm exploring how AI can help engineering teams work smarter — automating the repetitive stuff so people can focus on creative problem-solving.
+Right now I'm exploring how AI can help engineering teams work smarter, automating the repetitive stuff so people can focus on creative problem solving.
 
 <div class="about-section">
   <p class="about-section__title">Projects</p>
 
   <div class="project-card">
     <p class="project-card__name"><a href="https://articyl.com" target="_blank" rel="noopener">Articyl</a></p>
-    <p class="project-card__description">A personal content hub — save anything, consume anywhere. Save web content via browser extension, subscribe to RSS feeds and podcasts, listen with AI narration, and deliver to your Kindle, Kobo, or reMarkable as PDF/EPUB.</p>
+    <p class="project-card__description">A personal content hub, save anything, consume anywhere. Save web content via browser extension, subscribe to RSS feeds and podcasts, listen with AI narration, and deliver to your Kindle, Kobo, or reMarkable as PDF/EPUB.</p>
   </div>
 
   <div class="project-card">
