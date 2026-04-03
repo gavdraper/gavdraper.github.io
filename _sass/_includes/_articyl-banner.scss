@@ -1,0 +1,128 @@
+// - - - - - - - - - - - - - - - - - -
+
+// Articyl promotional banners
+
+// - - - - - - - - - - - - - - - - - -
+
+.articyl-banner {
+  font-family: $body-font;
+}
+
+// Variants hidden until JS picks one
+.articyl-banner__variant {
+  display: none;
+
+  &.is-active {
+    display: block;
+  }
+}
+
+// Top banner — compact card above article content
+.articyl-banner--top {
+  margin-bottom: 30px;
+  padding: 20px 24px;
+  background: $background-alt-color;
+  border-radius: 6px;
+  border-left: 3px solid $accent-color;
+
+  @include mq(tabletp) {
+    margin-bottom: 40px;
+    padding: 24px 28px;
+  }
+
+  .articyl-banner__label {
+    font-size: 13px;
+    font-weight: $bold-weight;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: $accent-color;
+    margin: 0 0 6px;
+  }
+
+  .articyl-banner__text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: $text-medium-color;
+    margin: 0 0 12px;
+
+    @include mq(tabletp) {
+      font-size: 16px;
+    }
+
+    strong {
+      color: $text-dark-color;
+      font-weight: $bold-weight;
+    }
+  }
+
+  .articyl-banner__cta {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: $bold-weight;
+    color: $accent-color;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    @include transition(border-bottom-color 0.2s ease);
+
+    &:hover {
+      border-bottom-color: $accent-color;
+    }
+  }
+}
+
+// Bottom banner — larger card CTA
+.articyl-banner--bottom {
+  margin-top: 40px;
+  padding: 30px 24px;
+  background: $background-alt-color;
+  border-radius: 6px;
+  border-left: 3px solid $accent-color;
+
+  @include mq(tabletp) {
+    margin-top: 50px;
+    padding: 36px 32px;
+  }
+
+  @include mq(laptop) {
+    margin-top: 60px;
+    padding: 40px 40px;
+  }
+
+  .articyl-banner__heading {
+    font-size: 20px;
+    font-weight: $bold-weight;
+    color: $text-dark-color;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+
+    @include mq(tabletp) {
+      font-size: 22px;
+    }
+  }
+
+  .articyl-banner__text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: $text-medium-color;
+    margin: 0 0 20px;
+    max-width: 540px;
+
+    @include mq(tabletp) {
+      font-size: 16px;
+    }
+  }
+
+  .articyl-banner__cta {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: $bold-weight;
+    color: $accent-color;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    @include transition(border-bottom-color 0.2s ease);
+
+    &:hover {
+      border-bottom-color: $accent-color;
+    }
+  }
+}

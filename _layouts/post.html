@@ -23,7 +23,11 @@ layout: default
 
 		<article class="single-post">
 
+			{% include articyl-banner.html position="top" %}
+
 			{{ page.content }}
+
+			{% include articyl-banner.html position="bottom" %}
 
 		</article>
 
