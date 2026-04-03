@@ -132,6 +132,7 @@ $grid-spacing: {{ site.data.settings.post_settings.grid_spacing }}px;
 @import "_includes/_footer";
 
 @import "_includes/_content";
+@import "_includes/_about";
 @import "_includes/_articyl-banner";
 @import "_includes/_socials";
 @import "_includes/_gallery";

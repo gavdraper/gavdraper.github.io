@@ -1,0 +1,99 @@
+// - - - - - - - - - - - - - - - - - -
+
+// About page
+
+// - - - - - - - - - - - - - - - - - -
+
+.about-intro {
+  font-size: 20px;
+  line-height: 1.6;
+  color: $text-dark-color;
+  font-weight: $bold-weight;
+  margin-bottom: 30px;
+
+  @include mq(tabletp) {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
+}
+
+.about-section {
+  margin-top: 30px;
+
+  @include mq(tabletp) {
+    margin-top: 40px;
+  }
+}
+
+.about-section__title {
+  font-size: 13px;
+  font-weight: $bold-weight;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $accent-color;
+  margin-bottom: 20px;
+}
+
+.project-card {
+  background: $background-alt-color;
+  border-radius: 6px;
+  padding: 24px;
+  margin-bottom: 16px;
+
+  @include mq(tabletp) {
+    padding: 28px 32px;
+  }
+}
+
+.project-card__name {
+  font-size: 18px;
+  font-weight: $bold-weight;
+  color: $text-dark-color;
+  margin: 0 0 8px;
+
+  a {
+    color: $text-dark-color;
+    text-decoration: none;
+    border-bottom: 2px solid $accent-color;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}
+
+.project-card__description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: $text-medium-color;
+  margin: 0;
+
+  @include mq(tabletp) {
+    font-size: 16px;
+  }
+}
+
+.about-contact {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  @include mq(tabletp) {
+    margin-top: 40px;
+    padding-top: 40px;
+  }
+}
+
+.about-contact__link {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: $bold-weight;
+  color: $accent-color;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  @include transition(border-bottom-color 0.2s ease);
+
+  &:hover {
+    border-bottom-color: $accent-color;
+  }
+}
