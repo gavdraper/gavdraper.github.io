@@ -5,9 +5,14 @@ description:
 featured_image: /images/hero-images/night-programming-outdoor.jpg
 ---
 
-<p class="about-intro">Engineering Manager based in Brighton, England with 20+ years building software on the Microsoft stack. Passionate about scalable platforms, continuous improvement, and running.</p>
+<p class="about-intro">Engineering Manager based in Brighton, England with 20+ years building software on the Microsoft stack.</p>
 
-Formerly at ClearBank, I specialize in .NET, SQL Server, and Azure. Right now I'm exploring how AI can help engineering teams work smarter — automating the repetitive stuff so people can focus on creative problem-solving.
+- Specializing in .NET, SQL Server, Azure, and more
+- Formerly at ClearBank
+- Passionate about building product-focused scalable platforms (and running)
+- Advocate for continuous improvement
+
+Right now I'm exploring how AI can help engineering teams work smarter — automating the repetitive stuff so people can focus on creative problem-solving.
 
 <div class="about-section">
   <p class="about-section__title">Projects</p>
