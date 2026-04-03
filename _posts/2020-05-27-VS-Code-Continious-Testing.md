@@ -2,7 +2,7 @@
 title: Continious Testing With VS Code
 date: 2020-05-27 00:00:00
 subtitle: ''
-description: "Walthrough Adding Code Coverage And Continous Testing To VS Code"
+description: "Walkthrough Adding Code Coverage And Continous Testing To VS Code"
 featured_image: '/images/hero-images/test.jpg'
 ---
 Visual Studio is excellent, but on personal projects where I'm normally playing around on a low powered laptop and don't need 99% of the features in Visual Studio, VS Code is my goto. VS Code is so much more than a text editor, out of the box you get a full-fledged debugger, ability to attach to remote machines, Live Share for pair programming and an extension for almost everything. If you've not already given it a go I recommend you do (Did I mention LiveShare?).
