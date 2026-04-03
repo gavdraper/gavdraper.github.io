@@ -136,17 +136,6 @@
 	{{ site.data.settings.advanced_settings.footer_js }}
 	{% endif %}
 
-	<script>
-		// Articyl banner rotation — pick one random variant per banner
-		document.querySelectorAll('.articyl-banner').forEach(function(banner) {
-			var variants = banner.querySelectorAll('.articyl-banner__variant');
-			if (variants.length > 0) {
-				var idx = Math.floor(Math.random() * variants.length);
-				variants[idx].classList.add('is-active');
-			}
-		});
-	</script>
-
 </body>
 
 </html>

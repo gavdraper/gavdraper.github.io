@@ -6,6 +6,10 @@
 
 .articyl-banner {
   font-family: $body-font;
+  padding: 20px 24px;
+  background: $background-alt-color;
+  border-radius: 6px;
+  border-left: 3px solid $accent-color;
 }
 
 // Variants hidden until JS picks one
@@ -17,13 +21,41 @@
   }
 }
 
+// Shared text style
+.articyl-banner__text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: $text-medium-color;
+  margin: 0 0 12px;
+
+  @include mq(tabletp) {
+    font-size: 16px;
+  }
+
+  strong {
+    color: $text-dark-color;
+    font-weight: $bold-weight;
+  }
+}
+
+// Shared CTA style
+.articyl-banner__cta {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: $bold-weight;
+  color: $accent-color;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  @include transition(border-bottom-color 0.2s ease);
+
+  &:hover {
+    border-bottom-color: $accent-color;
+  }
+}
+
 // Top banner — compact card above article content
 .articyl-banner--top {
   margin-bottom: 30px;
-  padding: 20px 24px;
-  background: $background-alt-color;
-  border-radius: 6px;
-  border-left: 3px solid $accent-color;
 
   @include mq(tabletp) {
     margin-bottom: 40px;
@@ -38,45 +70,12 @@
     color: $accent-color;
     margin: 0 0 6px;
   }
-
-  .articyl-banner__text {
-    font-size: 15px;
-    line-height: 1.5;
-    color: $text-medium-color;
-    margin: 0 0 12px;
-
-    @include mq(tabletp) {
-      font-size: 16px;
-    }
-
-    strong {
-      color: $text-dark-color;
-      font-weight: $bold-weight;
-    }
-  }
-
-  .articyl-banner__cta {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: $bold-weight;
-    color: $accent-color;
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    @include transition(border-bottom-color 0.2s ease);
-
-    &:hover {
-      border-bottom-color: $accent-color;
-    }
-  }
 }
 
 // Bottom banner — larger card CTA
 .articyl-banner--bottom {
   margin-top: 40px;
   padding: 30px 24px;
-  background: $background-alt-color;
-  border-radius: 6px;
-  border-left: 3px solid $accent-color;
 
   @include mq(tabletp) {
     margin-top: 50px;
@@ -101,28 +100,12 @@
   }
 
   .articyl-banner__text {
-    font-size: 15px;
     line-height: 1.6;
-    color: $text-medium-color;
     margin: 0 0 20px;
     max-width: 540px;
-
-    @include mq(tabletp) {
-      font-size: 16px;
-    }
   }
 
   .articyl-banner__cta {
-    display: inline-block;
     font-size: 15px;
-    font-weight: $bold-weight;
-    color: $accent-color;
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    @include transition(border-bottom-color 0.2s ease);
-
-    &:hover {
-      border-bottom-color: $accent-color;
-    }
   }
 }

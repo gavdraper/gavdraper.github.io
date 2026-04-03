@@ -132,8 +132,20 @@
 	function pageFunctions() {
 
 
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Articyl banners
+
+		// Pick one random variant per banner (re-runs after AJAX page swap)
+		document.querySelectorAll('.articyl-banner').forEach(function(banner) {
+			var variants = banner.querySelectorAll('.articyl-banner__variant');
+			variants.forEach(function(v) { v.classList.remove('is-active'); });
+			if (variants.length > 0) {
+				var idx = Math.floor(Math.random() * variants.length);
+				variants[idx].classList.add('is-active');
+			}
+		});
+
+
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Show content
-		console.log("Blah");
 		// Wait until first image has loaded
 		$('.page__content').find('.hero__image').imagesLoaded({ background: true }, function () {
 

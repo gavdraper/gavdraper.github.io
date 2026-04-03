@@ -1,0 +1,27 @@
+top:
+  - label: null
+    text: "<strong>Articyl</strong> — save articles, subscribe to RSS feeds, listen with AI narration, and send everything to your e-reader. All your content in one place."
+    cta: "Try it free"
+  - label: "Too busy to read this now?"
+    text: "Save it to <strong>Articyl</strong> and read it later — or let AI narrate it while you commute, exercise, or cook."
+    cta: "Save articles, listen anywhere"
+  - label: "Prefer reading on your Kindle or reMarkable?"
+    text: "<strong>Articyl</strong> cleans up web articles and delivers them as beautifully formatted PDFs or EPUBs straight to your e-reader."
+    cta: "Send articles to your e-reader"
+  - label: "Still juggling Pocket, Feedly, and a podcast app?"
+    text: "<strong>Articyl</strong> combines read-later, RSS feeds, podcasts, and AI narration in one distraction-free app."
+    cta: "Simplify your reading"
+
+bottom:
+  - heading: "Your content, your way."
+    text: "Articyl lets you save web articles, subscribe to RSS feeds and podcasts, listen to anything with AI narration, and deliver it all to your Kindle, Kobo, or reMarkable. One app for everything you read."
+    cta: "Try Articyl free"
+  - heading: "Turn any article into a podcast."
+    text: "Articyl's AI narration reads articles aloud so you can listen while you commute, work out, or do chores. Save from anywhere, listen everywhere."
+    cta: "Start listening"
+  - heading: "Read long-form on the screen that matters."
+    text: "Articyl strips the clutter from web articles and delivers clean, formatted PDFs or EPUBs to your Kindle, Kobo, or reMarkable — on a schedule or on demand."
+    cta: "Deliver to your e-reader"
+  - heading: "One place for everything you read and listen to."
+    text: "RSS feeds, saved articles, podcasts, highlights, and notes — Articyl keeps it all together with cross-device sync and a distraction-free reader."
+    cta: "Try Articyl free"

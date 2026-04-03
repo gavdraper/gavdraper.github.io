@@ -1,73 +1,13 @@
-<aside class="articyl-banner articyl-banner--{{ include.position }}" data-position="{{ include.position }}">
+<aside class="articyl-banner articyl-banner--{{ include.position }}" data-position="{{ include.position }}" aria-label="Articyl promotion">
   <div class="articyl-banner__inner">
-    <!-- Variants are hidden by default, JS picks one at random -->
-    {% if include.position == "top" %}
-
-    <div class="articyl-banner__variant" data-variant="1">
-      <p class="articyl-banner__text">
-        <strong>Articyl</strong> — save articles, subscribe to RSS feeds, listen with AI narration, and send everything to your e-reader. All your content in one place.
-      </p>
-      <a href="https://articyl.com?ref=blog-top-1" class="articyl-banner__cta" target="_blank" rel="noopener">Try it free &rarr;</a>
+    {% assign variants = site.data.articyl_variants[include.position] %}
+    {% for variant in variants %}
+    <div class="articyl-banner__variant" data-variant="{{ forloop.index }}">
+      {% if variant.label %}<p class="articyl-banner__label">{{ variant.label }}</p>{% endif %}
+      {% if variant.heading %}<h4 class="articyl-banner__heading">{{ variant.heading }}</h4>{% endif %}
+      <p class="articyl-banner__text">{{ variant.text }}</p>
+      <a href="https://articyl.com?ref=blog-{{ include.position }}-{{ forloop.index }}" class="articyl-banner__cta" target="_blank" rel="noopener">{{ variant.cta }} &rarr;</a>
     </div>
-
-    <div class="articyl-banner__variant" data-variant="2">
-      <p class="articyl-banner__label">Too busy to read this now?</p>
-      <p class="articyl-banner__text">
-        Save it to <strong>Articyl</strong> and read it later — or let AI narrate it while you commute, exercise, or cook.
-      </p>
-      <a href="https://articyl.com?ref=blog-top-2" class="articyl-banner__cta" target="_blank" rel="noopener">Save articles, listen anywhere &rarr;</a>
-    </div>
-
-    <div class="articyl-banner__variant" data-variant="3">
-      <p class="articyl-banner__label">Prefer reading on your Kindle or reMarkable?</p>
-      <p class="articyl-banner__text">
-        <strong>Articyl</strong> cleans up web articles and delivers them as beautifully formatted PDFs or EPUBs straight to your e-reader.
-      </p>
-      <a href="https://articyl.com?ref=blog-top-3" class="articyl-banner__cta" target="_blank" rel="noopener">Send articles to your e-reader &rarr;</a>
-    </div>
-
-    <div class="articyl-banner__variant" data-variant="4">
-      <p class="articyl-banner__label">Still juggling Pocket, Feedly, and a podcast app?</p>
-      <p class="articyl-banner__text">
-        <strong>Articyl</strong> combines read-later, RSS feeds, podcasts, and AI narration in one distraction-free app.
-      </p>
-      <a href="https://articyl.com?ref=blog-top-4" class="articyl-banner__cta" target="_blank" rel="noopener">Simplify your reading &rarr;</a>
-    </div>
-
-    {% else %}
-
-    <div class="articyl-banner__variant" data-variant="1">
-      <p class="articyl-banner__heading">Your content, your way.</p>
-      <p class="articyl-banner__text">
-        Articyl lets you save web articles, subscribe to RSS feeds and podcasts, listen to anything with AI narration, and deliver it all to your Kindle, Kobo, or reMarkable. One app for everything you read.
-      </p>
-      <a href="https://articyl.com?ref=blog-bottom-1" class="articyl-banner__cta" target="_blank" rel="noopener">Try Articyl free &rarr;</a>
-    </div>
-
-    <div class="articyl-banner__variant" data-variant="2">
-      <p class="articyl-banner__heading">Turn any article into a podcast.</p>
-      <p class="articyl-banner__text">
-        Articyl's AI narration reads articles aloud so you can listen while you commute, work out, or do chores. Save from anywhere, listen everywhere.
-      </p>
-      <a href="https://articyl.com?ref=blog-bottom-2" class="articyl-banner__cta" target="_blank" rel="noopener">Start listening &rarr;</a>
-    </div>
-
-    <div class="articyl-banner__variant" data-variant="3">
-      <p class="articyl-banner__heading">Read long-form on the screen that matters.</p>
-      <p class="articyl-banner__text">
-        Articyl strips the clutter from web articles and delivers clean, formatted PDFs or EPUBs to your Kindle, Kobo, or reMarkable — on a schedule or on demand.
-      </p>
-      <a href="https://articyl.com?ref=blog-bottom-3" class="articyl-banner__cta" target="_blank" rel="noopener">Deliver to your e-reader &rarr;</a>
-    </div>
-
-    <div class="articyl-banner__variant" data-variant="4">
-      <p class="articyl-banner__heading">One place for everything you read and listen to.</p>
-      <p class="articyl-banner__text">
-        RSS feeds, saved articles, podcasts, highlights, and notes — Articyl keeps it all together with cross-device sync and a distraction-free reader.
-      </p>
-      <a href="https://articyl.com?ref=blog-bottom-4" class="articyl-banner__cta" target="_blank" rel="noopener">Try Articyl free &rarr;</a>
-    </div>
-
-    {% endif %}
+    {% endfor %}
   </div>
 </aside>
