@@ -136,6 +136,37 @@
 	{{ site.data.settings.advanced_settings.footer_js }}
 	{% endif %}
 
+	<script>
+		(function() {
+			function activateArticylBanners() {
+				document.querySelectorAll('.articyl-banner').forEach(function(banner) {
+					var variants = banner.querySelectorAll('.articyl-banner__variant');
+					variants.forEach(function(v) { v.classList.remove('is-active'); });
+					if (variants.length > 0) {
+						var idx = Math.floor(Math.random() * variants.length);
+						variants[idx].classList.add('is-active');
+					}
+				});
+			}
+
+			// Run on initial load
+			activateArticylBanners();
+
+			// Re-run after AJAX page swaps
+			var pageEl = document.querySelector('.page');
+			if (pageEl) {
+				new MutationObserver(function(mutations) {
+					for (var i = 0; i < mutations.length; i++) {
+						if (mutations[i].addedNodes.length) {
+							activateArticylBanners();
+							break;
+						}
+					}
+				}).observe(pageEl, { childList: true });
+			}
+		})();
+	</script>
+
 </body>
 
 </html>
